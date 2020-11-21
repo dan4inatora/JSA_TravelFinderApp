@@ -18,5 +18,9 @@
   "bugs": {
     "url": "https://github.com/dan4inatora/JSA_TravelFinderApp/issues"
   },
-  "homepage": "https://github.com/dan4inatora/JSA_TravelFinderApp#readme"
+  "homepage": "https://github.com/dan4inatora/JSA_TravelFinderApp#readme",
+  "dependencies": {
+    "dotenv": "^8.2.0",
+    "express": "^4.17.1"
+  }
 }
