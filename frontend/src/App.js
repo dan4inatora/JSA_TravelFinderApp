@@ -4,6 +4,10 @@ import {connect} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
 import './App.scss';
 
+import HomePage from './pages/homepage/homepage.component';
+import SignUp from './components/sign-up/signUp.component';
+import SignIn from './components/sign-in/signIn.component';
+import ForgotPassword from './components/forgot-password/forgotPassword.component';
 import {setCurrentUser} from './redux/user/user.actions';
 import {selectCurrentUser} from './redux/user/user.selectors';
 
@@ -15,7 +19,10 @@ const App = () => {
     return (
       <div className='App'>
         <Switch>
-          {/* <Route exact path='/' component={}/> */}
+          <Route exact path='/' component={HomePage}/>
+          <Route path='/sign-up' component={SignUp}/>
+          <Route path='/sign-in' component={SignIn}/>
+          <Route exact path='/forgot-password' component={ForgotPassword}/>
         </Switch>
       </div>
     );
