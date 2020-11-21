@@ -1,0 +1,22 @@
+{
+  "name": "travelfinder",
+  "version": "1.0.0",
+  "description": "no",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dan4inatora/JSA_TravelFinderApp.git"
+  },
+  "keywords": [
+    "no"
+  ],
+  "author": "dan4inatora",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/dan4inatora/JSA_TravelFinderApp/issues"
+  },
+  "homepage": "https://github.com/dan4inatora/JSA_TravelFinderApp#readme"
+}
