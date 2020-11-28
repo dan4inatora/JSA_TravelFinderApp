@@ -14,6 +14,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import axios from 'axios';
 
 function Copyright() {
   return (
@@ -82,9 +83,26 @@ const SignUp = () => {
       onSubmit(values) {
           try {
               //registerUserAction(values);
+              axios({
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json'},
+                url: 'http://localhost:3000/api/register',
+                data: {
+                  email: values.email,
+                  username: values.username,
+                  firstname: values.firstName,
+                  lastname: values.lastName,
+                  password: values.password
+                }
+              }).then((response) => {
+                console.log(response);
+              }).catch((error) => {
+                console.log(error);
+              });
 
               const {username, firstName, lastName, email, password} = values;
               console.log(values);
+              
               // registerUserMutation({variables: { username, email, password}})
               //     .then((result: any) => {
               //         registerUserSuccess();
