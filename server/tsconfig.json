@@ -1,0 +1,30 @@
+{
+  "compilerOptions": {
+      "module": "commonjs",
+      "allowSyntheticDefaultImports": true,
+      "esModuleInterop": true,
+      "target": "es2017",
+      "noImplicitAny": false,
+      "moduleResolution": "node",
+      "resolveJsonModule": true,
+      "sourceMap": true,
+      "outDir": "dist",
+      "baseUrl": ".",
+      "lib": ["es2017"],
+      "emitDecoratorMetadata": true,
+      "experimentalDecorators": true,
+      "isolatedModules": false,
+      "noImplicitUseStrict": true,
+      "paths": {
+          "*": [
+              "node_modules/*"
+          ]
+      },
+      "typeRoots": ["./server/types", "node_modules/@types"]
+  },
+  "include": [
+      "./**/*.ts"
+  ],
+  "exclude": ["types"]
+}
+
