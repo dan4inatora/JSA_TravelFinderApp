@@ -1,24 +1,30 @@
 import React from 'react';
 import Header from '../../components/header/header.component';
 import Container from '@material-ui/core/Container';
+import useSticky from '../../components/header/useSticky';
+import CarouselSlideComponent from '../../components/carousel-slide/CarouselSlideComponent';
 
 import './homepage.styles.scss';
 
 const sections = [
-    { title: 'Technology', url: '#' },
-    { title: 'Design', url: '#' },
-    { title: 'Culture', url: '#' },
-    { title: 'Business', url: '#' },
-    { title: 'Politics', url: '#' }
+    { title: 'Home', url: '#' },
+    { title: 'Places/Locations', url: '#' },
+    { title: 'Recommended trips', url: '#' },
+    { title: 'Contact', url: '#' },
+    { title: 'Profile', url: '#' }
 ];
 
-const HomePage = () => (
-    <Container maxWidth="lg">
-        <Header title="Travel Finder" sections={sections}/>
-        <main>
+const HomePage = () => {
+    const {isSticky, element} = useSticky();
 
-        </main>
-    </Container>
-);
+    return (
+        <Container maxWidth="lg">
+            <Header title="Travel Finder" sticky={isSticky} sections={sections}/>
+            <main>
+                <CarouselSlideComponent />
+            </main>
+        </Container>
+    )
+};
 
 export default HomePage;
