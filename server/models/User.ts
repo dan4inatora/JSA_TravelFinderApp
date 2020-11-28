@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BaseEntity, OneToMany} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BaseEntity} from "typeorm";
 import bcrypt from 'bcrypt';
 import { Field, Int, ObjectType } from "type-graphql";
 import {Roles} from '../constants/Roles';

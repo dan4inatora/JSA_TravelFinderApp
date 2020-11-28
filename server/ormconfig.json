@@ -8,8 +8,8 @@
   "database": "travelfinder",
   "synchronize": false,
   "logging": false,
-  "entities": ["/models/**/*.ts"],
-  "migrations": ["/migrations/**/*.ts"],
+  "entities": ["./models/*.ts"],
+  "migrations": ["./migrations/*.ts"],
   "cli": {
     "entitiesDir": "/models",
     "migrationsDir": "/migrations"

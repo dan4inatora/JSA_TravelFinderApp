@@ -1,11 +1,11 @@
 import express from 'express';
 import {envConfig} from './config/envConfig';
 import cors from "cors";
-import passport from "passport";
 import session from "express-session";
 import {RedisStoreWrapper, client} from "./services/RedisService"
 import LocalPasport from './config/passportConfig';
 import AdminPassport from './config/passportAdminConfig';
+import mainRouter from './routers/mainRouter';
 const createConnection = require('typeorm').createConnection;
 
 const app = express();
@@ -47,6 +47,21 @@ app.use(express.json())
 .use(passportMiddleware)
 .use(passportSessionMiddleware);
 
+//Global error handler
+app.use((err, req, res, next) => {
+  if (err.name === "ValidationError") {
+    var valErrors = [];
+    Object.keys(err.errors).forEach(key =>
+      valErrors.push(err.errors[key].message)
+    );
+    res.send(valErrors);
+  } else {
+    console.log(err);
+  }
+});
+
+app.use('/', mainRouter);
+
 //CORS FOR PUBLIC
 app.use(cors({
   methods:["POST"],
@@ -69,6 +84,19 @@ adminApp.use(express.json())
 .use(sessionMiddleware)
 .use(passportMiddlewareAdmin)
 .use(passportSessionMiddlewareAdmin);
+
+//global error handler
+adminApp.use((err, req, res, next) => {
+  if (err.name === "ValidationError") {
+    var valErrors = [];
+    Object.keys(err.errors).forEach(key =>
+      valErrors.push(err.errors[key].message)
+    );
+    res.send(valErrors);
+  } else {
+    console.log(err);
+  }
+});
 
 adminApp.use(cors({
   methods:["POST"],
