@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import Button from '@material-ui/core/Button';
 import CssBaseline from '@material-ui/core/CssBaseline';
@@ -12,6 +12,8 @@ import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
 import Typography from '@material-ui/core/Typography';
 import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
+import * as Yup from 'yup';
+import { useFormik } from 'formik';
 
 function Copyright() {
   return (
@@ -44,10 +46,70 @@ const useStyles = makeStyles((theme) => ({
   submit: {
     margin: theme.spacing(3, 0, 2),
   },
+  error: {
+    color: 'red',
+    fontSize: '10px',
+    width: '200px'
+  }
 }));
 
 const SignIn = () => {
   const classes = useStyles();
+  const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
+  const [state, setResponseMessage] = useState({response: ''});
+
+  const validationSchema = Yup.object({
+      email: Yup.string().email().required('Valid email required!'),
+      password: Yup.string().required('Password must contain at least 8 chars and at least on number and special symbol')
+          .matches(PASSWORD_REGEX)
+  });
+
+  const {handleSubmit, handleChange, values, errors } = useFormik({
+      initialValues: {
+          email: "",
+          password: ""
+      },
+      validateOnBlur: true,
+      validationSchema,
+      onSubmit(values) {
+          try {
+              //registerUserAction(values);
+
+              const {email, password} = values;
+              console.log(values);
+
+              // registerUserMutation({variables: { username, email, password}})
+              //     .then((result: any) => {
+              //         registerUserSuccess();
+              //         loginUserMutation({variables: { email, password}})
+              //         .then((result: any) => {
+              //             if(result.data.login !== undefined){
+              //                 loginSuccessAction(result.data.login);
+              //             }
+              //             else if(result.data.loginAdmin !== undefined){
+              //                 loginSuccessAction(result.data.loginAdmin);
+              //             }
+                          
+              //             redirectToOnboarding();
+              //         });     
+
+              //     }).catch((responseBackend: any) => {
+              //         console.log("Response backend: ", responseBackend);
+              //         let validationErrors = responseBackend.graphQLErrors[0].extensions.exception.validationErrors;
+
+              //         for(let i=0; i < validationErrors.length; i++) {
+              //             if(validationErrors[i].property === "email") {
+              //                 setResponseMessage({response: t('Register.emailInUse')});
+              //             }
+              //         }
+              //         registerUserFailure(validationErrors);
+              //     });
+
+          } catch(error) {
+              console.log(errors);
+          }
+      }
+  })
 
   return (
     <Container component="main" maxWidth="xs">
@@ -59,12 +121,15 @@ const SignIn = () => {
         <Typography component="h1" variant="h5">
           Sign in
         </Typography>
-        <form className={classes.form} noValidate>
-          <TextField variant="outlined" margin="normal" required fullWidth id="email"
-            label="Email Address" name="email" autoComplete="email" autoFocus
+        {state.response ? <div className='error-box'>{state.response}</div> : null}
+        <form className={classes.form} noValidate onSubmit={handleSubmit}>
+          <TextField variant="outlined" margin="normal" onChange={handleChange} error={errors.email === ""}
+            required fullWidth id="email" helperText={errors.email ? errors.email : null} autoComplete="email"
+            label="Email Address" name="email" value={values.email} autoFocus FormHelperTextProps={{className: classes.error}}
           />
-          <TextField variant="outlined" margin="normal" required fullWidth name="password"
-            label="Password" type="password" id="password" autoComplete="current-password"
+          <TextField variant="outlined" margin="normal" value={values.password} onChange={handleChange} error={errors.password === ""}
+            required fullWidth name="password" helperText={errors.password ? errors.password : null} autoComplete="current-password"
+            label="Password" type="password" id="password" FormHelperTextProps={{className: classes.error}}
           />
           <FormControlLabel
             control={<Checkbox value="remember" color="primary" />}
