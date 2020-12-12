@@ -6,7 +6,8 @@ const INITIAL_STATE = {
     currentUser: null,
     awaitingAuthentication: false,
     authenticated: false,
-    registeredUser: false
+    registeredUser: false,
+    isAdmin: false
 }
 
 const userReducer = (state = INITIAL_STATE, action) => {
@@ -15,20 +16,21 @@ const userReducer = (state = INITIAL_STATE, action) => {
             return {
                 ...state,
                 registeredUser: true,
-                awaitingAuthentication: false
+                awaitingAuthentication: false,
+                currentUser: action.payload
             }
         case UserActionTypes.LOGIN_LOCAL:
             return {
                 ...state,
                 awaitingAuthentication: false,
                 authenticated: true,
-                currentUser: action.data
+                currentUser: action.payload
             };
         case UserActionTypes.LOGIN_THIRD_PARTY:
             return {
                 ...state,
                 authenticated: true,
-                currentUser: action.data
+                currentUser: action.payload
             };
         case UserActionTypes.LOGOUT_USER:
             return {
@@ -36,8 +38,17 @@ const userReducer = (state = INITIAL_STATE, action) => {
                 currentUser: null,
                 awaitingAuthentication: false,
                 authenticated: false,
-                registeredUser: false
+                registeredUser: false,
+                isAdmin: false
             };
+        case UserActionTypes.LOGIN_ADMIN:
+            return {
+                ...state,
+                currentUser: action.payload,
+                awaitingAuthentication: false,
+                authenticated: true,
+                isAdmin: true
+            }
             default:
                 return state;
     }

@@ -25,6 +25,10 @@ const App = () => {
           <Route path='/sign-in' component={SignIn}/>
           <Route exact path='/forgot-password' component={ForgotPassword}/>
           <Route path='/admin-sign-in' component={AdminSignIn}/>
+          {/* <Route path='/onboarding' component={}/>
+          <Route path='/history' component={}/>
+          <Route path='/profile/:id/:name' component={}/>
+          <Route path='/tour/:id' component={}/> */}
         </Switch>
       </div>
     );

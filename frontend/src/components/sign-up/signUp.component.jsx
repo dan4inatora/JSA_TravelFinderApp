@@ -15,6 +15,9 @@ import Container from '@material-ui/core/Container';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
 import axios from 'axios';
+import {connect} from 'react-redux';
+import {registerUser} from '../../redux/user/user.actions';
+import { useHistory } from 'react-router-dom';
 
 function Copyright() {
   return (
@@ -54,8 +57,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const SignUp = () => {
+const SignUp = ({registerUser}) => {
   const classes = useStyles();
+  const history = useHistory();
   const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
   const [state, setResponseMessage] = useState({response: ''});
 
@@ -82,7 +86,6 @@ const SignUp = () => {
       validationSchema,
       onSubmit(values) {
           try {
-              //registerUserAction(values);
               axios({
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json'},
@@ -95,41 +98,19 @@ const SignUp = () => {
                   password: values.password
                 }
               }).then((response) => {
-                console.log(response);
+                if(response.data && response.data.email) {
+                  registerUser({email: response.data.email, name: response.data.firstName + " " + response.data.lastName, 
+                    role: response.data.role, username: response.data.username});
+                }
+
+                setTimeout(() => {
+                  history.push('/');
+                }, 1000);
               }).catch((error) => {
                 console.log(error);
               });
 
-              const {username, firstName, lastName, email, password} = values;
               console.log(values);
-              
-              // registerUserMutation({variables: { username, email, password}})
-              //     .then((result: any) => {
-              //         registerUserSuccess();
-              //         loginUserMutation({variables: { email, password}})
-              //         .then((result: any) => {
-              //             if(result.data.login !== undefined){
-              //                 loginSuccessAction(result.data.login);
-              //             }
-              //             else if(result.data.loginAdmin !== undefined){
-              //                 loginSuccessAction(result.data.loginAdmin);
-              //             }
-                          
-              //             redirectToOnboarding();
-              //         });     
-
-              //     }).catch((responseBackend: any) => {
-              //         console.log("Response backend: ", responseBackend);
-              //         let validationErrors = responseBackend.graphQLErrors[0].extensions.exception.validationErrors;
-
-              //         for(let i=0; i < validationErrors.length; i++) {
-              //             if(validationErrors[i].property === "email") {
-              //                 setResponseMessage({response: t('Register.emailInUse')});
-              //             }
-              //         }
-              //         registerUserFailure(validationErrors);
-              //     });
-
           } catch(error) {
               console.error(error);
           }
@@ -208,4 +189,12 @@ const SignUp = () => {
   );
 }
 
-export default SignUp;
+// const mapStateToProps = createStructuredSelector({
+//   currentUser: selectCurrentUser
+// });
+
+const mapDispatchToProps = dispatch => ({
+  registerUser: (user) => dispatch(registerUser(user))
+}); 
+
+export default connect(null, mapDispatchToProps)(SignUp);
