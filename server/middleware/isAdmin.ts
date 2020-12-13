@@ -4,7 +4,7 @@ const isAdmin = (req, res, next) => {
   if (req.isAuthenticated() && req.user.role === Roles.ADMIN) {
     next();
   } else {
-    res.status(401).send("User must be Admin");
+    res.status(401).send({error: "User must be Admin"});
   }
 }
 

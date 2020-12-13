@@ -99,11 +99,11 @@ adminApp.use((err, req, res, next) => {
   }
 });
 
-// adminApp.use(cors({
-//   methods:["POST"],
-//   origin:`http://localhost:${envConfig.frontendAdmin.port}`,
-//   credentials: true
-// }));
+adminApp.use(cors({
+  methods:["POST"],
+  origin:`http://localhost:${envConfig.frontendAdmin.port}`,
+  credentials: true
+}));
 
 //AdminApp and port
 adminApp.listen(
