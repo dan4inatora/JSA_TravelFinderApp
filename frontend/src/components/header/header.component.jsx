@@ -10,6 +10,7 @@ import {selectCurrentUser} from '../../redux/user/user.selectors';
 import {createStructuredSelector} from 'reselect';
 import { useHistory } from 'react-router-dom';
 import {connect} from 'react-redux';
+import {logoutUser} from '../../redux/user/user.actions';
 import './header.styles.scss';
 
 const useStyles = makeStyles((theme) => ({
@@ -32,7 +33,7 @@ const useStyles = makeStyles((theme) => ({
 const Header = (props) => {
   const classes = useStyles();
   const history = useHistory();
-  const { sections, title, sticky , currentUser} = props;
+  const { sections, title, sticky , currentUser, logout} = props;
 
   return (
     <nav className={sticky ? "navbar navbar-sticky" : ''}>
@@ -50,7 +51,7 @@ const Header = (props) => {
         </Typography>
         
         {currentUser ? 
-            <Button variant="outlined" size="small">
+            <Button variant="outlined" size="small" onClick={() => logout()}>
                 Logout
             </Button> 
         : 
@@ -85,4 +86,8 @@ const mapStateToProps = createStructuredSelector({
   currentUser: selectCurrentUser
 });
 
-export default connect(mapStateToProps, null)(Header);
+const mapDispatchToProps = dispatch => ({
+  logout: () => dispatch(logoutUser())
+}); 
+
+export default connect(mapStateToProps, mapDispatchToProps)(Header);

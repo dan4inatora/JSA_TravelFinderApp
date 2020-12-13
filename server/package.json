@@ -5,7 +5,8 @@
   "main": "index.js",
   "scripts": {
     "start": "nodemon index.ts",
-    "migrate": "ts-node ./node_modules/.bin/typeorm migrations:run"
+    "migrate": "ts-node ./node_modules/.bin/typeorm migrations:run",
+    "migrateWindows": "npx ts-node ./node_modules/typeorm/cli.js migration:run"
   },
   "keywords": [],
   "author": "",

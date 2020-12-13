@@ -14,6 +14,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import Container from '@material-ui/core/Container';
 import * as Yup from 'yup';
 import { useFormik } from 'formik';
+import axios from 'axios';
+import {connect} from 'react-redux';
+import {loginUserLocal} from '../../redux/user/user.actions';
+import { useHistory } from 'react-router-dom';
+
 
 function Copyright() {
   return (
@@ -53,8 +58,9 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const SignIn = () => {
+const SignIn = ({loginUser}) => {
   const classes = useStyles();
+  const history = useHistory();
   const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/;
   const [state, setResponseMessage] = useState({response: ''});
 
@@ -72,42 +78,32 @@ const SignIn = () => {
       validateOnBlur: true,
       validationSchema,
       onSubmit(values) {
-          try {
-              //registerUserAction(values);
+        try {
+          axios({
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json'},
+            url: 'http://localhost:3000/api/login',
+            data: {
+              email: values.email,
+              password: values.password
+            }
+          }).then((response) => {
+            if(response.data && response.data.email) {
+              loginUser({email: response.data.email, name: response.data.firstName + " " + response.data.lastName, 
+              role: response.data.role, username: response.data.username});
+            }
 
-              const {email, password} = values;
-              console.log(values);
+            setTimeout(() => {
+              history.push('/');
+            }, 1000);
+          }).catch((error) => {
+            console.log(error);
+          });
 
-              // registerUserMutation({variables: { username, email, password}})
-              //     .then((result: any) => {
-              //         registerUserSuccess();
-              //         loginUserMutation({variables: { email, password}})
-              //         .then((result: any) => {
-              //             if(result.data.login !== undefined){
-              //                 loginSuccessAction(result.data.login);
-              //             }
-              //             else if(result.data.loginAdmin !== undefined){
-              //                 loginSuccessAction(result.data.loginAdmin);
-              //             }
-                          
-              //             redirectToOnboarding();
-              //         });     
-
-              //     }).catch((responseBackend: any) => {
-              //         console.log("Response backend: ", responseBackend);
-              //         let validationErrors = responseBackend.graphQLErrors[0].extensions.exception.validationErrors;
-
-              //         for(let i=0; i < validationErrors.length; i++) {
-              //             if(validationErrors[i].property === "email") {
-              //                 setResponseMessage({response: t('Register.emailInUse')});
-              //             }
-              //         }
-              //         registerUserFailure(validationErrors);
-              //     });
-
-          } catch(error) {
-              console.log(errors);
-          }
+          console.log(values);
+      } catch(error) {
+          console.error(error);
+      }
       }
   })
 
@@ -161,4 +157,12 @@ const SignIn = () => {
   );
 }
 
-export default SignIn;
+// const mapStateToProps = createStructuredSelector({
+//   currentUser: selectCurrentUser
+// });
+
+const mapDispatchToProps = dispatch => ({
+  loginUser: (user) => dispatch(loginUserLocal(user))
+}); 
+
+export default connect(null, mapDispatchToProps)(SignIn);
