@@ -63,6 +63,7 @@ app.use((err, req, res, next) => {
 app.use('/', mainRouter);
 
 //CORS FOR PUBLIC
+console.log()
 app.use(cors({
   methods:["POST"],
   origin:`http://localhost:${envConfig.frontend.port}`,
