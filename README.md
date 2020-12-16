@@ -3,6 +3,7 @@
 ```run migrations with - ts-node ./node_modules/.bin/typeorm migrations:generate -n <migration name>```
 
 #Travel Finder
+
 This app helps you find the most suitable vacation for you. It takes into account what weather you like, what your favourite activities are, your most liked travel destinations, your preffered cuisine...etc, and it offers you the best holiday customized for you.
 
 ###Functionalities
