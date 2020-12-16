@@ -8,7 +8,7 @@ This app helps you find the most suitable vacation for you. It takes into accoun
 
 ### Functionalities
 * Admin
-  * All crud operations with users and holiday info
+  * All crud operations with regards to users and holiday info
 * Public
   * Answer and submit custom questioneer(to help us recommend you a trip)
   * Comment below a holiday and leave up to 5 star review
@@ -18,16 +18,16 @@ This app helps you find the most suitable vacation for you. It takes into accoun
   
 ### Techologies that will be used
 * Backend:
-  * Express with endpoints
+  * Express REST api (with endpoints)
   * Redis and sessions
   * Postgres SQL
   * Stripe (for payments)
-  * Passport
+  * Passport for authentication
 
 * Frontend:
   * React.js
   * Redux
   * SCSS
-  *Material-UI
+  * Material-UI
 
   
