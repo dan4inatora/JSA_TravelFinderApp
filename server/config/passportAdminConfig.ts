@@ -19,7 +19,7 @@ AdminPassport.deserializeUser(async (id: number, done) => {
 
 
 AdminPassport.use(
-  "local",
+  "local-admin",
   new localStrategy(
     { usernameField: "email", passwordField: "password" },
     async (email, password, done) => {
