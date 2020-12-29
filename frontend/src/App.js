@@ -5,6 +5,7 @@ import {createStructuredSelector} from 'reselect';
 import './App.scss';
 
 import HomePage from './pages/homepage/homepage.component';
+import OnboardingPage from './pages/onboarding/onboarding.page';
 import SignUp from './components/sign-up/signUp.component';
 import SignIn from './components/sign-in/signIn.component';
 import AdminSignIn from './components/admin sign-in/adminSignIn.component';
@@ -25,10 +26,11 @@ const App = () => {
           <Route path='/sign-in' component={SignIn}/>
           <Route exact path='/forgot-password' component={ForgotPassword}/>
           <Route path='/admin-sign-in' component={AdminSignIn}/>
-          {/* <Route path='/onboarding' component={}/>
-          <Route path='/history' component={}/>
+          <Route path='/onboarding' component={OnboardingPage}/>
+          {/* <Route path='/history' component={}/>
           <Route path='/profile/:id/:name' component={}/>
-          <Route path='/tour/:id' component={}/> */}
+          <Route path='/tour/:id' component={}/> 
+          <Route path='/destinations' component={} */}
         </Switch>
       </div>
     );

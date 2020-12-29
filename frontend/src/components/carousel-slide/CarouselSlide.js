@@ -8,11 +8,9 @@ export default function CarouselSlide(props) {
         card: {
             backgroundColor,
             borderRadius: 5,
-            padding: '25px',
             width: '100vw',
             alignItems: 'center',
             height: '70vh',
-            boxShadow: '20px 20px 20px black',
             display: 'flex',
             justifyContent: 'center',
         },
