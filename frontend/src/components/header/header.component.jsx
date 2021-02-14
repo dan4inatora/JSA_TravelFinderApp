@@ -3,12 +3,13 @@ import PropTypes from 'prop-types';
 import { makeStyles } from '@material-ui/core/styles';
 import Toolbar from '@material-ui/core/Toolbar';
 import Button from '@material-ui/core/Button';
+import IconButton from '@material-ui/core/IconButton';
 import SearchBar from '../search-bar/search-bar.component';
-import Typography from '@material-ui/core/Typography';
 import Link from '@material-ui/core/Link';
 import {selectCurrentUser} from '../../redux/user/user.selectors';
 import {createStructuredSelector} from 'reselect';
 import { useHistory } from 'react-router-dom';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import {connect} from 'react-redux';
 import {logoutUser} from '../../redux/user/user.actions';
 import './header.styles.scss';
@@ -16,6 +17,9 @@ import './header.styles.scss';
 const useStyles = makeStyles((theme) => ({
   toolbar: {
     borderBottom: `1px solid ${theme.palette.divider}`,
+    display: "flex",
+    justifyContent: "space-between",
+    alignItems: "center"
   },
   toolbarTitle: {
     flex: 1,
@@ -28,38 +32,42 @@ const useStyles = makeStyles((theme) => ({
     padding: theme.spacing(1),
     flexShrink: 0,
   },
+  button: {
+    color: "white",
+    fontSize: "1rem"
+  }
 }));
 
 const Header = (props) => {
   const classes = useStyles();
   const history = useHistory();
-  const { sections, title, sticky , currentUser, logout} = props;
+  const { sections, title, currentUser, logout} = props;
+
+  const redirectToProfilePage = (role, username) => {
+    history.push(`/profile/${username}/${role}`);
+  }
 
   return (
-    <nav className={sticky ? "navbar navbar-sticky" : ''}>
+    <nav className="navbar navbar-sticky">
       <Toolbar className={classes.toolbar}>
-        <SearchBar /> 
-        <Typography
-          component="h2"
-          variant="h5"
-          color="inherit"
-          align="center"
-          noWrap
-          className={classes.toolbarTitle}
-        >
-          {title}
-        </Typography>
+        <Link color="inherit" noWrap href="/" className="title-container">{title}</Link>
+          <SearchBar fullWidth={false}/> 
         
         {currentUser ? 
-            <Button variant="outlined" size="small" onClick={() => logout()}>
+          <div>
+            <IconButton className={classes.button} onClick={() => redirectToProfilePage(currentUser.role, currentUser.username)}>
+              <AccountCircleIcon/>
+            </IconButton>
+            <Button className={classes.button} variant="outlined" size="small" onClick={() => logout()}>
                 Logout
             </Button> 
+          </div>
         : 
         <div>
-            <Button variant="outlined" size="small" onClick={() => history.push('/sign-up')}>
+            <Button className={classes.button} variant="outlined" size="small" onClick={() => history.push('/sign-up')}>
                 Sign up
             </Button>
-            <Button variant="outlined" size="small" onClick={() => history.push('/sign-in')}>
+            <Button className={classes.button} variant="outlined" size="small" onClick={() => history.push('/sign-in')}>
                 Sign in
             </Button>
         </div>

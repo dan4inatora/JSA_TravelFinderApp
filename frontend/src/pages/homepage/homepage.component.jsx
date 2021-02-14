@@ -3,15 +3,15 @@ import Header from '../../components/header/header.component';
 import Container from '@material-ui/core/Container';
 import useSticky from '../../components/header/useSticky';
 import CarouselSlideComponent from '../../components/carousel-slide/CarouselSlideComponent';
+import Footer from '../../components/footer/footer.component';
 
 import './homepage.styles.scss';
 
-const sections = [
-    { title: 'Home', url: '#' },
-    { title: 'Places/Locations', url: '#' },
-    { title: 'Recommended trips', url: '#' },
-    { title: 'Contact', url: '#' },
-    { title: 'Profile', url: '#' }
+export const sections = [
+    { title: 'Home', url: '/' },
+    { title: 'Destinations', url: '/destinations' },
+    { title: 'Recommended trips', url: '/recommendations' },
+    { title: 'Contact us', url: '/contact-us' }
 ];
 
 const HomePage = () => {
@@ -19,10 +19,11 @@ const HomePage = () => {
 
     return (
         <Container maxWidth="lg">
-            <Header title="Travel Finder" sticky={isSticky} sections={sections}/>
+            {/* <Header title="Travel Finder" sticky={isSticky} sections={sections}/> */}
             <main>
                 <CarouselSlideComponent />
             </main>
+            {/* <Footer/> */}
         </Container>
     )
 };
