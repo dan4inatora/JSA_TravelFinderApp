@@ -18,19 +18,7 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 import {registerUser} from '../../redux/user/user.actions';
 import { useHistory } from 'react-router-dom';
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {'Copyright © '}
-      <Link color="inherit" href="https://material-ui.com/">
-        Travel Finder
-      </Link>{' '}
-      {new Date().getFullYear()}
-      {'.'}
-    </Typography>
-  );
-}
+import { Copyright } from '../footer/footer.component';
 
 const useStyles = makeStyles((theme) => ({
   paper: {
