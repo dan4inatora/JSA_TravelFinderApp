@@ -1,20 +1,22 @@
-import {register, login, currentUser, logout} from '../services/UserService';
+import { UserService } from "../services/UserService";
+
+const userService = new UserService();
 
 export const registerController = (req, res, next) => {
-  register(req, res, next);
+  return userService.register(req, res, next);
 };
 
 export const loginController = async (req, res, next) => {
-  login(req, res, next);
+  return userService.login(req, res, next);
 };
 
 
 export const currentUserController = async (req, res, next) =>{
-  currentUser(req, res, next);
+  return userService.currentUser(req, res, next);
 }
 
 export const logoutController = (req, res, next) => {
-  logout(req, res, next)
+  return userService.logout(req, res, next)
 };
 
 
