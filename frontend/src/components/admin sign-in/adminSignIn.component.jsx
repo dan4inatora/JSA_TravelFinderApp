@@ -66,7 +66,7 @@ const AdminSignIn = ({loginAdmin}) => {
               axios({
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json'},
-                url: 'http://localhost:3000/api/login-admin',
+                url: 'http://localhost:3000/api/login',
                 data: {
                   email: values.email,
                   password: values.password
@@ -83,10 +83,6 @@ const AdminSignIn = ({loginAdmin}) => {
               }).catch((error) => {
                 console.log(error);
               });
-  
-              setTimeout(() => {
-                history.push('/');
-              }, 1000);
                 console.log(values);
             } catch(error) {
                 console.log(errors);
