@@ -13,6 +13,12 @@ const createConnection = require('typeorm').createConnection;
 
 const app = express();
 
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+     next();
+});
 //Redis connection check
 const RedisStore = RedisStoreWrapper(session);
 
@@ -86,6 +92,14 @@ app.listen(
 
 //ADMIN APP
 const adminApp = express();
+
+adminApp.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+     next();
+});
+
 const passportMiddlewareAdmin = AdminPassport.initialize();
 const passportSessionMiddlewareAdmin = AdminPassport.session();
 
