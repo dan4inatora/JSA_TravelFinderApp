@@ -13,12 +13,6 @@ const createConnection = require('typeorm').createConnection;
 
 const app = express();
 
-app.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
-     next();
-});
 //Redis connection check
 const RedisStore = RedisStoreWrapper(session);
 
@@ -56,6 +50,8 @@ app.use(express.json())
 .use(passportMiddleware)
 .use(passportSessionMiddleware);
 
+
+
 //Global error handler
 app.use((err, req, res, next) => {
   if (err.name === "ValidationError") {
@@ -72,10 +68,17 @@ app.use((err, req, res, next) => {
 //CORS FOR PUBLIC
 console.log()
 app.use(cors({
-  methods:["POST"],
+  methods:["POST","PUT","GET", "DELETE"],
   origin:`http://localhost:${envConfig.frontend.port}`,
   credentials: true
 }));
+
+app.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+     next();
+});
 
 const appRoutes: Array<CommonRoutesConfig> = [];
 appRoutes.push(new UsersRouter(app));
@@ -92,13 +95,6 @@ app.listen(
 
 //ADMIN APP
 const adminApp = express();
-
-adminApp.use(function(req, res, next) {
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-  res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
-     next();
-});
 
 const passportMiddlewareAdmin = AdminPassport.initialize();
 const passportSessionMiddlewareAdmin = AdminPassport.session();
@@ -122,10 +118,17 @@ adminApp.use((err, req, res, next) => {
 });
 
 adminApp.use(cors({
-  methods:["POST"],
+  methods:["POST","PUT","GET", "DELETE"],
   origin:`http://localhost:${envConfig.frontend.port}`,
   credentials: true
 }));
+
+adminApp.use(function(req, res, next) {
+  res.header("Access-Control-Allow-Origin", "*");
+  res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+  res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+     next();
+});
 
 const adminRoutes: Array<CommonRoutesConfig> = [];
 adminRoutes.push(new AdminRouter(adminApp));
