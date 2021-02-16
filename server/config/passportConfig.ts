@@ -25,6 +25,7 @@ passport.use(
           return done(null, false, {message : "Email not registered"});
         }
         else if(!matchingUser.comparePassword(password)){
+          console.log("PASSWORD", password);
           return done(null, false, {message:"Incorrect password"});
         }
         else{

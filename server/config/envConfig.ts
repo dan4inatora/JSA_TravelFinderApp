@@ -21,9 +21,6 @@ export interface EnvConfig {
   frontend : {
       port : number; 
   };
-  frontendAdmin : {
-      port : number;
-  }
 }
 
 
@@ -48,9 +45,7 @@ export const envConfig: EnvConfig = {
   frontend : {
     port : parseInt(process.env["FRONTEND_PORT"])
   },
-  frontendAdmin : {
-    port : parseInt(process.env["FRONTEND_ADMIN_PORT"])
-  }
+
 
   
 };

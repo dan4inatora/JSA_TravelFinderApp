@@ -1,16 +1,17 @@
 import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BaseEntity} from "typeorm";
 import bcrypt from 'bcrypt';
 import {Roles} from '../constants/Roles';
+import { use } from "passport";
 
 @Entity('users')
 export class User extends BaseEntity{
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column("text", { unique: true })
+    @Column({name: 'email'})
     email: string;
     
-    @Column({name: 'username', unique: true })
+    @Column({name: 'user_name'})
     username: string;
 
     @Column({name: 'first_name' })
@@ -19,7 +20,7 @@ export class User extends BaseEntity{
     @Column({name: 'last_name' })
     lastName: string;
 
-    @Column({nullable:true, select : false})
+    @Column({nullable:true})
     password: string;
 
     @Column({default: Roles.USER})
@@ -33,6 +34,17 @@ export class User extends BaseEntity{
     }
 
     async comparePassword(attempt: string): Promise<boolean> {
+      console.log("HIUSTON HERE", attempt, this.password);
       return await bcrypt.compare(attempt, this.password);
+    }
+
+    constructor(email:string, username: string, firstName: string, lastName: string, password:string, role: string){
+      super();
+      this.email = email;
+      this.username = username;
+      this.firstName = firstName;
+      this.lastName = lastName;
+      this.password = password;
+      this.role = role;
     }
 }

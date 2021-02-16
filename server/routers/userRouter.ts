@@ -1,12 +1,12 @@
-import {loginController, registerController, currentUserController, logoutController}  from '../controllers/userController';
-import isAuthenticated from '../middleware/isAuthenticated';
+import userController  from '../controllers/userController';
+import AuthenticationMiddleware from '../middleware/AuthenticationMiddleware';
 import express from 'express';
 const router = express.Router();
 
-router.post('/register', registerController);
-router.post('/login' ,loginController);
-router.post('/logout' , isAuthenticated, logoutController);
-router.get('/currentUser' , isAuthenticated, currentUserController);
+router.post('/register', userController.register);
+router.post('/login' ,userController.login);
+router.post('/logout' , AuthenticationMiddleware.isAuthenticated, userController.logout);
+router.get('/currentUser' , AuthenticationMiddleware.isAdmin, userController.currentUser);
 
 
 
