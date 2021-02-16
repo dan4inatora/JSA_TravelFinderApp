@@ -36,7 +36,7 @@ const sessionMiddleware = session({
   saveUninitialized: false,
   rolling: true,
   store: new RedisStore({ client }),
-  cookie: { maxAge: 60 * 60 * 60 } // Set to secure:false and expire in 1 minute for demo purposes
+  cookie: { maxAge: 60 * 60 * 60  * 1000} // Set to secure:false and expire in 1 minute for demo purposes
 })
 
 const passportMiddleware = LocalPasport.initialize();

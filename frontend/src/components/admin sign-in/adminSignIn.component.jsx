@@ -67,6 +67,7 @@ const AdminSignIn = ({loginAdmin}) => {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json'},
                 url: 'http://localhost:3000/api/login',
+                withCredentials: true,
                 data: {
                   email: values.email,
                   password: values.password
