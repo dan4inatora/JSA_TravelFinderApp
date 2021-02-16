@@ -39,6 +39,7 @@ class AdminController {
               return res.send(user);
             }
           } catch (err) {
+            console.log("HERE MANIAC?")
             return next(err);
           }
         } else {
@@ -65,7 +66,7 @@ class AdminController {
        res.status(404).send({ error: 'Duplicate email adress' });
     }
     else{
-     const user = userService.createUser(new User(email, username, firstname, lastname, password, role));
+     const user = await userService.createUser(new User(email, username, firstname, lastname, password, role));
      console.log("USER", user)
      return res.send(user);
     }

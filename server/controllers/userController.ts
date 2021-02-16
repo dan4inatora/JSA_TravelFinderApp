@@ -23,7 +23,7 @@ class UserController {
        res.status(404).send({ error: 'Duplicate email adress' });
     }
     else{
-     const user = await userService.createUser(new User(email, username, firstname, lastname, password, Roles.ADMIN));
+     const user = await userService.createUser(new User(email, username, firstname, lastname, password, Roles.USER));
      console.log("USER", user)
      return res.send(user);
     }
