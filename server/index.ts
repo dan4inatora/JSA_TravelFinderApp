@@ -5,7 +5,10 @@ import session from "express-session";
 import {RedisStoreWrapper, client} from "./services/RedisService"
 import LocalPasport from './config/passportConfig';
 import AdminPassport from './config/passportAdminConfig';
-import mainRouter from './routers/mainRouter';
+import {CommonRoutesConfig} from './routers/CommonRoutesConfig';
+import {UsersRouter} from './routers/UserRouter';
+import {AdminRouter} from './routers/AdminRouter';
+
 const createConnection = require('typeorm').createConnection;
 
 const app = express();
@@ -68,12 +71,17 @@ app.use(cors({
   credentials: true
 }));
 
-app.use('/', mainRouter);
+const appRoutes: Array<CommonRoutesConfig> = [];
+appRoutes.push(new UsersRouter(app));
 
 //App and port
 app.listen(
   {port: envConfig.express.public.port},
-  (): void => console.log(`Public is now running on http://localhost:${envConfig.express.public.port}`));
+  () => {console.log(`Public is now running on http://localhost:${envConfig.express.public.port}`);
+  appRoutes.forEach((route: CommonRoutesConfig) => {
+    console.log(`Routes configured for ${route.getName()}`);
+  });
+});
 
 
 //ADMIN APP
@@ -105,7 +113,9 @@ adminApp.use(cors({
   credentials: true
 }));
 
-adminApp.use('/', mainRouter);
+const adminRoutes: Array<CommonRoutesConfig> = [];
+adminRoutes.push(new AdminRouter(adminApp));
+
 //AdminApp and port
 adminApp.listen(
   {port: envConfig.express.admin.port},

@@ -5,20 +5,19 @@ import {Roles} from '../constants/Roles';
 
 
 const localStrategy = strategy.Strategy;
-const AdminPassport = new passport.Passport();
 
 
-AdminPassport.serializeUser((user: User, done) => {
+passport.serializeUser((user: User, done) => {
   done(null, user.id);
 });
 
-AdminPassport.deserializeUser(async (id: number, done) => {
+passport.deserializeUser(async (id: number, done) => {
   const user = await User.findOne({where:{id}});
   done(null, user);
 });
 
 
-AdminPassport.use(
+passport.use(
   "local-admin",
   new localStrategy(
     { usernameField: "email", passwordField: "password" },
@@ -45,4 +44,4 @@ AdminPassport.use(
   )
 );
 
-export default AdminPassport;
+export default passport;
