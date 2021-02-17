@@ -69,7 +69,7 @@ const SignIn = ({loginUser}) => {
           axios({
             method: 'POST',
             headers: { 'Content-Type': 'application/json'},
-            url: 'http://localhost:3000/api/login',
+            url: 'http://localhost:3000/login',
             withCredentials: true,
             data: {
               email: values.email,

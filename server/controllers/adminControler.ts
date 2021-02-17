@@ -53,8 +53,10 @@ class AdminController {
     const {id} = req.body
     let body_without_id = _objectWithoutProperties(req.body, ["id"]);
     const user = await User.update({id}, {...body_without_id});
-    if(user.affected > 0)
-        return await userService.findUserById(id);
+    if(user.affected > 0) {
+      const response = await userService.findUserById(id);
+      res.status(200).send(response);
+    }
     else
         res.status(401).send({error:"Error while updating user"})
   };
