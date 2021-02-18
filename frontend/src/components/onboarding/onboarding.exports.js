@@ -29,7 +29,6 @@ export function valueLabelFormat(value) {
 
 export const BudgetSlider = withStyles({
     root: {
-        color: '#52af77',
         height: 8,
       },
       thumb: {

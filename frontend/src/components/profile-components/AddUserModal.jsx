@@ -2,7 +2,7 @@ import React, {useState, useEffect} from "react";
 import {IconButton, Dialog, Button, Backdrop, Fade, TextField, MuiThemeProvider, FormLabel, Select} from "@material-ui/core";
 import EditIcon from '@material-ui/icons/Edit';
 import CloseIcon from '@material-ui/icons/Close';
-import { Alert, AlertTitle } from '@material-ui/lab';
+import { channelsTableTheme } from './theme';
 import axios from 'axios';
 
 const AddUserModal = (props) => {
@@ -66,7 +66,7 @@ const AddUserModal = (props) => {
                 <EditIcon/>
                 Add New user
             </Button>
-            {/* <MuiThemeProvider theme={channelsTableTheme}> */}
+            <MuiThemeProvider theme={channelsTableTheme}>
                   <Dialog closeAfterTransition={true} onClose={handleClose} open={open} aria-labelledby="simple-modal-title"
                       aria-describedby="simple-modal-description" BackdropComponent={Backdrop}
                       BackdropProps={{ timeout: 800 }}>
@@ -79,10 +79,8 @@ const AddUserModal = (props) => {
                               <div className='add-user-container'>
                                   <h1 className='title'>Add New User</h1>
                                     { response ? 
-                                    <Alert severity="error">
-                                        <AlertTitle>Error</AlertTitle>
                                         {response}
-                                    </Alert> : null}
+                                    : null}
                                   <form className='add-user-form' onSubmit={handleSubmit}>
                                         <FormLabel className='select-label' htmlFor="channel">First Name:</FormLabel>
                                         <TextField type='text' onChange={handleChange} hiddenLabel={true} name='firstname'
@@ -114,7 +112,7 @@ const AddUserModal = (props) => {
                           </div>
                       </Fade>
                   </Dialog>
-              {/* </MuiThemeProvider> */}
+              </MuiThemeProvider>
         </React.Fragment>
       );
 }

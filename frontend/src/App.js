@@ -13,8 +13,9 @@ import ForgotPassword from './components/forgot-password/forgotPassword.componen
 import {setCurrentUser} from './redux/user/user.actions';
 import {selectCurrentUser} from './redux/user/user.selectors';
 
-const App = () => {
+console.log(process.env.REACT_APP_AMADEUS_ACCESS_TOKEN);
 
+const App = () => {
     return (
       <div className='App'>
           <Header title="Travel Finder" sticky={false} sections={sections}/>
