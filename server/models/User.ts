@@ -1,7 +1,8 @@
-import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BaseEntity} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, BeforeInsert, BaseEntity, OneToMany} from "typeorm";
 import bcrypt from 'bcrypt';
 import {Roles} from '../constants/Roles';
-import { use } from "passport";
+import { Comment } from "./Comment";
+import { CommentReacts } from "./CommentReacts";
 
 @Entity('users')
 export class User extends BaseEntity{
@@ -25,6 +26,12 @@ export class User extends BaseEntity{
 
     @Column({default: Roles.USER})
     role: string;
+
+    @OneToMany(() => Comment, comments => comments.user)
+    comments: Comment[];
+
+    @OneToMany(() => CommentReacts, contentReacts => contentReacts.user)
+    commentReacts: CommentReacts[];
 
     @BeforeInsert()
     async hashPassword() {
