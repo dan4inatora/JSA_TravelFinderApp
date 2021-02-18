@@ -51,7 +51,7 @@ const Header = (props) => {
     <nav className="navbar navbar-sticky">
       <Toolbar className={classes.toolbar}>
         <Link color="inherit" noWrap href="/" className="title-container">{title}</Link>
-          <SearchBar fullWidth={false}/> 
+          {/* <SearchBar fullWidth={false}/>  */}
         
         {currentUser ? 
           <div>

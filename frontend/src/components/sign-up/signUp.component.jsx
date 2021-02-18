@@ -77,7 +77,7 @@ const SignUp = ({registerUser}) => {
               axios({
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json'},
-                url: 'http://localhost:3000/api/register',
+                url: 'http://localhost:3000/register',
                 withCredentials: true,
                 data: {
                   email: values.email,

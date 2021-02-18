@@ -21,6 +21,11 @@ export interface EnvConfig {
   frontend : {
       port : number; 
   };
+  amadeus: {
+    key: string;
+    secret: string;
+    accessToken: string;
+  }
 }
 
 
@@ -45,7 +50,9 @@ export const envConfig: EnvConfig = {
   frontend : {
     port : parseInt(process.env["FRONTEND_PORT"])
   },
-
-
-  
+  amadeus: {
+    key: process.env["AMADEUS_KEY"],
+    secret : process.env["AMADEUS_SECRET"],
+    accessToken: process.env["AMADEUS_ACCESS_TOKEN"]
+  }
 };
