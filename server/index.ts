@@ -8,6 +8,7 @@ import AdminPassport from './config/passportAdminConfig';
 import {CommonRoutesConfig} from './routers/CommonRoutesConfig';
 import {UsersRouter} from './routers/UserRouter';
 import {AdminRouter} from './routers/AdminRouter';
+import {CommentRouter} from './routers/CommentRouter';
 
 const createConnection = require('typeorm').createConnection;
 
@@ -82,6 +83,7 @@ app.use(cors({
 
 const appRoutes: Array<CommonRoutesConfig> = [];
 appRoutes.push(new UsersRouter(app));
+appRoutes.push(new CommentRouter(app));
 
 //App and port
 app.listen(

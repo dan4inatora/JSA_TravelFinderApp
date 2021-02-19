@@ -20,6 +20,9 @@ export class UsersRouter extends CommonRoutesConfig {
         this.app.route('/currentUser')
             .get(AuthenticationMiddleware.isAuthenticated,
                   userController.currentUser)
+        this.app.route('/editUser')
+            .put(AuthenticationMiddleware.isAuthenticated,
+                        userController.editUser)
 
         return this.app;
     }

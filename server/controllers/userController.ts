@@ -3,6 +3,7 @@ import { User } from "../models/User";
 import passport from "passport";
 import  userService  from "../services/UserService";
 import { Roles } from "../constants/Roles";
+import { _objectWithoutProperties } from "../helperFunctions/deleteObjectKeys";
 
 class UserController {
 
@@ -52,6 +53,16 @@ class UserController {
         }
       }
     )(req, res, next);
+  };
+
+  public async editUser (req : Request, res : Response, next : NextFunction) {
+    const {id} = req.body
+    let body_without_id = _objectWithoutProperties(req.body, ["id"]);
+    const user = await User.update({id}, {...body_without_id});
+    if(user.affected > 0)
+        return await userService.findUserById(id);
+    else
+        res.status(401).send({error:"Error while updating user"})
   };
   
   
