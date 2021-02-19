@@ -2,6 +2,7 @@ import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, PrimaryCo
 import { Comment } from "./Comment";
 import { CommentReacts } from "./CommentReacts";
 import { Favorites } from "./Favorites";
+import { Ratings } from "./Ratings";
 
 
 @Entity('hotels')
@@ -20,6 +21,9 @@ export class Hotel extends BaseEntity{
 
     @OneToMany(() => Favorites, favorites => favorites.hotel)
     favorites: Favorites[];
+
+    @OneToMany(() => Ratings, rating => rating.hotel)
+    ratings: Ratings[];
 
     
 }
