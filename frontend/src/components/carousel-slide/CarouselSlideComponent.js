@@ -25,7 +25,11 @@ function CarouselSlideComponent() {
 
     const useStyles = makeStyles(() => ({
         arrow: {
-            zIndex: '20'
+            color: 'white',
+            zIndex: '20',
+            background:
+            'linear-gradient(to top, rgba(0,0,0,0.7) 60%, rgba(0,0,0,0.3) 80%, rgba(0,0,0,0) 90%)',
+            height: '25%'
         },
         card: {
             width: '100vw',

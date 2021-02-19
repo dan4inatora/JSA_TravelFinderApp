@@ -14,10 +14,30 @@ svg {
     position: absolute;
     z-index: 20;
     left: 30px;
+    color: white;
+    padding: 50px;
+    z-index: 20;
+    background:black;
+    opacity: 0.6;
+
+    &:hover {
+        opacity: 1;
+        transition: 0.5s;
+    }
 }
 
 .arrow-icon-right {
     position: absolute;
     z-index: 20;
     right: 30px;
+    color: white;
+    padding: 50px;
+    z-index: 20;
+    background:black;
+    opacity: 0.6;
+
+    &:hover {
+        opacity: 1;
+        transition: 0.5s;
+    }
 }

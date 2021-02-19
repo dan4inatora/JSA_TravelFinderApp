@@ -19,22 +19,35 @@ const useStyles = makeStyles((theme) => ({
     borderBottom: `1px solid ${theme.palette.divider}`,
     display: "flex",
     justifyContent: "space-between",
-    alignItems: "center"
+    alignItems: "center",
+    fontFamily: "Garamond Helvetica sans-serif"
   },
   toolbarTitle: {
     flex: 1,
+    fontFamily: "Garamond Helvetica sans-serif"
   },
   toolbarSecondary: {
     justifyContent: 'space-between',
     overflowX: 'auto',
+    fontFamily: "Garamond Helvetica sans-serif"
   },
   toolbarLink: {
-    padding: theme.spacing(1),
+    padding: theme.spacing(2),
     flexShrink: 0,
+    fontFamily: "Garamond Helvetica sans-serif",
+    fontSize: '1.3rem',
+
+     '&:hover': {
+      borderRadius: '25px',
+      backgroundColor: 'gray',
+      transition: '0.5s'
+
+     }
   },
   button: {
     color: "white",
-    fontSize: "1rem"
+    fontSize: "1rem",
+    fontFamily: "Garamond Helvetica sans-serif"
   }
 }));
 

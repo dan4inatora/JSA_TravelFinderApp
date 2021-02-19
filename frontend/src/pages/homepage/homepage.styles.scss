@@ -1,3 +1,9 @@
 .homepage {
     background-color: #777777;
 }
+
+.grid-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+}

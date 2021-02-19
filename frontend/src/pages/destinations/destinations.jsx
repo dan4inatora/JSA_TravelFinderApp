@@ -2,12 +2,23 @@ import React, {useState, useEffect} from 'react';
 import PlacesAutocomplete from 'react-places-autocomplete';
 import { geocodeByAddress, geocodeByPlaceId, getLatLng } from 'react-places-autocomplete';
 import CircleLoader from 'react-spinners/CircleLoader';
-import Container from '@material-ui/core/Container';
+import { Container, Button } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import DestinationFilters from '../../components/destinationFilters/destinationFilters';
 import SearchResults from '../../components/destinationFilters/searchResults';
 import './destinations.styles.scss';
 
+const useStyles = makeStyles((theme) => ({
+    button: {
+        margin: '0 auto', cursor: 'pointer',
+        fontSize: '2rem',
+        fontFamily: "Garamond Helvetica sans-serif",
+        margin: '2rem'
+    }
+}));
+
 const DestinationsPage = () => {
+    const classes = useStyles();
     const [address, setAddress] = useState('');
     const [budgetValue, setBudgetValue] = useState([1000,2000]);
     const [dateRange, setDateRange] = useState({});
@@ -16,6 +27,8 @@ const DestinationsPage = () => {
       Lng: 0
     })
     const [loadingIndicator, setLoadingIndicator] = useState(false);
+    const [showFilters, setShowFilters] = useState(true);
+    const [showHotels, setShowHotels] = useState(true);
 
     useEffect(() => {
       console.log(dateRange, budgetValue);
@@ -34,6 +47,7 @@ const DestinationsPage = () => {
       .catch(error => console.error('Error', error))
 
       setLoadingIndicator(true);
+      setShowFilters(true);
       console.log(addressCoords);
     }
 
@@ -71,13 +85,23 @@ const DestinationsPage = () => {
             </div>
           )}
         </PlacesAutocomplete>
-          <div className='loading-indicator'>
-              <CircleLoader css={`z-index: 100;`} 
-              size={80} color={"#36D2B3"} loading={loadingIndicator}/>
-              {/* <div className='loader-message'>{loadingMessage}</div> */}
-          </div>
-        <DestinationFilters budgetValue={budgetValue} setBudgetValue={setBudgetValue} setDateRange={setDateRange}/>
-        <SearchResults data={data} budgetValue={budgetValue} dateRange={dateRange}/>
+        
+        <div className='loading-indicator'>
+            <CircleLoader css={`z-index: 100;`} 
+            size={80} color={"#36D2B3"} loading={loadingIndicator}/>
+            {/* <div className='loader-message'>{loadingMessage}</div> */}
+        </div>
+        {showFilters ?
+        <div>
+            <DestinationFilters budgetValue={budgetValue} setBudgetValue={setBudgetValue} setDateRange={setDateRange}/>
+            <Button size="large" color="primary" className={classes.button} variant="contained">
+                Search
+            </Button>
+        </div>
+        : null}
+        {showHotels ? 
+            <SearchResults data={data} budgetValue={budgetValue} dateRange={dateRange}/>
+        : null}
       </Container>
       );
 }
