@@ -13,10 +13,10 @@ export class CommentRouter extends CommonRoutesConfig {
         this.app.route('/addComment')
             .post(AuthenticationMiddleware.isAuthenticated,
                   commentController.addComment)
-        this.app.route('/deleteComment')
+        this.app.route('/deleteComment/:id')
             .delete(AuthenticationMiddleware.isAuthenticated,
                     commentController.deleteComment)
-        this.app.route('/getAllComments')
+        this.app.route('/getAllComments/:id')
             .get(AuthenticationMiddleware.isAuthenticated,
                   commentController.allCommentsForHotel)
         this.app.route('/toggleThrumbReact')
@@ -25,6 +25,9 @@ export class CommentRouter extends CommonRoutesConfig {
         this.app.route('/togglePartyReact')
             .post(AuthenticationMiddleware.isAuthenticated,
                   commentController.toggleReactParty)
+        this.app.route('/editComment/:id')
+            .put(AuthenticationMiddleware.isAuthenticated,
+                  commentController.editComment)
 
         return this.app;
     }

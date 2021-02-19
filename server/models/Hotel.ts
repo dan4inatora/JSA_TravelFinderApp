@@ -1,11 +1,11 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany} from "typeorm";
+import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, PrimaryColumn} from "typeorm";
 import { Comment } from "./Comment";
 import { CommentReacts } from "./CommentReacts";
 
 
 @Entity('hotels')
 export class Hotel extends BaseEntity{
-    @PrimaryGeneratedColumn()
+    @PrimaryColumn()
     id: number;
 
     @Column({name: 'name'})
