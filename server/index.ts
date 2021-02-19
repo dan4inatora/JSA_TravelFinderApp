@@ -9,6 +9,7 @@ import {CommonRoutesConfig} from './routers/CommonRoutesConfig';
 import {UsersRouter} from './routers/UserRouter';
 import {AdminRouter} from './routers/AdminRouter';
 import {CommentRouter} from './routers/CommentRouter';
+import {FavoritesRouter} from './routers/FavoritesRouter';
 
 const createConnection = require('typeorm').createConnection;
 
@@ -84,6 +85,8 @@ app.use(cors({
 const appRoutes: Array<CommonRoutesConfig> = [];
 appRoutes.push(new UsersRouter(app));
 appRoutes.push(new CommentRouter(app));
+appRoutes.push(new FavoritesRouter(app));
+
 
 //App and port
 app.listen(
