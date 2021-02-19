@@ -10,6 +10,7 @@ import {UsersRouter} from './routers/UserRouter';
 import {AdminRouter} from './routers/AdminRouter';
 import {CommentRouter} from './routers/CommentRouter';
 import {FavoritesRouter} from './routers/FavoritesRouter';
+import {RatingsRouter} from './routers/RatingsRouter';
 
 const createConnection = require('typeorm').createConnection;
 
@@ -86,6 +87,7 @@ const appRoutes: Array<CommonRoutesConfig> = [];
 appRoutes.push(new UsersRouter(app));
 appRoutes.push(new CommentRouter(app));
 appRoutes.push(new FavoritesRouter(app));
+appRoutes.push(new RatingsRouter(app));
 
 
 //App and port

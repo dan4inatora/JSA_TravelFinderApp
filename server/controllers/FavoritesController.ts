@@ -29,7 +29,7 @@ class FavoritesController {
 
   public async deleteFavorite (req : Request, res : Response, next : NextFunction)  {
     let userId = parseInt(req.params.id);
-    const {hotelId} = req.body;
+    let hotelId = parseInt(req.params.hotelId);
     let deleted = await favoritesService.deleteFavorites(userId, hotelId);
     res.status(200).send(deleted);
   }; 
