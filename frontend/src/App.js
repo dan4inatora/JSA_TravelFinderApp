@@ -22,25 +22,25 @@ console.log(process.env.REACT_APP_AMADEUS_ACCESS_TOKEN);
 
 const App = (props) => {
     useEffect(() => {
+      const params = {
+        "grant_type": "client_credentials",
+        "client_id": `${process.env.REACT_APP_API_KEY}`,
+        "client_secret": `${process.env.REACT_APP_SECRET}`
+      }
       if(props.accessToken === '') {
-        const params = new URLSearchParams();
-        params.append('grant_type', 'client_credentials');
-        params.append('client_id', 'PJkllAaddAAeiGYEgpWl8VjE74jS23pM');
-        params.append('client_secret', 'PwYk56p0BEFv0oVT');
-
-        // axios({
-        //   method: 'POST',
-        //   headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
-        //   url: 'https://test.api.amadeus.com/v1/security/oauth2/token?',
-        //   params: params
-        // }).then((response) => {
-        //   if(response && response.access_token) {
-        //     console.log(response);
-        //     retrieveAccessToken(response.access_token);
-        //   }
-        // }).catch((error) => {
-        //   console.log(error);
-        // });
+        axios({
+          method: 'POST',
+          headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
+          url: 'https://test.api.amadeus.com/v1/security/oauth2/token?',
+          body: JSON.stringify(params)
+        }).then((response) => {
+          if(response && response.access_token) {
+            console.log(response);
+            retrieveAccessToken(response.access_token);
+          }
+        }).catch((error) => {
+          console.log(error);
+        });
       }
     }, [props.accessToken])
     
@@ -56,7 +56,7 @@ const App = (props) => {
           <Route path='/onboarding' component={OnboardingPage}/>
           <Route path='/destinations' component={DestinationsPage}/>
           <Route path='/profile/:username/:role' render={(routeProps) => (<ProfilePage routeProps={routeProps}/>)}/>
-          <Route path='hotel/:hotelId/:hotelName/:budgetValue/:adults/:startDate/:endDate' render={(routeProps) => (
+          <Route path='hotel/:hotelId/:hotelName/:adults' render={(routeProps) => (
             <HotelPage routeProps={routeProps}/>
           )} exact={true}/>
           <Route path='hotels/:searchString' exact={true} />

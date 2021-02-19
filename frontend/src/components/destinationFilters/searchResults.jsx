@@ -1,6 +1,7 @@
 import React from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import StarIcon from '@material-ui/icons/Star';
+import {Link} from 'react-router-dom';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { Chip, Paper, GridListTile, GridListTileBar, IconButton, Card, CardMedia, Typography, CardActions, Button, Container, CardContent} from '@material-ui/core';
@@ -70,7 +71,7 @@ const useStyles = makeStyles((theme) => ({
   }));
 
 const SearchResults = (props) => {
-    const {data, budgetValue, dateRange} = props;
+    const {data, budgetValue, dateRange, selectedRadioButton} = props;
     const classes = useStyles();
 
     const getDays = (offer) => {
@@ -142,7 +143,7 @@ const SearchResults = (props) => {
                             }
                             </Typography>
                             <Button size="large" color="primary" variant="contained">
-                                Reserve
+                                <Link to={`hotel/${result.hotel.hotelId}/${result.hotel.name}`}>Reserve</Link>
                                 <ArrowForwardIcon/>
                             </Button>
                         </Typography>
