@@ -11,6 +11,7 @@ import {AdminRouter} from './routers/AdminRouter';
 import {CommentRouter} from './routers/CommentRouter';
 import {FavoritesRouter} from './routers/FavoritesRouter';
 import {RatingsRouter} from './routers/RatingsRouter';
+import {DestinationRouter} from './routers/DestinationsRouter';
 
 const createConnection = require('typeorm').createConnection;
 
@@ -88,7 +89,7 @@ appRoutes.push(new UsersRouter(app));
 appRoutes.push(new CommentRouter(app));
 appRoutes.push(new FavoritesRouter(app));
 appRoutes.push(new RatingsRouter(app));
-
+appRoutes.push(new DestinationRouter(app));
 
 //App and port
 app.listen(
