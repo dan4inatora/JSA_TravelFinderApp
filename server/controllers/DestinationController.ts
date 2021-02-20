@@ -84,7 +84,7 @@ class DestinationController {
 
   };
 
-  public async getRecommendations(req : Request, res : Response, next : NextFunction)  {
+  public async getHotelById(req : Request, res : Response, next : NextFunction)  {
     const {lat, lng, hotelId} = req.body;
 
         axios({
@@ -104,7 +104,7 @@ class DestinationController {
 
   };
 
-  public async getHotelById(req : Request, res : Response, next : NextFunction)  {
+  public async getRecommendations(req : Request, res : Response, next : NextFunction)  {
     const {cityCode} = req.body;
         axios({
             method: 'GET',
@@ -123,6 +123,7 @@ class DestinationController {
 
   };
 
+ 
  
 }
 
