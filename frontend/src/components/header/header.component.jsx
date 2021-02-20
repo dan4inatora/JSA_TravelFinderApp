@@ -87,12 +87,26 @@ const Header = (props) => {
         }
       </Toolbar>
       <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
-        {sections.map((section) => (
           <Link color="inherit" noWrap
-            key={section.title} variant="body2" href={section.url} className={classes.toolbarLink}>
-            {section.title}
+           variant="body2" 
+           href="/" className={classes.toolbarLink}>
+            Home
           </Link>
-        ))}
+          <Link color="inherit" noWrap 
+          variant="body2" 
+          href="/destinations" className={classes.toolbarLink}>
+            Destinations
+          </Link>
+          <Link color="inherit" noWrap 
+          variant="body2" 
+          href={"/recommendations" + "/" + currentUser.username} className={classes.toolbarLink}>
+            Recommended Trips
+          </Link>
+          <Link color="inherit" noWrap 
+          variant="body2" 
+          href={"/contact-us"} className={classes.toolbarLink}>
+            Contact us
+          </Link>
       </Toolbar>
     </nav>
   );

@@ -4,7 +4,10 @@ import StarIcon from '@material-ui/icons/Star';
 import {Link} from 'react-router-dom';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import { Chip, Paper, GridListTile, GridListTileBar, IconButton, Card, CardMedia, Typography, CardActions, Button, Container, CardContent} from '@material-ui/core';
+import { Chip, Paper, GridListTile, GridListTileBar, IconButton, Typography, Button} from '@material-ui/core';
+import {addRecommendation} from '../../redux/userSearched/userSearched.actions';
+import axios from 'axios';
+import {connect} from 'react-redux';
 import _ from 'lodash';
 
 const useStyles = makeStyles((theme) => ({
@@ -70,22 +73,26 @@ const useStyles = makeStyles((theme) => ({
     }
   }));
 
+export function getDays(offer) {
+    var date1 = new Date(offer.checkInDate);
+    var date2 = new Date(offer.checkOutDate);
+    const diffTime = Math.abs(date2 - date1);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+
+    return `${diffDays} day(s)`;
+}
+
+export function capitalizeFirstLetter(string) {
+    return string.charAt(0).toUpperCase() + string.slice(1);
+}
+
 const SearchResults = (props) => {
-    const {data, budgetValue, dateRange, selectedRadioButton} = props;
+    const {data, budgetValue, dateRange, selectedRadioButton, addToUserSearched} = props;
     const classes = useStyles();
 
-    const getDays = (offer) => {
-        var date1 = new Date(offer.checkInDate);
-        var date2 = new Date(offer.checkOutDate);
-        const diffTime = Math.abs(date2 - date1);
-        const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
-
-        return `${diffDays} day(s)`;
+    const addSelectionToRedux = (cityCode) => {
+        addToUserSearched(cityCode);
     }
-
-    function capitalizeFirstLetter(string) {
-        return string.charAt(0).toUpperCase() + string.slice(1);
-      }
 
     return (
         <div className="search-results-container">
@@ -142,7 +149,8 @@ const SearchResults = (props) => {
                                 <span>Included 4% commission</span>
                             }
                             </Typography>
-                            <Button size="large" color="primary" variant="contained">
+                            
+                            <Button size="large" color="primary" variant="contained" onClick={() => addSelectionToRedux(result.hotel.cityCode)}>
                                 <Link to={`hotel/${result.hotel.hotelId}/${result.hotel.name}`}>Reserve</Link>
                                 <ArrowForwardIcon/>
                             </Button>
@@ -164,4 +172,8 @@ const SearchResults = (props) => {
     )
 }
 
-export default SearchResults;
+const mapDispatchToProps = dispatch => ({
+    addToUserSearched: (cityCode) => dispatch(addRecommendation(cityCode))
+}); 
+
+export default connect(null, mapDispatchToProps)(SearchResults);
