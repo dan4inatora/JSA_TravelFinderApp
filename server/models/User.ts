@@ -3,6 +3,8 @@ import bcrypt from 'bcrypt';
 import {Roles} from '../constants/Roles';
 import { Comment } from "./Comment";
 import { CommentReacts } from "./CommentReacts";
+import { Favorites } from "./Favorites";
+import { Ratings } from "./Ratings";
 
 @Entity('users')
 export class User extends BaseEntity{
@@ -32,6 +34,12 @@ export class User extends BaseEntity{
 
     @OneToMany(() => CommentReacts, contentReacts => contentReacts.user)
     commentReacts: CommentReacts[];
+
+    @OneToMany(() => Favorites, favorites => favorites.user)
+    favorites: Favorites[];
+    
+    @OneToMany(() => Ratings, rating => rating.user)
+    ratings: Ratings[];
 
     @BeforeInsert()
     async hashPassword() {
