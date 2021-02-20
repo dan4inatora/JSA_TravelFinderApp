@@ -8,7 +8,7 @@ import userSearchedReducer from './userSearched/userSearched.reducer';
 const persistConfig = {
     key: 'root',
     storage,
-    whitelist: ['user', 'amadeus']
+    whitelist: ['user', 'amadeus', 'userSearched']
     //whitelist prop shows what the reducer has to persist
 }
 

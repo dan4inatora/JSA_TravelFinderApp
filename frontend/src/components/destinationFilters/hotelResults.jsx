@@ -86,8 +86,8 @@ export function capitalizeFirstLetter(string) {
     return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
-const SearchResults = (props) => {
-    const {data, budgetValue, dateRange, selectedRadioButton, addToUserSearched} = props;
+const HotelResults = (props) => {
+    const {data, addToUserSearched} = props;
     const classes = useStyles();
 
     const addSelectionToRedux = (cityCode) => {
@@ -96,9 +96,10 @@ const SearchResults = (props) => {
 
     return (
         <div className="search-results-container">
+                {data.length ? 
                 <Typography gutterBottom variant="h3" component="h2" className={classes.resultsTitle}>
                     Results from your search ({data.length})
-                </Typography>                
+                </Typography>  : null}              
                 {data ? data.map((result) => (
                 <Paper elevation={4} style={{display: result.hotel.description ? 'flex' : 'none'}} key={result.hotel.dupeId} className={classes.paper}>
                     <GridListTile key={result.hotel.dupeId} cols={1}>
@@ -176,4 +177,4 @@ const mapDispatchToProps = dispatch => ({
     addToUserSearched: (cityCode) => dispatch(addRecommendation(cityCode))
 }); 
 
-export default connect(null, mapDispatchToProps)(SearchResults);
+export default connect(null, mapDispatchToProps)(HotelResults);

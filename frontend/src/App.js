@@ -19,8 +19,6 @@ import axios from 'axios';
 import {connect} from 'react-redux';
 import querystring from 'querystring';
 
-console.log(process.env.REACT_APP_SECRET);
-
 const App = (props) => {
     useEffect(() => {
       const params = {
@@ -29,19 +27,6 @@ const App = (props) => {
         "client_secret": `${process.env.REACT_APP_SECRET}`
       }
       if(props.accessToken === '') {
-        // axios({
-        //   method: 'POST',
-        //   headers: { 'Content-Type': 'application/x-www-form-urlencoded'},
-        //   url: 'https://test.api.amadeus.com/v1/security/oauth2/token?',
-        //   body: JSON.stringify(params)
-        // }).then((response) => {
-        //   if(response && response.access_token) {
-        //     console.log(response);
-        //     retrieveAccessToken(response.access_token);
-        //   }
-        // }).catch((error) => {
-        //   console.log(error);
-        // });
         axios.post('https://test.api.amadeus.com/v1/security/oauth2/token?',
             // note the use of querystring
             querystring.stringify({"grant_type": "client_credentials",

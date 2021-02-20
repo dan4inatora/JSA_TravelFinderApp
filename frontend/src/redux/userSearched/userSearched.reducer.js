@@ -5,19 +5,19 @@ const INITIAL_STATE = {
 }
 
 function checkForDuplicateKey(cityCode, state) {
-    let newState = state;
+    let newState = {...state};
     if(newState.userSearched) {
         for(var key in newState.userSearched) {
             if(newState.userSearched.hasOwnProperty(cityCode)) {
-                newState[key]++;
-                return newState;
+                newState.userSearched[key]++;
+                return newState.userSearched;
             }
         }
     
         newState.userSearched[cityCode] = 1;
     }
     
-    return newState;
+    return newState.userSearched;
 }
 
 const userSearchedReducer = (state = INITIAL_STATE, action) => {

@@ -5,7 +5,7 @@ import StarIcon from '@material-ui/icons/Star';
 import {Link} from 'react-router-dom';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
-import {capitalizeFirstLetter, getDays} from '../../components/destinationFilters/searchResults';
+import {capitalizeFirstLetter, getDays} from '../../components/destinationFilters/hotelResults';
 import RoomIcon from '@material-ui/icons/Room';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import PhoneIcon from '@material-ui/icons/Phone';
@@ -252,7 +252,7 @@ const HotelPage = (props) => {
                 </Typography>
                 {data.offers.length ? data.offers.map((offer, i) => (
                 <Paper className={classes.infoPaper} key={i}>
-                    <Grid container spacing={3}>
+                    <Grid container spacing={3} key={i}>
                         <Grid item xs={12} sm={12}>
                             <Typography variant="subtitle1" display='inline' className={classes.offerType}>
                                 {capitalizeFirstLetter(offer.room.typeEstimated.category.toLowerCase().replaceAll("_", " "))}

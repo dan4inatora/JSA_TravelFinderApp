@@ -92,36 +92,40 @@ const DestinationFilters = (props) => {
                 See what's nearby?
             </Typography>
             <div className={classes.filtersContainer}>
-                <TextField
-                    id="datetime-local"
-                    placeholder="Check in"
-                    value={dateRange ? dateRange.startDate : ''}
-                    className={classes.textField}
-                    onFocus={handleFocusTextField}
-                    InputLabelProps={{
-                    shrink: true,
-                    }}/>
-                <TextField
-                    id="datetime-local"
-                    placeholder="Check out"
-                    value={dateRange ? dateRange.endDate : ''}
-                    className={classes.textField}
-                    onFocus={handleFocusTextField}
-                    InputLabelProps={{
-                    shrink: true,
-                    }}/>
-                
-                <Popper open={open} anchorEl={anchorEl} className={classes.popper} placement='bottom' transition>
-                    {({ TransitionProps }) => (
-                        <Fade {...TransitionProps} timeout={350}>
-                            <DateRangePicker
-                                open={open}
-                                toggle={toggle}
-                                closeOnClickOutside={true}
-                                onChange={(range) => {convertDate(range)}}/>
-                        </Fade>
-                    )}
-                </Popper>
+                {selectedRadioButton !== 'hotels' ?
+                <div>
+                    <TextField
+                        id="datetime-local"
+                        placeholder="Check in"
+                        value={dateRange ? dateRange.startDate : ''}
+                        className={classes.textField}
+                        onFocus={handleFocusTextField}
+                        InputLabelProps={{
+                        shrink: true,
+                        }}/>
+                    <TextField
+                        id="datetime-local"
+                        placeholder="Check out"
+                        value={dateRange ? dateRange.endDate : ''}
+                        className={classes.textField}
+                        onFocus={handleFocusTextField}
+                        InputLabelProps={{
+                        shrink: true,
+                        }}/>
+                    
+                    <Popper open={open} anchorEl={anchorEl} className={classes.popper} placement='bottom' transition>
+                        {({ TransitionProps }) => (
+                            <Fade {...TransitionProps} timeout={350}>
+                                <DateRangePicker
+                                    open={open}
+                                    toggle={toggle}
+                                    closeOnClickOutside={true}
+                                    onChange={(range) => {convertDate(range)}}/>
+                            </Fade>
+                        )}
+                    </Popper>
+                </div>
+                : null}
                 <div className={classes.rightDiv}>
                     <FormControl component="fieldset">
                         <RadioGroup aria-label="travel-types" name="travelType" 
@@ -131,14 +135,17 @@ const DestinationFilters = (props) => {
                             <FormControlLabel className={classes.formLabel} value="hotels" control={<Radio />} label="Hotels and Accomodation" />
                         </RadioGroup>
                     </FormControl>
-                    <BudgetSlider name="budgetSlider" valueLabelDisplay="on" value={budgetValue}
-                        min={500}
-                        step={100}
-                        max={10000}
-                        defaultValue={[20, 40]}
-                        valueLabelFormat={valueLabelFormat}
-                        onChange={handleBudgetSliderChange}
-                        />
+
+                    {selectedRadioButton !== 'hotels' ?
+                        <BudgetSlider name="budgetSlider" valueLabelDisplay="on" value={budgetValue}
+                            min={500}
+                            step={100}
+                            max={10000}
+                            defaultValue={[20, 40]}
+                            valueLabelFormat={valueLabelFormat}
+                            onChange={handleBudgetSliderChange}
+                            />
+                    : null}
                 </div>
             </div>
         </Container>
