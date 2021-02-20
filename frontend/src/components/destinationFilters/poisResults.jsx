@@ -147,8 +147,9 @@ const PoisResults = (props) => {
                                 <span>Included 2% commission</span>
                             </Typography>
                             
-                            <Button size="large" color="primary" variant="contained">
-                                <Link to={`pois/${result.id}/${result.name}`}>Book now</Link>
+                            <Button size="large" color="primary" component={Link} 
+                            to={`poi/${result.id}/${result.geoCode.longitude}/${result.geoCode.latitude}`} variant="contained">
+                                Book now
                                 <ArrowForwardIcon/>
                             </Button>
                         </Typography>

@@ -6,6 +6,8 @@ import {connect} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
 import {data} from '../destinations/destinations';
 import {selectUserSearches} from '../../redux/userSearched/userSearched.selectors';
+import {fetchRecommendedLocations} from '../../components/axios/axiosRequests';
+import {Link} from 'react-router-dom';
 
 const useStyles = makeStyles((theme) => ({
     title: {
@@ -63,8 +65,14 @@ const RecommendationPage = (props) => {
     const [recommendations, setRecommendations] = useState(data);
 
     useEffect(() => {
-        console.log(userSearches.length, userSearches[0]);
-        //sort key value pair list then call axios for top 2 city codes
+        const maxCityCode = Object.keys(userSearches.userSearched).reduce(function(a, b){ return userSearches.userSearched[a] > userSearches.userSearched[b] ? a : b });
+
+        fetchRecommendedLocations(maxCityCode)
+        .then((response) => {
+            setRecommendations(response);
+        }).catch((error) => {
+            console.log(error);
+        });
     }, [userSearches])
 
     //fetch recommendations from redux and display in recommendations component
@@ -82,23 +90,20 @@ const RecommendationPage = (props) => {
                             <Card className={classes.card}>
                                 <CardMedia
                                     className={classes.cardMedia}
-                                    image={recommendation.hotel.media[0].uri}
-                                    title={recommendation.hotel.name}
+                                    image="http://uat.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/1BBCD9A70FE94FAF8B1959D2552E21B8"
+                                    title="recommendation"
                                 />
                                 <CardContent className={classes.cardContent}>
                                     <Typography gutterBottom variant="h5" component="h2">
-                                    {recommendation.hotel.name + ", " + recommendation.hotel.address.cityName}
+                                    {recommendation.name}
                                     </Typography>
                                     <Typography variant="subtitle2">
-                                    {recommendation.hotel.description ? recommendation.hotel.description.text : 'No Description'}
+                                    Relevance: {recommendation.relevance}
                                     </Typography>
                                 </CardContent>
                                 <CardActions>
-                                    <Button size="small" color="primary">
+                                    <Button component={Link} to={'/destinations'} size="small" color="primary">
                                     View
-                                    </Button>
-                                    <Button size="small" color="primary">
-                                    Edit
                                     </Button>
                                 </CardActions>
                             </Card>

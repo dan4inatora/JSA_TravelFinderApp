@@ -60,6 +60,11 @@ const Header = (props) => {
     history.push(`/profile/${username}/${role}`);
   }
 
+  const logoutUser = () => {
+    logout();
+    history.push('/');
+  }
+
   return (
     <nav className="navbar navbar-sticky">
       <Toolbar className={classes.toolbar}>
@@ -71,7 +76,7 @@ const Header = (props) => {
             <IconButton className={classes.button} onClick={() => redirectToProfilePage(currentUser.role, currentUser.username)}>
               <AccountCircleIcon/>
             </IconButton>
-            <Button className={classes.button} variant="outlined" size="small" onClick={() => logout()}>
+            <Button className={classes.button} variant="outlined" size="small" onClick={() => logoutUser()}>
                 Logout
             </Button> 
           </div>
@@ -97,11 +102,12 @@ const Header = (props) => {
           href="/destinations" className={classes.toolbarLink}>
             Destinations
           </Link>
+          { currentUser ?
           <Link color="inherit" noWrap 
           variant="body2" 
           href={"/recommendations" + "/" + currentUser.username} className={classes.toolbarLink}>
             Recommended Trips
-          </Link>
+          </Link> : null}
           <Link color="inherit" noWrap 
           variant="body2" 
           href={"/contact-us"} className={classes.toolbarLink}>

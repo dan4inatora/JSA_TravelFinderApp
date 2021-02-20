@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import {valueLabelFormat, BudgetSlider} from '../onboarding/onboarding.exports';
-import {Typography, Container, FormControl, Fade, FormLabel, Popper, TextField, FormControlLabel, RadioGroup, Radio} from '@material-ui/core';
+import {Typography, Container, FormControl, Fade, Paper, Popper, TextField, FormControlLabel, RadioGroup, Radio} from '@material-ui/core';
 import { DateRangePicker } from "materialui-daterange-picker";
 import { makeStyles } from '@material-ui/core/styles';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
@@ -29,7 +29,10 @@ const useStyles = makeStyles((theme) => ({
         display: 'flex',
         flexDirection: 'row',
         alignItems: 'center',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        border: '2px solid #d9e1ec',
+        backgroundColor: '#f1f4f8',
+        padding: '4%'
     },
     rightDiv: {
         width: '40%'
@@ -47,6 +50,12 @@ const useStyles = makeStyles((theme) => ({
     },
     popper: {
         zIndex: '100'
+    },
+    otherLabel: {
+        fontFamily: "Garamond Helvetica sans-serif",
+        fontSize: '1rem',
+        fontWeight: '500',
+        marginBottom: '34px'
     }
 }));
 
@@ -94,7 +103,7 @@ const DestinationFilters = (props) => {
             </Typography>
             <div className={classes.filtersContainer}>
                 {selectedRadioButton === 'hotels' ?
-                <div>
+                <Paper className={classes.infoPaper}>
                     <TextField
                         id="datetime-local"
                         placeholder="Check in"
@@ -126,7 +135,7 @@ const DestinationFilters = (props) => {
                             </Fade>
                         )}
                     </Popper>
-                </div>
+                </Paper>
                 : null}
                 <div className={classes.rightDiv}>
                     <FormControl component="fieldset">
@@ -139,14 +148,19 @@ const DestinationFilters = (props) => {
                     </FormControl>
 
                     {selectedRadioButton === 'hotels' ?
-                        <BudgetSlider name="budgetSlider" valueLabelDisplay="on" value={budgetValue}
-                            min={500}
-                            step={100}
-                            max={10000}
-                            defaultValue={[20, 40]}
-                            valueLabelFormat={valueLabelFormat}
-                            onChange={handleBudgetSliderChange}
-                            />
+                        <div>
+                            <Typography variant="h4" gutterBottom className={classes.otherLabel}>
+                                Select you budget
+                            </Typography>
+                            <BudgetSlider name="budgetSlider" valueLabelDisplay="on" value={budgetValue}
+                                min={0}
+                                step={100}
+                                max={10000}
+                                defaultValue={[20, 40]}
+                                valueLabelFormat={valueLabelFormat}
+                                onChange={handleBudgetSliderChange}
+                                />
+                        </div>
                     : null}
                 </div>
             </div>

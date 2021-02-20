@@ -146,9 +146,10 @@ const ToursResults = (props) => {
                             <Typography variant="subtitle2" className={classes.distance}>
                                 <span>Included 3% commission</span>
                             </Typography>
-                            
-                            <Button size="large" color="primary" variant="contained">
-                                <Link to={`tours/${result.id}/${result.name}`}>Book now</Link>
+                             
+                            <Button size="large" color="primary" variant="contained" component={Link}
+                                to={`tour/${result.id}/${result.geoCode.longitude}/${result.geoCode.latitude}`}>
+                                Book now
                                 <ArrowForwardIcon/>
                             </Button>
                         </Typography>

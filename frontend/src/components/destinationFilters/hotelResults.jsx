@@ -104,7 +104,7 @@ const HotelResults = (props) => {
                 <Paper elevation={4} style={{display: result.hotel.description ? 'flex' : 'none'}} key={result.hotel.dupeId} className={classes.paper}>
                     <GridListTile key={result.hotel.dupeId} cols={1}>
                         <img className={classes.image}
-                            src={`${result.hotel.media[0].uri}`}
+                            src={"http://uat.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/1BBCD9A70FE94FAF8B1959D2552E21B8"}
                             alt={result.hotel.name}
                         />
                         <GridListTileBar
@@ -151,18 +151,19 @@ const HotelResults = (props) => {
                             }
                             </Typography>
                             
-                            <Button size="large" color="primary" variant="contained" onClick={() => addSelectionToRedux(result.hotel.cityCode)}>
-                                <Link to={`hotel/${result.hotel.hotelId}/${result.hotel.name}`}>Reserve</Link>
+                            <Button component={Link} to={`hotel/${result.hotel.hotelId}/${result.hotel.longitude}/${result.hotel.latitude}`}
+                                size="large" color="primary" variant="contained" onClick={() => addSelectionToRedux(result.hotel.cityCode)}>
+                                Reserve
                                 <ArrowForwardIcon/>
                             </Button>
                         </Typography>
 
                         <Typography variant="subtitle2" component="div" className={classes.amenities}>
-                            {result.hotel.amenities.map((label,i) => (
+                            {result.hotel.amenities ? result.hotel.amenities.map((label,i) => (
                                 <Chip key={i} label={capitalizeFirstLetter(label.toLowerCase().replaceAll("_", " "))}
                                     clickable color="primary" className={classes.chip}
                                 />
-                            ))}
+                            )) : null}
                         </Typography>
                     </div>
                 </Paper>

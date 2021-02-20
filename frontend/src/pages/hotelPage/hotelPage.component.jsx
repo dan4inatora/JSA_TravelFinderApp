@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect} from 'react';
 import { Chip, Paper, Grid, GridListTile, GridListTileBar, Box, IconButton, Typography, Button, Container} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import StarIcon from '@material-ui/icons/Star';
@@ -13,6 +13,7 @@ import PrintIcon from '@material-ui/icons/Print';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import HourglassFullIcon from '@material-ui/icons/HourglassFull';
 import Rating from '@material-ui/lab/Rating';
+import {fetchHotelById} from '../../components/axios/axiosRequests';
 import _ from 'lodash';
 
 const useStyles = makeStyles((theme) => ({
@@ -147,10 +148,21 @@ const useStyles = makeStyles((theme) => ({
 const HotelPage = (props) => {
     const classes = useStyles();
     const {routeProps} = props;
-    const {hotelId, hotelName, adults} = routeProps.match.params;
+    const {hotelId, longitude, latitude} = routeProps.match.params;
     const [value, setValue] = React.useState(1);
     const [hover, setHover] = React.useState(-1);
-    console.log(hotelId, hotelName, adults);
+    const [data, setData] = React.useState([]);
+    console.log(hotelId, longitude, latitude);
+
+    useEffect(() => {
+        if(hotelId && longitude && latitude) {
+            fetchHotelById(hotelId, longitude, latitude).then((response) => {
+                setData(response);
+            }).catch((error) => {
+                console.log(error);
+            });
+        }
+    }, [])
 
     const labels = {
         1: 'Useless',
@@ -161,11 +173,12 @@ const HotelPage = (props) => {
       };
 
     return (
-        <Container component="main" maxWidth="xl">
-            <GridListTile key={data.hotel.dupeId} cols={1}>
+        <div>
+        {data.length !== 0 ? <Container component="main" maxWidth="xl">
+            <GridListTile cols={1}>
                 <img className={classes.image}
-                    src={`${data.hotel.media[0].uri}`}
-                    alt={data.hotel.name}
+                    src="http://uat.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/1BBCD9A70FE94FAF8B1959D2552E21B8"
+                    alt="hotelName"
                 />
                 <GridListTileBar
                     title={data.hotel.name}
@@ -280,17 +293,18 @@ const HotelPage = (props) => {
                                 Payment type: {offer.policies.paymentType}
                             </Typography>
                             <Typography variant="subtitle2" className={classes.distance}>
-                                Accepted Payments: 
-                                {
+                                Accepted Payments: Credit Card
+                                {/* {
                                     offer.policies.deposit.acceptedPayments.methods.map((method) => 
                                 {
                                     return capitalizeFirstLetter(method.toLowerCase().replaceAll("_", " "));
-                                })}
+                                })} */}
                             </Typography> 
+                            {offer.policies.cancellation ?
                             <Typography variant="subtitle2" className={classes.cancelation}>
-                                Cancellation: {offer.policies.cancellation.description.text}
+                                Cancellation: {offer.policies.cancellation.description ? offer.policies.cancellation.description.text :null}
                                 Amount: {offer.price.currency + " " + offer.policies.cancellation.amount}
-                            </Typography>
+                            </Typography> : null}
                         </Grid>
                         <Grid item xs={12} sm={2}>
                             <Typography variant="subtitle2" className={classes.distance}>
@@ -307,7 +321,8 @@ const HotelPage = (props) => {
                     No offers for this hotel were found...
                 </Typography>}
             </div>
-        </Container>
+        </Container> : null}
+        </div>
     )
 
 }
