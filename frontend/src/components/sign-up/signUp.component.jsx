@@ -88,7 +88,7 @@ const SignUp = ({registerUser}) => {
                 }
               }).then((response) => {
                 if(response.data && response.data.email) {
-                  registerUser({email: response.data.email, name: response.data.firstName + " " + response.data.lastName, 
+                  registerUser({id: response.data.id, email: response.data.email, name: response.data.firstName + " " + response.data.lastName, 
                     role: response.data.role, username: response.data.username});
                 }
 

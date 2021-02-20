@@ -40,6 +40,7 @@ export function fetchToursAndActivities(addressCoords) {
 
 export function fetchHotels(addressCoords, budgetValue, dateRange) {
     //build string here and pass it to url
+    
 
     return new Promise((resolve, reject) => {
         axios({

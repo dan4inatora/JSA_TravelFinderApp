@@ -66,15 +66,16 @@ const AdminSignIn = ({loginAdmin}) => {
               axios({
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json'},
-                url: 'http://localhost:3000/api/login',
+                url: 'http://localhost:3001/login',
                 withCredentials: true,
                 data: {
                   email: values.email,
-                  password: values.password
+                  password: values.password,
+                  role: 'admin'
                 }
               }).then((response) => {
                 if(response.data && response.data.email) {
-                  loginAdmin({email: response.data.email, name: response.data.firstName + " " + response.data.lastName, 
+                  loginAdmin({id: response.data.id, email: response.data.email, name: response.data.firstName + " " + response.data.lastName, 
                     role: response.data.role, username: response.data.username});
                 }
 

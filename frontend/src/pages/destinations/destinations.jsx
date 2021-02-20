@@ -126,11 +126,6 @@ const DestinationsPage = () => {
           )}
         </PlacesAutocomplete>
         
-        <div className='loading-indicator'>
-            <CircleLoader css={`z-index: 100;`} 
-            size={80} color={"#36D2B3"} loading={loadingIndicator}/>
-            {/* <div className='loader-message'>{loadingMessage}</div> */}
-        </div>
         {showFilters ?
         <div>
             <DestinationFilters budgetValue={budgetValue} dateRange={dateRange} 
@@ -142,6 +137,11 @@ const DestinationsPage = () => {
             </Button>
         </div>
         : null}
+        <div className='loading-indicator'>
+            <CircleLoader css={`z-index: 100;`} 
+            size={80} color={"#36D2B3"} loading={loadingIndicator}/>
+            {/* <div className='loader-message'>{loadingMessage}</div> */}
+        </div>
         {showTours ? 
             <ToursResults data={data}/>
         : null}

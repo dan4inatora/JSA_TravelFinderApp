@@ -3,6 +3,7 @@ import {valueLabelFormat, BudgetSlider} from '../onboarding/onboarding.exports';
 import {Typography, Container, FormControl, Fade, FormLabel, Popper, TextField, FormControlLabel, RadioGroup, Radio} from '@material-ui/core';
 import { DateRangePicker } from "materialui-daterange-picker";
 import { makeStyles } from '@material-ui/core/styles';
+import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import moment from 'moment';
 
 const useStyles = makeStyles((theme) => ({
@@ -92,7 +93,7 @@ const DestinationFilters = (props) => {
                 See what's nearby?
             </Typography>
             <div className={classes.filtersContainer}>
-                {selectedRadioButton !== 'hotels' ?
+                {selectedRadioButton === 'hotels' ?
                 <div>
                     <TextField
                         id="datetime-local"
@@ -103,6 +104,7 @@ const DestinationFilters = (props) => {
                         InputLabelProps={{
                         shrink: true,
                         }}/>
+                        <ArrowForwardIcon/>
                     <TextField
                         id="datetime-local"
                         placeholder="Check out"
@@ -136,7 +138,7 @@ const DestinationFilters = (props) => {
                         </RadioGroup>
                     </FormControl>
 
-                    {selectedRadioButton !== 'hotels' ?
+                    {selectedRadioButton === 'hotels' ?
                         <BudgetSlider name="budgetSlider" valueLabelDisplay="on" value={budgetValue}
                             min={500}
                             step={100}

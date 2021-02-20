@@ -77,7 +77,7 @@ const SignIn = ({loginUser}) => {
             }
           }).then((response) => {
             if(response.data && response.data.email) {
-              loginUser({email: response.data.email, name: response.data.firstName + " " + response.data.lastName, 
+              loginUser({id: response.data.id, email: response.data.email, name: response.data.firstName + " " + response.data.lastName, 
               role: response.data.role, username: response.data.username});
             }
 
