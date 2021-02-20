@@ -63,7 +63,7 @@
   }
   ul.options li:hover {
     font-weight: bold;
-    color: #00b4cc;
+    color: gray;
     cursor: pointer;
     transition: 0.3s all;
   }
@@ -71,10 +71,10 @@
   ul.options li.option-active {
     background: whitesmoke;
     font-size: 1.5rem;
-    color: #00b4cc;
+    color: black;
   }
   .no-options {
-    color: white;
+    color: black;
   }
 
   .loading-indicator {

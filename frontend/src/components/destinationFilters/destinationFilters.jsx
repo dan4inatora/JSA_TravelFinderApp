@@ -34,8 +34,11 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#f1f4f8',
         padding: '4%'
     },
+    infoPaper: {
+        backgroundColor: 'none',
+    },
     rightDiv: {
-        width: '40%'
+        width: '60%'
     },
     formLabel: {
         fontFamily: "Garamond Helvetica sans-serif"
@@ -43,6 +46,7 @@ const useStyles = makeStyles((theme) => ({
     textField: {
         marginLeft: theme.spacing(1),
         marginRight: theme.spacing(1),
+        marginBottom: theme.spacing(2),
         width: 200,
     },
     nearbyLabel: {
@@ -102,67 +106,64 @@ const DestinationFilters = (props) => {
                 See what's nearby?
             </Typography>
             <div className={classes.filtersContainer}>
+                <FormControl component="fieldset">
+                    <RadioGroup aria-label="travel-types" name="travelType" 
+                        className={classes.radioGroup} value={selectedRadioButton} onChange={handleChange}>
+                        <FormControlLabel className={classes.formLabel} value="pointsOfInterest" control={<Radio color="primary"/>} label="Point of Interest" />
+                        <FormControlLabel className={classes.formLabel} value="tours" control={<Radio color="primary"/>} label="Tours and Activities" />
+                        <FormControlLabel className={classes.formLabel} value="hotels" control={<Radio color="primary"/>} label="Hotels and Accomodation" />
+                    </RadioGroup>
+                </FormControl>
                 {selectedRadioButton === 'hotels' ?
-                <Paper className={classes.infoPaper}>
+                <Container component="div" maxWidth="md">
+                    <Typography variant="h4" gutterBottom className={classes.otherLabel}>
+                        Select the dates for your travel
+                    </Typography>
                     <TextField
-                        id="datetime-local"
-                        placeholder="Check in"
-                        value={dateRange ? dateRange.startDate : ''}
-                        className={classes.textField}
-                        onFocus={handleFocusTextField}
-                        InputLabelProps={{
-                        shrink: true,
-                        }}/>
-                        <ArrowForwardIcon/>
-                    <TextField
-                        id="datetime-local"
-                        placeholder="Check out"
-                        value={dateRange ? dateRange.endDate : ''}
-                        className={classes.textField}
-                        onFocus={handleFocusTextField}
-                        InputLabelProps={{
-                        shrink: true,
-                        }}/>
-                    
-                    <Popper open={open} anchorEl={anchorEl} className={classes.popper} placement='bottom' transition>
-                        {({ TransitionProps }) => (
-                            <Fade {...TransitionProps} timeout={350}>
-                                <DateRangePicker
-                                    open={open}
-                                    toggle={toggle}
-                                    closeOnClickOutside={true}
-                                    onChange={(range) => {convertDate(range)}}/>
-                            </Fade>
-                        )}
-                    </Popper>
-                </Paper>
-                : null}
-                <div className={classes.rightDiv}>
-                    <FormControl component="fieldset">
-                        <RadioGroup aria-label="travel-types" name="travelType" 
-                            className={classes.radioGroup} value={selectedRadioButton} onChange={handleChange}>
-                            <FormControlLabel className={classes.formLabel} value="pointsOfInterest" control={<Radio />} label="Point of Interest" />
-                            <FormControlLabel className={classes.formLabel} value="tours" control={<Radio />} label="Tours and Activities" />
-                            <FormControlLabel className={classes.formLabel} value="hotels" control={<Radio />} label="Hotels and Accomodation" />
-                        </RadioGroup>
-                    </FormControl>
+                    id="datetime-local"
+                    placeholder="Check in"
+                    value={dateRange ? dateRange.startDate : ''}
+                    className={classes.textField}
+                    onFocus={handleFocusTextField}
+                    InputLabelProps={{
+                    shrink: true,
+                    }}/>
+                    <ArrowForwardIcon/>
+                <TextField
+                    id="datetime-local"
+                    placeholder="Check out"
+                    value={dateRange ? dateRange.endDate : ''}
+                    className={classes.textField}
+                    onFocus={handleFocusTextField}
+                    InputLabelProps={{
+                    shrink: true,
+                    }}/>
+                
+                <Popper open={open} anchorEl={anchorEl} className={classes.popper} placement='bottom' transition>
+                    {({ TransitionProps }) => (
+                        <Fade {...TransitionProps} timeout={350}>
+                            <DateRangePicker
+                                open={open}
+                                toggle={toggle}
+                                closeOnClickOutside={true}
+                                onChange={(range) => {convertDate(range)}}/>
+                        </Fade>
+                    )}
+                </Popper>
 
-                    {selectedRadioButton === 'hotels' ?
-                        <div>
-                            <Typography variant="h4" gutterBottom className={classes.otherLabel}>
-                                Select you budget
-                            </Typography>
-                            <BudgetSlider name="budgetSlider" valueLabelDisplay="on" value={budgetValue}
-                                min={0}
-                                step={100}
-                                max={10000}
-                                defaultValue={[20, 40]}
-                                valueLabelFormat={valueLabelFormat}
-                                onChange={handleBudgetSliderChange}
-                                />
-                        </div>
-                    : null}
-                </div>
+                <Typography variant="h4" gutterBottom className={classes.otherLabel}>
+                    Select you budget
+                </Typography>
+                <BudgetSlider name="budgetSlider" valueLabelDisplay="on" value={budgetValue}
+                    min={0}
+                    step={100}
+                    max={10000}
+                    defaultValue={[20, 40]}
+                    valueLabelFormat={valueLabelFormat}
+                    onChange={handleBudgetSliderChange}
+                    />
+                </Container>
+                : null}
             </div>
         </Container>
     )
