@@ -6,7 +6,6 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { Chip, Paper, GridListTile, GridListTileBar, IconButton, Typography, Button} from '@material-ui/core';
 import {addRecommendation} from '../../redux/userSearched/userSearched.actions';
-import axios from 'axios';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 
@@ -96,7 +95,7 @@ const HotelResults = (props) => {
 
     return (
         <div className="search-results-container">
-                {data.length ? 
+                {data ? 
                 <Typography gutterBottom variant="h3" component="h2" className={classes.resultsTitle}>
                     Results from your search ({data.length})
                 </Typography>  : null}              

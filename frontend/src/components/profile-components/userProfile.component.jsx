@@ -1,5 +1,4 @@
 import React from 'react';
-import axios from 'axios';
 import {createStructuredSelector} from 'reselect';
 import { makeStyles } from '@material-ui/core/styles';
 import {selectCurrentUser} from '../../redux/user/user.selectors';

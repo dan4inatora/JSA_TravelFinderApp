@@ -6,7 +6,6 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { Chip, Paper, GridListTile, GridListTileBar, IconButton, Typography, Button} from '@material-ui/core';
 import {addRecommendation} from '../../redux/userSearched/userSearched.actions';
-import axios from 'axios';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 

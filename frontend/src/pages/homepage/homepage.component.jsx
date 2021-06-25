@@ -52,8 +52,7 @@ const HomePage = () => {
     const classes = useStyles();
 
     return (
-        // <Container maxWidth="lg" className>
-        //     {/* <Header title="Travel Finder" sticky={isSticky} sections={sections}/> */}
+        <React.Fragment>
             <main>
                 <CarouselSlideComponent />
                 <Container className={classes.cardGrid} maxWidth="md">
@@ -127,7 +126,7 @@ const HomePage = () => {
                                         </Typography>
                                         <Typography variant="subtitle2">
                                         Past, present and future – the city that has it all
-    Having it all is most definitely a good thing but it can also be a somewhat overwhelming – where to start? London has so much to offer, for all tastes, budgets and cultural persuasions.
+                                        Having it all is most definitely a good thing but it can also be a somewhat overwhelming – where to start? London has so much to offer, for all tastes, budgets and cultural persuasions.
                                         </Typography>
                                     </CardContent>
                                     <CardActions>
@@ -144,8 +143,8 @@ const HomePage = () => {
                     </div>
                 </Container>
             </main>
-        //     {/* <Footer/> */}
-        // </Container>
+            <Footer></Footer>
+        </React.Fragment>
     )
 };
 

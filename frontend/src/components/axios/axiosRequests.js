@@ -4,9 +4,12 @@ export function fetchPointsOfInterest(addressCoords) {
     return new Promise((resolve, reject) => {
         axios({
             method: 'GET',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'Bearer ' + process.env.REACT_APP_ACCESS_TOKEN},
-            url: `https://test.api.amadeus.com/v1/reference-data/locations/pois?latitude=${addressCoords.lat}&longitude=${addressCoords.lng}`
+            url: 'http://localhost:3000/getPointOfInterest',
+            data: {
+                lng: addressCoords.lng,
+                lat: addressCoords.lat
+            },
+            withCredentials: true
         }).then((response) => {
             if(response && response.data) {
                 console.log(response);
@@ -23,9 +26,12 @@ export function fetchToursAndActivities(addressCoords) {
     return new Promise((resolve, reject) => {
         axios({
             method: 'GET',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'Bearer ' + process.env.REACT_APP_ACCESS_TOKEN},
-            url: `https://test.api.amadeus.com/v1/shopping/activities?latitude=${addressCoords.lat}&longitude=${addressCoords.lng}`
+            url: 'http://localhost:3000/getToursAndActivities',
+            data: {
+                lat: addressCoords.lat,
+                lng: addressCoords.lng
+            },
+            withCredentials: true
         }).then((response) => {
             if(response && response.data) {
                 console.log(response);
@@ -39,28 +45,16 @@ export function fetchToursAndActivities(addressCoords) {
 }
 
 export function fetchHotels(addressCoords, budgetValue, dateRange) {
-    //build string here and pass it to url
-    let stringParams='';
-    if(addressCoords.lat) {
-        stringParams=`latitude=${addressCoords.lat}&longitude=${addressCoords.lng}`;
-    }
-
-    if(budgetValue) {
-        stringParams = stringParams+ `&priceRange=${budgetValue[0]}-${budgetValue[1]}`;
-    }
-
-    stringParams = stringParams + '&currency=USD';
-    // if(dateRange) {
-    //     stringParams = stringParams+ `&dateRange=${dateRange[0]}`
-    // }
-    console.log('https://test.api.amadeus.com/v2/shopping/hotel-offers?' + stringParams);
-
     return new Promise((resolve, reject) => {
         axios({
             method: 'GET',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'Bearer ' + process.env.REACT_APP_ACCESS_TOKEN},
-            url: 'https://test.api.amadeus.com/v2/shopping/hotel-offers?' + stringParams
+            url: 'http://localhost:3000/getHotels',
+            data: {
+                lat: addressCoords.lat,
+                lng: addressCoords.lng,
+                budgetValue: budgetValue
+            },
+            withCredentials: true
         }).then((response) => {
             if(response && response.data) {
                 console.log(response);
@@ -74,14 +68,16 @@ export function fetchHotels(addressCoords, budgetValue, dateRange) {
 }
 
 export function fetchHotelById(hotelId, longitude, latitude) {
-
-
     return new Promise((resolve, reject) => {
         axios({
             method: 'GET',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'Bearer ' + process.env.REACT_APP_ACCESS_TOKEN},
-            url: `https://test.api.amadeus.com/v2/shopping/hotel-offers/by-hotel?latitude=${latitude}&longitude=${longitude}&hotelId=${hotelId}`
+            url: 'http://localhost:3000/getHotelById',
+            data: {
+                hotelId: hotelId, 
+                longitude: longitude, 
+                latitude: latitude
+            },
+            withCredentials: true
         }).then((response) => {
             if(response && response.data) {
                 console.log(response);
@@ -100,9 +96,11 @@ export function fetchRecommendedLocations(cityCode) {
     return new Promise((resolve, reject) => {
         axios({
             method: 'GET',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'Bearer ' + process.env.REACT_APP_ACCESS_TOKEN},
-            url: `https://test.api.amadeus.com/v1/reference-data/recommended-locations?cityCodes=${cityCode}`
+            url: 'http://localhost:3000/getRecommendations',
+            data: {
+                cityCode: cityCode
+            },
+            withCredentials: true
         }).then((response) => {
             if(response && response.data) {
                 console.log(response);

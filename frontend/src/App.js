@@ -20,33 +20,6 @@ import {connect} from 'react-redux';
 import querystring from 'querystring';
 
 const App = (props) => {
-    // useEffect(() => {
-    //   const params = {
-    //     "grant_type": "client_credentials",
-    //     "client_id": `${process.env.REACT_APP_API_KEY}`,
-    //     "client_secret": `${process.env.REACT_APP_SECRET}`
-    //   }
-    //   if(props.accessToken === '') {
-    //     axios.post('https://test.api.amadeus.com/v1/security/oauth2/token?',
-    //         // note the use of querystring
-    //         querystring.stringify({"grant_type": "client_credentials",
-    //         "client_id": `${process.env.REACT_APP_API_KEY}`,
-    //         "client_secret": `${process.env.REACT_APP_SECRET}`}),{
-    //         headers: {
-    //           'Content-Type':'application/x-www-form-urlencoded',     
-    //           'Authorization': 'Bearer GylJbgGAUgrwp4fuGWA5RxLEH6MN',
-    //           'Access-Control-Allow-Methods': 'POST, GET, OPTIONS, PUT, DELETE'
-    //         }
-    //       }).then((response) => {
-    //         if(response && response.access_token) {
-    //           console.log(response);
-    //           retrieveAccessToken(response.access_token);
-    //         }
-    //       }).catch((error) => {
-    //         console.log(error);
-    //       });
-    //   }
-    // }, [props.accessToken])
     
     return (
       <div className='App'>

@@ -151,7 +151,7 @@ const HotelPage = (props) => {
     const {hotelId, longitude, latitude} = routeProps.match.params;
     const [value, setValue] = React.useState(1);
     const [hover, setHover] = React.useState(-1);
-    const [data, setData] = React.useState([]);
+    const [data, setData] = React.useState(mockData);
     console.log(hotelId, longitude, latitude);
 
     useEffect(() => {
@@ -174,7 +174,7 @@ const HotelPage = (props) => {
 
     return (
         <div>
-        {data.length !== 0 ? <Container component="main" maxWidth="xl">
+        {data ? <Container component="main" maxWidth="xl">
             <GridListTile cols={1}>
                 <img className={classes.image}
                     src="http://uat.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/1BBCD9A70FE94FAF8B1959D2552E21B8"
@@ -327,7 +327,7 @@ const HotelPage = (props) => {
 
 }
 
-const data = {
+const mockData = {
         "type": "hotel-offers",
         "hotel": {
             "type": "hotel",

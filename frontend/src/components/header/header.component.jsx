@@ -68,13 +68,13 @@ const Header = (props) => {
   return (
     <nav className="navbar navbar-sticky">
       <Toolbar className={classes.toolbar}>
-        <Link color="inherit" noWrap href="/" className="title-container">{title}</Link>
+        <Link color="inherit" noWrap href="/" underline='none' className="title-container">{title}</Link>
           {/* <SearchBar fullWidth={false}/>  */}
         
         {currentUser ? 
           <div>
             <IconButton className={classes.button} onClick={() => redirectToProfilePage(currentUser.role, currentUser.username)}>
-              <AccountCircleIcon/>
+              <AccountCircleIcon fontSize="large"/>
             </IconButton>
             <Button className={classes.button} variant="outlined" size="small" onClick={() => logoutUser()}>
                 Logout
@@ -93,23 +93,23 @@ const Header = (props) => {
       </Toolbar>
       <Toolbar component="nav" variant="dense" className={classes.toolbarSecondary}>
           <Link color="inherit" noWrap
-           variant="body2" 
+           variant="body2" underline='none'
            href="/" className={classes.toolbarLink}>
             Home
           </Link>
           <Link color="inherit" noWrap 
-          variant="body2" 
+          variant="body2" underline='none'
           href="/destinations" className={classes.toolbarLink}>
             Destinations
           </Link>
           { currentUser ?
           <Link color="inherit" noWrap 
-          variant="body2" 
+          variant="body2" underline='none'
           href={"/recommendations" + "/" + currentUser.username} className={classes.toolbarLink}>
             Recommended Trips
           </Link> : null}
           <Link color="inherit" noWrap 
-          variant="body2" 
+          variant="body2" underline='none'
           href={"/contact-us"} className={classes.toolbarLink}>
             Contact us
           </Link>

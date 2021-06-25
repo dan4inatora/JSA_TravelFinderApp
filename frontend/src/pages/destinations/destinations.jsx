@@ -82,7 +82,7 @@ const DestinationsPage = () => {
             });
         } else if(selectedRadioButton === 'hotels') {
             fetchHotels(addressCoords, budgetValue, dateRange).then((response) => {
-                setData(response);
+                setData(mockData);
                 setLoadingIndicator(false);
                 setShowHotels(true);
             }).catch((error) => {
@@ -155,7 +155,7 @@ const DestinationsPage = () => {
       );
 }
 
-export const data = [
+export const mockData = [
   {
       "type": "hotel-offers",
       "hotel": {

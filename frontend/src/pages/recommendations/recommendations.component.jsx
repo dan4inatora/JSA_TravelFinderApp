@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import axios from 'axios';
 import {connect} from 'react-redux';
 import {createStructuredSelector} from 'reselect';
-import {data} from '../destinations/destinations';
+import {mockData} from '../destinations/destinations';
 import {selectUserSearches} from '../../redux/userSearched/userSearched.selectors';
 import {fetchRecommendedLocations} from '../../components/axios/axiosRequests';
 import {Link} from 'react-router-dom';
@@ -62,7 +62,7 @@ const RecommendationPage = (props) => {
     const {username} = props.routeProps;
     const {userSearches} = props;
     const classes = useStyles();
-    const [recommendations, setRecommendations] = useState(data);
+    const [recommendations, setRecommendations] = useState(mockData);
 
     useEffect(() => {
         const maxCityCode = Object.keys(userSearches.userSearched).reduce(function(a, b){ return userSearches.userSearched[a] > userSearches.userSearched[b] ? a : b });
