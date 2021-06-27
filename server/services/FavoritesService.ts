@@ -43,6 +43,15 @@ class FavoritesService {
         fav.hotelId = hotelId;
         return await Favorites.create(fav).save();    
     }
+
+    public async isAddedToFavourites(userId : number, hotelId: number): Promise<boolean> {
+        const isAdded = await Favorites.findOne({where:{userId, hotelId}});
+        if(isAdded) {
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
 
 export default FavoritesService.getInstance();

@@ -1,20 +1,26 @@
-import React, {useEffect} from 'react';
-import { Chip, Paper, Grid, GridListTile, GridListTileBar, Box, IconButton, Typography, Button, Container} from '@material-ui/core';
+import React, {useState, useEffect} from 'react';
+import { Chip, Paper, Grid, GridListTile, GridListTileBar, IconButton, Typography, Button, Container} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import StarIcon from '@material-ui/icons/Star';
-import {Link} from 'react-router-dom';
 import StarBorderIcon from '@material-ui/icons/StarBorder';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import {capitalizeFirstLetter, getDays} from '../../components/destinationFilters/hotelResults';
 import RoomIcon from '@material-ui/icons/Room';
 import MailOutlineIcon from '@material-ui/icons/MailOutline';
 import PhoneIcon from '@material-ui/icons/Phone';
-import PrintIcon from '@material-ui/icons/Print';
 import EventAvailableIcon from '@material-ui/icons/EventAvailable';
 import HourglassFullIcon from '@material-ui/icons/HourglassFull';
-import Rating from '@material-ui/lab/Rating';
 import {fetchHotelById} from '../../components/axios/axiosRequests';
+import FavoriteIcon from '@material-ui/icons/Favorite';
 import _ from 'lodash';
+import {selectCurrentUser} from '../../redux/user/user.selectors';
+import {createStructuredSelector} from 'reselect';
+import {connect} from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import RatingComponent from '../../components/rating/ratings';
+import MapsComponent from '../../components/maps/mapsComponent';
+import CommentsBox from '../../components/comments/commentsBox';
+import FavouritesComponent from '../../components/favourites/favourites';
 
 const useStyles = makeStyles((theme) => ({
     image: {
@@ -116,7 +122,7 @@ const useStyles = makeStyles((theme) => ({
     infoPaper: {
         border: '2px solid #d9e1ec',
         backgroundColor: '#f1f4f8',
-        padding: '4%'
+        padding: '6%'
     },
     distance: {
         fontFamily: "Garamond Helvetica sans-serif",
@@ -147,30 +153,39 @@ const useStyles = makeStyles((theme) => ({
 
 const HotelPage = (props) => {
     const classes = useStyles();
-    const {routeProps} = props;
+    const {routeProps, currentUser} = props;
     const {hotelId, longitude, latitude} = routeProps.match.params;
-    const [value, setValue] = React.useState(1);
-    const [hover, setHover] = React.useState(-1);
-    const [data, setData] = React.useState(mockData);
+    const history = useHistory();
+
+    const [data, setData] = useState(mockData);
+    const [isAddedToFavourites, setIsAddedToFavourites] = useState(false);
     console.log(hotelId, longitude, latitude);
 
     useEffect(() => {
         if(hotelId && longitude && latitude) {
             fetchHotelById(hotelId, longitude, latitude).then((response) => {
-                setData(response);
+                if(response !== undefined) {
+                    setData(response);
+                }
             }).catch((error) => {
                 console.log(error);
             });
         }
-    }, [])
+    }, []);
 
-    const labels = {
-        1: 'Useless',
-        2: 'Poor',
-        3: 'Ok',
-        4: 'Good',
-        5: 'Excellent'
-      };
+    const handleFavouriteClick = (hotelId) => {
+        if(!isAddedToFavourites) {
+            //add to favourites
+            setIsAddedToFavourites(true);
+        } else {
+            //remove from favourites
+            setIsAddedToFavourites(false);
+        }
+    }
+
+    const signIn = () => {
+        history.push(`/sign-in`);
+    }
 
     return (
         <div>
@@ -199,7 +214,9 @@ const HotelPage = (props) => {
                         <StarIcon key={i} size="small" className={classes.stars}/>
                     ))}
                 </Typography>
-                <div>                    
+                <div>             
+                    <FavouritesComponent />
+                        
                     {data.available ? 
                     <Typography variant="subtitle2" display='inline' className={classes.greenAvailable}>
                         <EventAvailableIcon/> There are still rooms available
@@ -210,20 +227,25 @@ const HotelPage = (props) => {
                     </Typography>}
                 </div>
 
-                <Paper className={classes.infoPaper} style={{float: 'right', display: 'grid', marginTop: '34px'}}>
-                    <Typography variant="subtitle2" className={classes.info}>
-                        <RoomIcon/> {data.hotel.address.lines[0] + ", " + data.hotel.address.cityName + ", " + data.hotel.address.postalCode + ", " + data.hotel.address.countryCode}
-                    </Typography>
-                    <Typography variant="subtitle2" className={classes.info}>
-                        <MailOutlineIcon/> {data.hotel.contact.email}
-                    </Typography>
-                    <Typography variant="subtitle2" className={classes.info}>
-                        <PhoneIcon/> {data.hotel.contact.phone}
-                    </Typography>
-                    <Typography variant="subtitle2" className={classes.info}>
-                        <PhoneIcon/> {data.hotel.contact.fax}
-                    </Typography>
+                <Paper className={classes.infoPaper} style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-start', marginTop: '34px'}}>
+                    <div>
+                        <Typography variant="subtitle2" className={classes.info}>
+                            <RoomIcon/> {data.hotel.address.lines[0] + ", " + data.hotel.address.cityName + ", " + data.hotel.address.postalCode + ", " + data.hotel.address.countryCode}
+                        </Typography>
+                        <Typography variant="subtitle2" className={classes.info}>
+                            <MailOutlineIcon/> {data.hotel.contact.email}
+                        </Typography>
+                        <Typography variant="subtitle2" className={classes.info}>
+                            <PhoneIcon/> {data.hotel.contact.phone}
+                        </Typography>
+                        <Typography variant="subtitle2" className={classes.info}>
+                            <PhoneIcon/> {data.hotel.contact.fax}
+                        </Typography>
+                    </div>
+                    <MapsComponent latitude={latitude} longitude={longitude}/>
                 </Paper>
+
+
 
                 <Typography variant="subtitle2" className={classes.description}>
                     {data.hotel.description ? data.hotel.description.text : null}
@@ -246,18 +268,20 @@ const HotelPage = (props) => {
                     <Typography variant="subtitle2" className={classes.info}>
                         Rate {data.hotel.name}?
                     </Typography>
-                    <Rating
-                        name="hover-feedback"
-                        value={value}
-                        precision={1}
-                        onChange={(event, newValue) => {
-                        setValue(newValue);
-                        }}
-                        onChangeActive={(event, newHover) => {
-                        setHover(newHover);
-                        }}
-                    />
-                    {value !== null && <Box ml={2}>{labels[hover !== -1 ? hover : value]}</Box>}
+                    {currentUser ? 
+                        <RatingComponent userId={currentUser.id} hotelId={hotelId} />
+                    : null}
+
+                    <Typography variant="subtitle2" className={classes.info}>
+                        Leave a comment
+                    </Typography>
+                    {currentUser ?
+                        <CommentsBox isLoggedIn={true} comments={[]}
+                        userId={currentUser.id} 
+                        hotelName={data.hotel.name}
+                        contentId={data.hotel.hotelId}
+                        signIn={signIn}/>
+                    : null} 
                 </Paper>
 
                 <Typography variant="subtitle1" display='inline' className={classes.subtitle}>
@@ -308,9 +332,8 @@ const HotelPage = (props) => {
                         </Grid>
                         <Grid item xs={12} sm={2}>
                             <Typography variant="subtitle2" className={classes.distance}>
-                                <Button size="large" color="primary" variant="contained">
+                                <Button size="large" color="primary" variant="contained" endIcon={<PhoneIcon/>}>
                                     Book Now
-                                    <PhoneIcon/>
                                 </Button>
                             </Typography>
                         </Grid>
@@ -324,8 +347,13 @@ const HotelPage = (props) => {
         </Container> : null}
         </div>
     )
-
 }
+
+const mapStateToProps = createStructuredSelector({
+    currentUser: selectCurrentUser
+});
+
+export default connect(mapStateToProps, null)(HotelPage);
 
 const mockData = {
         "type": "hotel-offers",
@@ -468,5 +496,3 @@ const mockData = {
         ],
         "self": "https://test.api.amadeus.com/v2/shopping/hotel-offers/by-hotel?hotelId=HSBERAIQ"
     }
-
-export default HotelPage;

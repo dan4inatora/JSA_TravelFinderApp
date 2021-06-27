@@ -56,6 +56,7 @@ class DestinationController {
   public async getHotels(req : Request, res : Response, next : NextFunction)  {
     const {lat, lng, budgetValue} = req.body;
     let stringParams='';
+    console.log(req.body);
     if(lat) {
         stringParams=`latitude=${lat}&longitude=${lng}`;
     }
@@ -74,11 +75,11 @@ class DestinationController {
             url: 'https://test.api.amadeus.com/v2/shopping/hotel-offers?' + stringParams
         }).then((response) => {
             if(response && response.data) {
-                console.log(response);
+                //console.log(response);
                 res.send(response.data.data);
             }
         }).catch((error) => {
-            console.log(error);
+            //console.log(error);
             res.send(error);
         });
 

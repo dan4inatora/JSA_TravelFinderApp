@@ -1,4 +1,4 @@
-import React, {useEffect} from "react";
+import React from "react";
 import { Switch, Route } from "react-router-dom";
 import './App.scss';
 import HomePage, {sections} from './pages/homepage/homepage.component';
@@ -14,10 +14,9 @@ import ForgotPassword from './components/forgot-password/forgotPassword.componen
 import {retrieveAccessToken} from './redux/amadeus/amadeus.actions';
 import {createStructuredSelector} from 'reselect';
 import {selectCurrentUser} from './redux/user/user.selectors';
-import {selectAmadeusAccessToken} from './redux/amadeus/amadeus.selectors'; 
-import axios from 'axios';
+import {selectAmadeusAccessToken} from './redux/amadeus/amadeus.selectors';
+import Footer from './components/footer/footer.component';
 import {connect} from 'react-redux';
-import querystring from 'querystring';
 
 const App = (props) => {
     
@@ -50,6 +49,7 @@ const App = (props) => {
           )} exact={true}/>
           <Route path='hotels/:searchString' exact={true} />
         </Switch>
+        <Footer/>
       </div>
     );
   }

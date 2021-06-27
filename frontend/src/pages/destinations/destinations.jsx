@@ -49,9 +49,15 @@ const DestinationsPage = () => {
       setAddress(address);
       
       geocodeByAddress(address)
-      .then(results => getLatLng(results[0]))
-      .then(latLng => setAddressCoords(latLng))
-      .catch(error => console.error('Error', error))
+        .then(results => {
+            getLatLng(results[0])
+        })
+        .then(latLng => {
+            setAddressCoords(latLng)
+        })
+        .catch(error => {
+            console.error('Error', error)
+        })
 
       setShowFilters(true);
     }

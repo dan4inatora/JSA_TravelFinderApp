@@ -34,7 +34,11 @@ class FavoritesController {
     res.status(200).send(deleted);
   }; 
 
-  
+  public async isAddedToFavourites (req : Request, res : Response, next : NextFunction) {
+    let userId = parseInt(req.params.id);
+    let hotelId = parseInt(req.params.hotelId);
+    let isAdded = await favoritesService.isAddedToFavourites(userId, hotelId);
+  }
   
   
 }

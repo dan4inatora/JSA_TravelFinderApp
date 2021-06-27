@@ -118,9 +118,5 @@ const RecommendationPage = (props) => {
 const mapStateToProps = createStructuredSelector({
     userSearches: selectUserSearches
 });
-  
-// const mapDispatchToProps = dispatch => ({
-// setAccessToken: (accessToken) => dispatch(retrieveAccessToken(accessToken)),
-// }); 
 
 export default connect(mapStateToProps, null)(RecommendationPage);

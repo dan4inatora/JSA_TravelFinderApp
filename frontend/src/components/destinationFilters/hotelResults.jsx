@@ -152,7 +152,7 @@ const HotelResults = (props) => {
                             
                             <Button component={Link} to={`hotel/${result.hotel.hotelId}/${result.hotel.longitude}/${result.hotel.latitude}`}
                                 size="large" color="primary" variant="contained" onClick={() => addSelectionToRedux(result.hotel.cityCode)}>
-                                Reserve
+                                View
                                 <ArrowForwardIcon/>
                             </Button>
                         </Typography>

@@ -46,7 +46,7 @@ export function fetchToursAndActivities(addressCoords) {
 
 export function fetchHotels(addressCoords, budgetValue, dateRange) {
     return new Promise((resolve, reject) => {
-        axios({
+        const reqBody = {
             method: 'GET',
             url: 'http://localhost:3000/getHotels',
             data: {
@@ -55,7 +55,9 @@ export function fetchHotels(addressCoords, budgetValue, dateRange) {
                 budgetValue: budgetValue
             },
             withCredentials: true
-        }).then((response) => {
+        };
+        console.log(reqBody);
+        axios(reqBody).then((response) => {
             if(response && response.data) {
                 console.log(response);
                 resolve(response.data.data);

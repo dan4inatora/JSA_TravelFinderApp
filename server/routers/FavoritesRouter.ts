@@ -19,7 +19,9 @@ export class FavoritesRouter extends CommonRoutesConfig {
         this.app.route('/deleteFavorites/:id/:hotelId')
             .post(AuthenticationMiddleware.isAuthenticated,
                 favoritesController.deleteFavorite)
-
+        this.app.route('isAddedToFavourites/:id/:hotelId')
+            .get(AuthenticationMiddleware.isAuthenticated,
+                favoritesController.isAddedToFavourites)
 
         return this.app;
     }
