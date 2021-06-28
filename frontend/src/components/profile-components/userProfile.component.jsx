@@ -1,10 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {createStructuredSelector} from 'reselect';
 import { makeStyles } from '@material-ui/core/styles';
 import {selectCurrentUser} from '../../redux/user/user.selectors';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import {connect} from 'react-redux';
-import {Paper, Avatar} from '@material-ui/core';
+import {Paper, Avatar, Typography} from '@material-ui/core';
+import axios from 'axios';
 import './profilePage.styles.scss';
 
 const useStyles = makeStyles((theme) => ({
@@ -21,7 +22,6 @@ const UserProfile = (props) => {
     const { currentUser } = props;
     const classes = useStyles();
 
-
     return (
         <div className="user-profile-container">
             <Paper className={classes.paper}>
@@ -30,6 +30,12 @@ const UserProfile = (props) => {
                 </Avatar>
                 <h1>{currentUser.username}</h1>
                 <h3>{currentUser.name}</h3>
+            </Paper>
+            <Paper className={classes.paper}>
+                <Typography gutterBottom variant="h5" component="h2" className={classes.title}>
+                    Favourites
+                </Typography>   
+
             </Paper>
         </div>
     )

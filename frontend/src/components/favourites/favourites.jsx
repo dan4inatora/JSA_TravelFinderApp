@@ -39,7 +39,7 @@ const FavouritesComponent = (props) => {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'GET',
-                url: 'http://localhost:3000/addFavorites',
+                url: 'http://localhost:3000/addFavorites/',
                 data: {
                     userId,
                     hotelId

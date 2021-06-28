@@ -19,6 +19,7 @@
     "axios": "^0.21.0",
     "formik": "^2.2.5",
     "graphql": "^15.5.0",
+    "html5-file-selector": "^2.1.0",
     "http-proxy-middleware": "^1.0.6",
     "materialui-daterange-picker": "^1.1.92",
     "moment": "^2.29.1",

@@ -21,6 +21,7 @@ import RatingComponent from '../../components/rating/ratings';
 import MapsComponent from '../../components/maps/mapsComponent';
 import CommentsBox from '../../components/comments/commentsBox';
 import FavouritesComponent from '../../components/favourites/favourites';
+import UploadInstrument from '../../components/upload-instrument/uploadInstrument';
 
 const useStyles = makeStyles((theme) => ({
     image: {
@@ -99,10 +100,10 @@ const useStyles = makeStyles((theme) => ({
         height: '25%'
     },
     amenities: {
+        width: '60%',
         fontFamily: 'inherit',
         marginLeft: '2%',
-        width: '65%',
-        margin: '0 auto'
+        margin:'0 auto'
     },
     chip: {
         fontFamily: 'inherit',
@@ -120,6 +121,12 @@ const useStyles = makeStyles((theme) => ({
         color: '#febb02'
     },
     infoPaper: {
+        border: '2px solid #d9e1ec',
+        backgroundColor: '#f1f4f8',
+        padding: '6%'
+    },
+    uploadPaper: {
+        width: '60%',
         border: '2px solid #d9e1ec',
         backgroundColor: '#f1f4f8',
         padding: '6%'
@@ -245,16 +252,15 @@ const HotelPage = (props) => {
                     <MapsComponent latitude={latitude} longitude={longitude}/>
                 </Paper>
 
-
-
                 <Typography variant="subtitle2" className={classes.description}>
                     {data.hotel.description ? data.hotel.description.text : null}
                 </Typography>                
 
+
+                <Typography variant="subtitle1" display='inline' className={classes.subtitle}>
+                    Amenities:
+                </Typography>
                 <Typography variant="subtitle2" component="div" className={classes.amenities}>
-                    <Typography variant="subtitle1" display='inline' className={classes.subtitle}>
-                        Amenities:
-                    </Typography>
                     <Paper className={classes.infoPaper}>
                         {data.hotel.amenities.map((label,i) => (
                             <Chip key={i} label={capitalizeFirstLetter(label.toLowerCase().replaceAll("_", " "))}
@@ -263,6 +269,13 @@ const HotelPage = (props) => {
                         ))}
                     </Paper>
                 </Typography>
+
+                <Typography variant="subtitle1" display='inline' className={classes.subtitle}>
+                    Upload your photos:
+                </Typography>
+                <Paper className={classes.uploadPaper}>
+                    <UploadInstrument userId={currentUser.id}/>
+                </Paper>
 
                 <Paper className={classes.rating}>
                     <Typography variant="subtitle2" className={classes.info}>
