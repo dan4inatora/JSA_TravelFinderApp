@@ -20,7 +20,7 @@ export class Comment extends BaseEntity{
     user: User;
 
     @Column({name: "hotel_id"})
-    hotelId: number;
+    hotelId: string;
 
     @ManyToOne(() => Hotel, hotel => hotel.comments)
     @JoinColumn({name: "hotel_id"})

@@ -2,19 +2,17 @@ import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, PrimaryCo
 import { Comment } from "./Comment";
 import { CommentReacts } from "./CommentReacts";
 import { Favorites } from "./Favorites";
+import { Images } from "./Images";
 import { Ratings } from "./Ratings";
 
 
 @Entity('hotels')
 export class Hotel extends BaseEntity{
     @PrimaryColumn()
-    id: number;
+    id: string;
 
-    @Column({name: 'name'})
-    name: string;
-
-    @Column({name: 'times_reserved'})
-    timesReserved: number;
+    @Column({name: "hotels_hotel_id"})
+    hotelId: string;
 
     @OneToMany(() => Comment, comments => comments.hotel)
     comments: Comment[];
@@ -24,6 +22,9 @@ export class Hotel extends BaseEntity{
 
     @OneToMany(() => Ratings, rating => rating.hotel)
     ratings: Ratings[];
+
+    @OneToMany(() => Images, image => image.hotel)
+    images: Images[];
 
     
 }

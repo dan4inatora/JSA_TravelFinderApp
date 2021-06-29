@@ -29,22 +29,21 @@ class FavoritesService {
         return hotels;
     }
 
-    public async deleteFavorites(userId : number, hotelId: number) : Promise<DeleteResult>{
+    public async deleteFavorites(userId : number, hotelId: string) : Promise<DeleteResult>{
         let fav = await Favorites.findOne({where:{userId, hotelId}});  
         return await Favorites.delete(fav);  
     }
 
-    public async addFavorites(userId : number, hotelId: number, hotelName: string) : Promise<Favorites>{
+    public async addFavorites(userId : number, hotelId: string) : Promise<Favorites>{
         if((await hotelService.getHotelById(hotelId)) === undefined){
-            await hotelService.createHotel(hotelId, hotelName, 0)
+            await hotelService.createHotel(hotelId)
         }
         let fav = new Favorites();
         fav.userId = userId;
-        fav.hotelId = hotelId;
         return await Favorites.create(fav).save();    
     }
 
-    public async isAddedToFavourites(userId : number, hotelId: number): Promise<boolean> {
+    public async isAddedToFavourites(userId : number, hotelId: string): Promise<boolean> {
         const isAdded = await Favorites.findOne({where:{userId, hotelId}});
         if(isAdded) {
             return true;

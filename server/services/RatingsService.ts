@@ -16,28 +16,28 @@ class RatingsService {
         return RatingsService.instance;
     }
 
-    public async addRating(userId : number, hotelId: number, hotelName: string, rating: number) : Promise<Ratings>{
+    public async addRating(userId : number, hotelId: string, rating: number) : Promise<Ratings>{
         if((await hotelService.getHotelById(hotelId)) === undefined){
-            await hotelService.createHotel(hotelId, hotelName, 0)
+            await hotelService.createHotel(hotelId)
         }
         let newRating = new Ratings();
         newRating.hotelId = hotelId;
         newRating.userId = userId;
         newRating.rating = rating;
-        return await newRating.save();
+        return await Ratings.create(newRating).save();
         
     }
 
-    public async deleteRating(userId : number, hotelId: number) : Promise<DeleteResult>{
+    public async deleteRating(userId : number, hotelId: string) : Promise<DeleteResult>{
         let toBeDeleted = await Ratings.findOne({where:{userId, hotelId}});
         return await Ratings.delete(toBeDeleted);
     }
 
-    public async getUserRatingforHotel(userId : number, hotelId: number) : Promise<Ratings>{
+    public async getUserRatingforHotel(userId : number, hotelId: string) : Promise<Ratings>{
         return await Ratings.findOne({where:{userId, hotelId}})
     }
 
-    public async getAllRatingsForHotel( hotelId: number) : Promise<Ratings[]>{
+    public async getAllRatingsForHotel( hotelId: string) : Promise<Ratings[]>{
         return await Ratings.find({where:{hotelId}})
     }
 

@@ -17,8 +17,8 @@ class CommentsController {
   }
 
   public async addComment(req : Request, res : Response, next : NextFunction)  {
-    const {userId, hotelId, hotelName, comment} = req.body;
-    let caddedComment = await CommentsService.addComment(userId, hotelId ,hotelName, comment);
+    const {userId, hotelId, comment} = req.body;
+    let caddedComment = await CommentsService.addComment(userId, hotelId, comment);
     res.status(200).send(caddedComment);
   };
 
