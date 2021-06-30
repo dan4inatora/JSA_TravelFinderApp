@@ -16,33 +16,34 @@ function Arrow(props) {
     className={direction === 'left' ? 'arrow-icon-left' : 'arrow-icon-right'}>{icon}</div>;
 }
 
-function CarouselSlideComponent() {
+const useStyles = makeStyles(() => ({
+    arrow: {
+        color: 'white',
+        zIndex: '20',
+        background:
+        'linear-gradient(to top, rgba(0,0,0,0.7) 60%, rgba(0,0,0,0.3) 80%, rgba(0,0,0,0) 90%)',
+        height: '25%'
+    },
+    card: {
+        width: '100vw',
+        height: '80vh'
+    },
+    title: {
+        textAlign: 'center',
+    },
+    media: {
+        width: '100vw',
+        maxHeight: '100%'
+    }
+}));
+
+function CarouselSlideComponent(props) {
+    const {hotelId} = props;
     const [index, setIndex] = useState(0);
     const numSlides = 5;
     const [currentPicture, setCurrentPicture] = useState(first);
     const [slideIn, setSlideIn] = useState(true);
     const [slideDirection, setSlideDirection] = useState('down');
-
-    const useStyles = makeStyles(() => ({
-        arrow: {
-            color: 'white',
-            zIndex: '20',
-            background:
-            'linear-gradient(to top, rgba(0,0,0,0.7) 60%, rgba(0,0,0,0.3) 80%, rgba(0,0,0,0) 90%)',
-            height: '25%'
-        },
-        card: {
-            width: '100vw',
-            height: '80vh'
-        },
-        title: {
-            textAlign: 'center',
-        },
-        media: {
-            width: '100vw',
-            maxHeight: '100%'
-        }
-    }));
 
     const classes = useStyles();
 

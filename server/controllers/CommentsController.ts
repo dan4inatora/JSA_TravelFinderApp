@@ -30,7 +30,7 @@ class CommentsController {
   };
 
   public async allCommentsForHotel(req : Request, res : Response, next : NextFunction)  {
-    let hotelId = parseInt(req.params.id);
+    let hotelId = req.params.id;
     let comments = await CommentService.getAllCommentsForHotel(hotelId);
     res.status(200).send(comments);
   };

@@ -15,14 +15,15 @@ class HotelService {
         return HotelService.instance;
     }
 
-    public async getHotelById(hotelId: string) : Promise<Hotel> {
-        return await Hotel.findOne({where:{id:hotelId}});
+    public async getHotelById(hotelIdentifier: string) : Promise<Hotel> {
+        return await Hotel.findOne({where:{hotelIdentifier}});
     }
 
-    public async createHotel(hotelId: string) : Promise<Hotel> {
+    public async createHotel(hotelIdentifier: string) : Promise<Hotel> {
         let hotel = new Hotel();
-        hotel.hotelId = hotelId;
-        return await hotel.save();
+        hotel.hotelIdentifier = hotelIdentifier;
+        await hotel.save();
+        return hotel;
     }
 
 

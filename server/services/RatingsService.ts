@@ -16,29 +16,37 @@ class RatingsService {
         return RatingsService.instance;
     }
 
-    public async addRating(userId : number, hotelId: string, rating: number) : Promise<Ratings>{
-        if((await hotelService.getHotelById(hotelId)) === undefined){
-            await hotelService.createHotel(hotelId)
+    public async addRating(userId : number, hotelIdentifier: string, rating: number) : Promise<Ratings>{
+        let hotel = await hotelService.getHotelById(hotelIdentifier);
+
+        if(hotel === undefined){
+            hotel = await hotelService.createHotel(hotelIdentifier);
         }
         let newRating = new Ratings();
-        newRating.hotelId = hotelId;
+        newRating.hotelId = hotel.id;
         newRating.userId = userId;
         newRating.rating = rating;
         return await Ratings.create(newRating).save();
         
     }
 
-    public async deleteRating(userId : number, hotelId: string) : Promise<DeleteResult>{
-        let toBeDeleted = await Ratings.findOne({where:{userId, hotelId}});
+    public async deleteRating(userId : number, hotelIdentifier: string) : Promise<DeleteResult>{
+        let hotel = await hotelService.getHotelById(hotelIdentifier);
+
+        let toBeDeleted = await Ratings.findOne({where:{userId, hotelId: hotel.id}});
         return await Ratings.delete(toBeDeleted);
     }
 
-    public async getUserRatingforHotel(userId : number, hotelId: string) : Promise<Ratings>{
-        return await Ratings.findOne({where:{userId, hotelId}})
+    public async getUserRatingforHotel(userId : number, hotelIdentifier: string) : Promise<Ratings>{
+        let hotel = await hotelService.getHotelById(hotelIdentifier);
+        let rating = await Ratings.findOne({where:{userId, hotelId: hotel.id}});
+        return rating ? rating : null; 
     }
 
-    public async getAllRatingsForHotel( hotelId: string) : Promise<Ratings[]>{
-        return await Ratings.find({where:{hotelId}})
+    public async getAllRatingsForHotel( hotelIdentifier: string) : Promise<Ratings[]>{
+        let hotel = await hotelService.getHotelById(hotelIdentifier);
+
+        return await Ratings.find({where:{hotelId: hotel.id}})
     }
 
 

@@ -20,8 +20,13 @@ class CommentService {
         return CommentService.instance;
     }
 
-    public async getAllCommentsForHotel(hotelId: number) : Promise<Comment[]> {
-        return await Comment.find({where:{hotelId}});
+    public async getAllCommentsForHotel(hotelIdentifier: string) : Promise<Comment[]> {
+        const hotel = await Hotel.findOne({where: {hotelIdentifier}});
+        if(hotel) {
+            return await Comment.find({where:{hotelId: hotel.id}});
+        } else {
+            return [];
+        }
     }
 
     public async isUserReactedThumb(commentId: number, userId : number) : Promise<Boolean>{
@@ -75,17 +80,23 @@ class CommentService {
         return await CommentReacts.delete(toBeDeleted);
     }
 
-    public async addComment(userId: number, hotelId : string, comment: string) : Promise<Comment>{
-        let hotel = await hotelService.getHotelById(hotelId);
-        if(hotel == undefined){ 
-            await hotelService.createHotel(hotelId)
+    public async addComment(userId: number, hotelIdentifier : string, comment: string) : Promise<Comment>{
+        try {
+            let hotel = await hotelService.getHotelById(hotelIdentifier);
+            if(hotel == undefined){ 
+                hotel = await hotelService.createHotel(hotelIdentifier);
+                console.log(hotel);
+            }
+            const newComment = new Comment();
+            newComment.hotelId = hotel.id;
+            newComment.userId = userId;
+            newComment.comment = comment;
+            console.log("COmment created", newComment);
+
+            return await Comment.create(newComment).save();
+        } catch(error) {
+            console.log(error);
         }
-        const newComment = new Comment();
-        newComment.hotelId = hotelId;
-        newComment.userId = userId;
-        newComment.comment = comment;
-        console.log("COmment created", newComment);
-        return await Comment.create(newComment).save();
     }
 
     public async deleteComment(commentId : number) : Promise<DeleteResult>{

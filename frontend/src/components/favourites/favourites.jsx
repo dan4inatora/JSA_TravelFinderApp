@@ -15,11 +15,7 @@ const FavouritesComponent = (props) => {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'GET',
-                url: 'http://localhost:3000/isAddedToFavourites',
-                data: {
-                    userId,
-                    hotelId
-                },
+                url: `http://localhost:3000/isAddedToFavourites/${userId}/${hotelId}`,
                 withCredentials: true
             }).then((response) => {
                 if(response && response.data) {
@@ -38,10 +34,9 @@ const FavouritesComponent = (props) => {
     const addToFavourites = () => {
         return new Promise((resolve, reject) => {
             axios({
-                method: 'GET',
-                url: 'http://localhost:3000/addFavorites/',
+                method: 'POST',
+                url: `http://localhost:3000/addFavorites/${userId}`,
                 data: {
-                    userId,
                     hotelId
                 },
                 withCredentials: true
@@ -60,12 +55,8 @@ const FavouritesComponent = (props) => {
     const removeFromFavourites = () => {
         return new Promise((resolve, reject) => {
             axios({
-                method: 'GET',
-                url: 'http://localhost:3000/deleteFavorites',
-                data: {
-                    userId,
-                    hotelId
-                },
+                method: 'POST',
+                url: `http://localhost:3000/deleteFavorites/${userId}/${hotelId}`,
                 withCredentials: true
             }).then((response) => {
                 if(response && response.data) {
@@ -82,12 +73,12 @@ const FavouritesComponent = (props) => {
     return (
         <React.Fragment>
             {isAdded ? 
-                <Button size="small" className="favourites-button" onClick={() => removeFromFavourites()}
+                <Button size="small" onClick={() => removeFromFavourites()}
                     variant="contained" endIcon={<FavoriteIcon/>}>
                     Remove from favourites
                 </Button> 
                 :  
-                <Button size="large" variant="contained" onClick={() => addToFavourites()} endIcon={<FavoriteIcon/>}>
+                <Button size="small" variant="contained" onClick={() => addToFavourites()} endIcon={<FavoriteIcon/>}>
                     Add to favourites
                 </Button> 
         }

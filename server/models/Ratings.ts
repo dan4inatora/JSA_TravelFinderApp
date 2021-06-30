@@ -19,7 +19,7 @@ export class Ratings extends BaseEntity{
     user: User;
 
     @Column({name: "hotel_id"})
-    hotelId: string;
+    hotelId: number;
 
     @ManyToOne(() => Hotel, hotel => hotel.ratings)
     @JoinColumn({name: "hotel_id"})

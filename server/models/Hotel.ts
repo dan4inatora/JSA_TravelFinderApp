@@ -1,4 +1,4 @@
-import {Entity, PrimaryGeneratedColumn, Column, BaseEntity, OneToMany, PrimaryColumn} from "typeorm";
+import {Entity, Column, BaseEntity, OneToMany, PrimaryGeneratedColumn} from "typeorm";
 import { Comment } from "./Comment";
 import { CommentReacts } from "./CommentReacts";
 import { Favorites } from "./Favorites";
@@ -8,11 +8,11 @@ import { Ratings } from "./Ratings";
 
 @Entity('hotels')
 export class Hotel extends BaseEntity{
-    @PrimaryColumn()
-    id: string;
+    @PrimaryGeneratedColumn()
+    id: number;
 
-    @Column({name: "hotels_hotel_id"})
-    hotelId: string;
+    @Column({name: "hotels_hotel_identifier"})
+    hotelIdentifier: string;
 
     @OneToMany(() => Comment, comments => comments.hotel)
     comments: Comment[];

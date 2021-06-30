@@ -1,6 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import PlacesAutocomplete from 'react-places-autocomplete';
-import { geocodeByAddress, geocodeByPlaceId, getLatLng } from 'react-places-autocomplete';
+import { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete';
 import CircleLoader from 'react-spinners/CircleLoader';
 import { Container, Button } from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
@@ -52,8 +52,9 @@ const DestinationsPage = () => {
         .then(results => {
             getLatLng(results[0])
         })
-        .then(latLng => {
-            setAddressCoords(latLng)
+        .then(result => {
+            console.log(result);
+            //setAddressCoords({Lat: lat, Lng: lng});
         })
         .catch(error => {
             console.error('Error', error)

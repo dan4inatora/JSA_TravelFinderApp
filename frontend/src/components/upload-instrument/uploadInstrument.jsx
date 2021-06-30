@@ -18,7 +18,14 @@ const useStyles = makeStyles((theme) => ({
     },
     previewImage: {
         width: '50px', 
-        height: '50px'
+        height: '50px',
+        margin: '3%'
+    },
+    previewContainer: {
+      display: 'flex',
+      flexDirection: 'row',
+      justifyContent: 'flex-start',
+      alignItems: 'center'
     }
 }))
 
@@ -83,7 +90,10 @@ const UploadInstrument = (props) => {
         LayoutComponent={Layout}
         onSubmit={handleSubmit}
         InputComponent={Input}
-        classNames={{ inputLabelWithFiles: classes.inputLabel, previewImage: classes.previewImage }}
+        classNames={{ 
+          inputLabelWithFiles: classes.inputLabel, 
+          previewImage: classes.previewImage, 
+          previewContainer: classes.previewContainer }}
         inputContent="Drop Your Photos Here"
         accept="image/*,video/*"
         disabled={userId ? false : true}

@@ -26,7 +26,6 @@ const AddComment = (props) => {
                 data: {
                     userId, 
                     hotelId: contentId, 
-                    hotelName, 
                     comment
                 },
                 withCredentials: true
@@ -41,6 +40,10 @@ const AddComment = (props) => {
                 reject(error);
             });
         })
+    }
+
+    const editComment = () => {
+        
     }
 
     const handleSubmit = (e) =>

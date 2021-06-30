@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import { Chip, Paper, Grid, GridListTile, GridListTileBar, IconButton, Typography, Button, Container} from '@material-ui/core';
 import { makeStyles } from '@material-ui/core/styles';
 import StarIcon from '@material-ui/icons/Star';
-import StarBorderIcon from '@material-ui/icons/StarBorder';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import {capitalizeFirstLetter, getDays} from '../../components/destinationFilters/hotelResults';
 import RoomIcon from '@material-ui/icons/Room';
@@ -22,6 +21,8 @@ import MapsComponent from '../../components/maps/mapsComponent';
 import CommentsBox from '../../components/comments/commentsBox';
 import FavouritesComponent from '../../components/favourites/favourites';
 import UploadInstrument from '../../components/upload-instrument/uploadInstrument';
+import CarouselSlideComponent from '../../components/carousel-slide/CarouselSlideComponent';
+import LocationPictures from '../../components/locationPictures/locationPictures';
 
 const useStyles = makeStyles((theme) => ({
     image: {
@@ -58,7 +59,6 @@ const useStyles = makeStyles((theme) => ({
     subtitle: {
         fontFamily: 'inherit',
         fontSize: '1.3rem',
-        display: 'block',
         textAlign: 'left',
         marginTop: '1rem',
         marginBottom: '1rem'
@@ -100,10 +100,13 @@ const useStyles = makeStyles((theme) => ({
         height: '25%'
     },
     amenities: {
-        width: '60%',
+        width: '50%',
         fontFamily: 'inherit',
         marginLeft: '2%',
-        margin:'0 auto'
+        margin:'2%',
+        border: '2px solid #d9e1ec',
+        backgroundColor: '#f1f4f8',
+        padding: '6%'
     },
     chip: {
         fontFamily: 'inherit',
@@ -125,10 +128,23 @@ const useStyles = makeStyles((theme) => ({
         backgroundColor: '#f1f4f8',
         padding: '6%'
     },
+    columnFlexContainer: {
+        display: 'flex',
+        flexDirection: 'row',
+        alignItems: 'flex-start',
+        justifyContent: 'space-evenly'
+    },
+    rowFlexContainer: {
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'flex-start',
+        justifyContent: 'space-evenly'
+    },
     uploadPaper: {
-        width: '60%',
+        width: '40%',
         border: '2px solid #d9e1ec',
         backgroundColor: '#f1f4f8',
+        margin: '2%',
         padding: '6%'
     },
     distance: {
@@ -154,7 +170,11 @@ const useStyles = makeStyles((theme) => ({
         alignItems: 'center',
         justifyContent: 'flex-end',
         padding: '4%'
-      },
+    },
+    flexEndContainer: {
+        display: 'flex',
+        justifyContent: 'flex-end'
+    }
 }));
 
 
@@ -196,22 +216,9 @@ const HotelPage = (props) => {
 
     return (
         <div>
-        {data ? <Container component="main" maxWidth="xl">
-            <GridListTile cols={1}>
-                <img className={classes.image}
-                    src="http://uat.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/1BBCD9A70FE94FAF8B1959D2552E21B8"
-                    alt="hotelName"
-                />
-                <GridListTileBar
-                    title={data.hotel.name}
-                    classes={{ root: classes.titleBar, title: classes.imageTitle}}
-                    actionIcon={
-                        <IconButton aria-label={`star ${data.hotel.name}`}>
-                            <StarBorderIcon className={classes.imageTitle} />
-                        </IconButton>
-                    }
-                />                
-            </GridListTile>
+        {data ? 
+        <Container component="main" maxWidth="xl">
+            <LocationPictures hotelId={hotelId} hotelName={data.hotel.name}/>
             <div className={classes.infoContainer}>
                 <Typography gutterBottom variant="h5" component="h2" className={classes.title}>
                     {data.hotel.name + ", " + data.hotel.address.cityName}
@@ -221,8 +228,8 @@ const HotelPage = (props) => {
                         <StarIcon key={i} size="small" className={classes.stars}/>
                     ))}
                 </Typography>
-                <div>             
-                    <FavouritesComponent />
+                <div className={classes.flexEndContainer}>             
+                    <FavouritesComponent userId={currentUser.id} hotelId={hotelId}/>
                         
                     {data.available ? 
                     <Typography variant="subtitle2" display='inline' className={classes.greenAvailable}>
@@ -256,26 +263,29 @@ const HotelPage = (props) => {
                     {data.hotel.description ? data.hotel.description.text : null}
                 </Typography>                
 
+                <div className={classes.columnFlexContainer}>
+                    <Typography variant="subtitle1" display='inline' className={classes.subtitle}>
+                        Amenities:
+                    </Typography>
 
-                <Typography variant="subtitle1" display='inline' className={classes.subtitle}>
-                    Amenities:
-                </Typography>
-                <Typography variant="subtitle2" component="div" className={classes.amenities}>
-                    <Paper className={classes.infoPaper}>
+                    <Typography variant="subtitle1" display='inline' className={classes.subtitle}>
+                        Upload your photos:
+                    </Typography>
+                </div>
+                
+                <div className={classes.columnFlexContainer}>
+                    <Paper className={classes.amenities}>
                         {data.hotel.amenities.map((label,i) => (
                             <Chip key={i} label={capitalizeFirstLetter(label.toLowerCase().replaceAll("_", " "))}
                                 clickable color="primary" className={classes.chip}
                             />
                         ))}
                     </Paper>
-                </Typography>
-
-                <Typography variant="subtitle1" display='inline' className={classes.subtitle}>
-                    Upload your photos:
-                </Typography>
-                <Paper className={classes.uploadPaper}>
-                    <UploadInstrument userId={currentUser.id}/>
+                
+                    <Paper className={classes.uploadPaper}>
+                        <UploadInstrument userId={currentUser.id}/>
                 </Paper>
+                </div>
 
                 <Paper className={classes.rating}>
                     <Typography variant="subtitle2" className={classes.info}>
@@ -289,7 +299,7 @@ const HotelPage = (props) => {
                         Leave a comment
                     </Typography>
                     {currentUser ?
-                        <CommentsBox isLoggedIn={true} comments={[]}
+                        <CommentsBox isLoggedIn={true}
                         userId={currentUser.id} 
                         hotelName={data.hotel.name}
                         contentId={data.hotel.hotelId}

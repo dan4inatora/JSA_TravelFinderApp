@@ -8,8 +8,6 @@ export class IdOfHotelsIsNotAutoIncrementAndSHoudBeSetToApiId1613690117406 imple
         await queryRunner.query(`ALTER TABLE "comments" DROP COLUMN "party_react"`);
         await queryRunner.query(`ALTER TABLE "comments" DROP CONSTRAINT "FK_2c6e72e2f8e12a886854df5b6b5"`);
         await queryRunner.query(`COMMENT ON COLUMN "hotels"."id" IS NULL`);
-        await queryRunner.query(`ALTER TABLE "hotels" ALTER COLUMN "id" DROP DEFAULT`);
-        await queryRunner.query(`DROP SEQUENCE "hotels_id_seq"`);
         await queryRunner.query(`ALTER TABLE "comments" ADD CONSTRAINT "FK_2c6e72e2f8e12a886854df5b6b5" FOREIGN KEY ("hotel_id") REFERENCES "hotels"("id") ON DELETE NO ACTION ON UPDATE NO ACTION`);
     }
 

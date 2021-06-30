@@ -17,7 +17,7 @@ export class Favorites extends BaseEntity{
     user: User;
 
     @Column({name: "hotel_id"})
-    hotelId: string;
+    hotelId: number;
 
     @ManyToOne(() => Hotel, hotel => hotel.favorites)
     @JoinColumn({name: "hotel_id"})
