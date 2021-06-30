@@ -22,22 +22,23 @@ class FavoritesController {
 
   public async addFavorite (req : Request, res : Response, next : NextFunction)  {
     let userId = parseInt(req.params.id);
-    const {hotelId, hotelName} = req.body;
-    let addedFavorite = await favoritesService.addFavorites(userId, hotelId, hotelName);
+    const {hotelId} = req.body;
+    let addedFavorite = await favoritesService.addFavorites(userId, hotelId);
     res.status(200).send(addedFavorite);
   };
 
   public async deleteFavorite (req : Request, res : Response, next : NextFunction)  {
     let userId = parseInt(req.params.id);
-    let hotelId = parseInt(req.params.hotelId);
+    let hotelId = req.params.hotelId;
     let deleted = await favoritesService.deleteFavorites(userId, hotelId);
     res.status(200).send(deleted);
   }; 
 
   public async isAddedToFavourites (req : Request, res : Response, next : NextFunction) {
     let userId = parseInt(req.params.id);
-    let hotelId = parseInt(req.params.hotelId);
+    let hotelId = req.params.hotelId;
     let isAdded = await favoritesService.isAddedToFavourites(userId, hotelId);
+    return isAdded;
   }
   
   

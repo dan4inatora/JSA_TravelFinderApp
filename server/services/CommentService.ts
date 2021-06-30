@@ -75,17 +75,17 @@ class CommentService {
         return await CommentReacts.delete(toBeDeleted);
     }
 
-    public async addComment(userId: number, hotelId : number, hotelName: string, comment: string) : Promise<Comment>{
+    public async addComment(userId: number, hotelId : string, comment: string) : Promise<Comment>{
         let hotel = await hotelService.getHotelById(hotelId);
         if(hotel == undefined){ 
-            await hotelService.createHotel(hotelId, hotelName, 0)
+            await hotelService.createHotel(hotelId)
         }
         const newComment = new Comment();
         newComment.hotelId = hotelId;
         newComment.userId = userId;
         newComment.comment = comment;
         console.log("COmment created", newComment);
-        return await newComment.save();
+        return await Comment.create(newComment).save();
     }
 
     public async deleteComment(commentId : number) : Promise<DeleteResult>{

@@ -15,7 +15,7 @@ class RatingsController {
   }
 
   public async getAllRatingsForHotel (req : Request, res : Response, next : NextFunction)  {
-    let hotelId = parseInt(req.params.id);
+    let hotelId = req.params.id;
     let allRatings = await ratingsService.getAllRatingsForHotel(hotelId);
     console.log(allRatings);
     let count = 0;
@@ -32,21 +32,21 @@ class RatingsController {
 
   public async addRating (req : Request, res : Response, next : NextFunction)  {
     let userId = parseInt(req.params.id);
-    const {hotelId, hotelName, rating} = req.body;
-    let addedRating = await ratingsService.addRating(userId,hotelId,hotelName,rating);
+    const {hotelId, rating} = req.body;
+    let addedRating = await ratingsService.addRating(userId,hotelId,rating);
     res.status(200).send(addedRating);
   };
 
   public async deleteRating (req : Request, res : Response, next : NextFunction)  {
     let userId = parseInt(req.params.id);
-    let hotelId = parseInt(req.params.hotelId);
+    let hotelId = req.params.hotelId;
     let deleted = await ratingsService.deleteRating(userId, hotelId);
     res.status(200).send(deleted);
   }; 
 
   public async getUserRatingForHotel (req : Request, res : Response, next : NextFunction)  {
     let userId = parseInt(req.params.id);
-    let hotelId = parseInt(req.params.hotelId);
+    let hotelId = req.params.hotelId;
     let rating = await ratingsService.getUserRatingforHotel(userId, hotelId);
     res.status(200).send(rating);
   }; 
