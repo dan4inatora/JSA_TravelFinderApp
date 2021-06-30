@@ -8,7 +8,7 @@ export class Images extends BaseEntity{
     id: number;
 
     @Column({name: "image_path"})
-    imagePath: number;
+    imagePath: string;
 
     @Column({name: "hotel_id"})
     hotelId: string;
