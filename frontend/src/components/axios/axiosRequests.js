@@ -8,11 +8,9 @@ export function fetchPointsOfInterest(addressCoords) {
             withCredentials: true
         }).then((response) => {
             if(response && response.data) {
-                console.log(response);
                 resolve(response.data.data);
             }
         }).catch((error) => {
-            console.log(error);
             reject(error);
         });
     })
@@ -26,11 +24,9 @@ export function fetchToursAndActivities(addressCoords) {
             withCredentials: true
         }).then((response) => {
             if(response && response.data) {
-                console.log(response);
                 resolve(response.data.data)
             }
         }).catch((error) => {
-            console.log(error);
             reject(error)
         });
     })
@@ -46,11 +42,9 @@ export function fetchHotels(addressCoords, budgetValue, dateRange) {
         console.log(reqBody);
         axios(reqBody).then((response) => {
             if(response && response.data) {
-                console.log(response);
                 resolve(response.data.data);
             }
         }).catch((error) => {
-            console.log(error);
             reject(error);
         });
     })
@@ -64,11 +58,9 @@ export function fetchHotelById(hotelId, longitude, latitude) {
             withCredentials: true
         }).then((response) => {
             if(response && response.data) {
-                console.log(response);
                 resolve(response.data.data);
             }
         }).catch((error) => {
-            console.log(error);
             reject(error);
         });
     })
@@ -84,11 +76,9 @@ export function fetchRecommendedLocations(cityCode) {
             withCredentials: true
         }).then((response) => {
             if(response && response.data) {
-                console.log(response);
                 resolve(response.data.data);
             }
         }).catch((error) => {
-            console.log(error);
             reject(error);
         });
     })

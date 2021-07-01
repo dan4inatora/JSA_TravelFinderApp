@@ -184,7 +184,7 @@ const HotelPage = (props) => {
     const [data, setData] = useState(mockData);
     const [isAddedToFavourites, setIsAddedToFavourites] = useState(false);
     console.log(hotelId, longitude, latitude);
-
+console.log(history);
     useEffect(() => {
         if(hotelId && longitude && latitude) {
             fetchHotelById(hotelId, longitude, latitude).then((response) => {
