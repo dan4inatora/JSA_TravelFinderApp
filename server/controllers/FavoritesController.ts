@@ -38,7 +38,7 @@ class FavoritesController {
     let userId = parseInt(req.params.id);
     let hotelId = req.params.hotelId;
     let isAdded = await favoritesService.isAddedToFavourites(userId, hotelId);
-    return isAdded;
+    res.status(200).send(isAdded);
   }
   
   

@@ -78,7 +78,6 @@ const SignUp = ({registerUser}) => {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json'},
                 url: 'http://localhost:3000/register',
-                withCredentials: true,
                 data: {
                   email: values.email,
                   username: values.username,

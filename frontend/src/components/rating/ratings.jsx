@@ -10,7 +10,7 @@ const RatingComponent = (props) => {
     const {currentUser, hotelId} = props;
     const [value, setValue] = useState(3);
     const [hover, setHover] = useState(-1);
-    const [userId] = useState(currentUser ? currentUser.id : 0);  
+    const [userId] = useState(currentUser ? currentUser.id : 1);  
 
     const labels = {
         1: 'Useless',
@@ -32,12 +32,11 @@ const RatingComponent = (props) => {
                 data: {
                     hotelId, 
                     rating
-                },
-                withCredentials: true
+                }
             }).then((response) => {
                 if(response && response.data) {
                     console.log(response);
-                    resolve(response.data.data);
+                    resolve(response.data);
                 }
             }).catch((error) => {
                 console.log(error);
@@ -51,12 +50,12 @@ const RatingComponent = (props) => {
             axios({
                 method: 'GET',
                 url: `http://localhost:3000/getUserRating/${userId}/${hotelId}`,
-                withCredentials: true
             }).then((response) => {
                 if(response && response.data) {
                     console.log(response);
-                    if(response.data.data) {
-                        resolve(response.data.data);
+                    if(response.data && response.data.rating) {
+                        resolve(response.data);
+                        setValue(response.data.rating);
                     }
                     
                 }

@@ -86,22 +86,22 @@ const DestinationsPage = () => {
                 setLoadingIndicator(false);
             });
         } else if(selectedRadioButton === 'hotels') {
-            setData(mockData);
-            setLoadingIndicator(false);
-            setShowHotels(true);
-            // fetchHotels(addressCoords, budgetValue, dateRange).then((response) => {
-            //     setData(mockData);
-            //     setLoadingIndicator(false);
-            //     setShowHotels(true);
-            // }).catch((error) => {
-            //     console.log(error);
-            //     setLoadingIndicator(false);
-            // });
+            // setData(mockData);
+            // setLoadingIndicator(false);
+            // setShowHotels(true);
+            fetchHotels(addressCoords, budgetValue, dateRange).then((response) => {
+                setData(response);
+                setLoadingIndicator(false);
+                setShowHotels(true);
+            }).catch((error) => {
+                console.log(error);
+                setLoadingIndicator(false);
+            });
         }
     }
 
     return (
-      <Container component="main" maxWidth="xl">
+      <div className="destinations-container">
         <PlacesAutocomplete value={address} onChange={handleChange} onSelect={handleSelect}>
           {({ getInputProps, suggestions, getSuggestionItemProps, loading }) => (
             <div>
@@ -161,7 +161,7 @@ const DestinationsPage = () => {
         {showHotels ? 
             <HotelResults data={data}/>
         : null}
-      </Container>
+      </div>
       );
 }
 

@@ -29,7 +29,7 @@ const CommentsBox = (props) => {
                     resolve(response.data.data);
                     if(response.data) {
                         setHasComments(true);
-                        setComments(response.data.data);
+                        setComments(response.data);
                     }
                 }
             }).catch((error) => {

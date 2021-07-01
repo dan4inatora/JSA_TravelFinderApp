@@ -1,7 +1,8 @@
 import { AmadeusReduxActions } from './amadeus.actions';
 
 const INITIAL_STATE = {
-    accessToken: ''
+    accessToken: '',
+    currentSelectedDestination: null
 }
 
 const amadeusReducer = (state= INITIAL_STATE, action) => {
@@ -11,6 +12,12 @@ const amadeusReducer = (state= INITIAL_STATE, action) => {
                 ...state,
                 accessToken: action.payload,
             }
+        case AmadeusReduxActions.SELECT_CURRENT_DESTINATION: {
+            return {
+                ...state,
+                currentSelectedDestination: action.payload
+            }
+        }
         default:
             return state;
     }

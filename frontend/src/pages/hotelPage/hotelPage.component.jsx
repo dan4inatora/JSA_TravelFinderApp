@@ -350,7 +350,7 @@ const HotelPage = (props) => {
                         <Grid item xs={12} sm={2}>
                             <Typography variant="subtitle2" className={classes.distance}>
                                 <Button size="large" color="primary" variant="contained" endIcon={<PhoneIcon/>}>
-                                    Book Now
+                                    View
                                 </Button>
                             </Typography>
                         </Grid>

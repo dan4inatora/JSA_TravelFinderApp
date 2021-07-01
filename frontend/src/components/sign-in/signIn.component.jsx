@@ -65,34 +65,25 @@ const SignIn = ({loginUser}) => {
       validateOnBlur: true,
       validationSchema,
       onSubmit(values) {
-        try {
-          return new Promise((resolve, reject) => {
-            axios({
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json', "Access-Control-Allow-Origin": "*"},
-              url: 'http://localhost:3000/login',
-              withCredentials: true,
-              data: {
-                email: values.email,
-                password: values.password
-              }
-            }).then((response) => {
-              if(response.data && response.data.email) {
-                loginUser({id: response.data.id, email: response.data.email, name: response.data.firstName + " " + response.data.lastName, 
-                role: response.data.role, username: response.data.username});
-              }
-              setTimeout(() => {
-                resolve(response.data);
-                history.push('/');
-              }, 1000);
-            }).catch((error) => {
-              console.log(error);
-              reject(error);
-            });
-          })
-        } catch(error) {
-            console.error(error);
-        }
+          axios({
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json'},
+            url: 'http://localhost:3000/login',
+            data: {
+              email: values.email,
+              password: values.password
+            }
+          }).then((response) => {
+            if(response.data && response.data.email) {
+              loginUser({id: response.data.id, email: response.data.email, name: response.data.firstName + " " + response.data.lastName, 
+              role: response.data.role, username: response.data.username});
+            }
+            setTimeout(() => {
+              history.push('/');
+            }, 1000);
+          }).catch((error) => {
+            console.log(error);
+          });
       }
   })
 

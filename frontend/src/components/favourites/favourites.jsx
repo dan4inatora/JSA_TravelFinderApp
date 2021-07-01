@@ -23,7 +23,7 @@ const FavouritesComponent = (props) => {
                 withCredentials: true
             }).then((response) => {
                 if(response && response.data) {
-                    resolve(response.data.data);
+                    resolve(response.data);
                     if(response.data) {
                         setIsAdded(true);
                     }
@@ -39,7 +39,7 @@ const FavouritesComponent = (props) => {
         return new Promise((resolve, reject) => {
             axios({
                 method: 'POST',
-                url: `http://localhost:3000/addFavorites/${userId}`,
+                url: `http://localhost:3000/addFavorites/${userId}/${hotelId}`,
                 data: {
                     hotelId
                 },
@@ -47,7 +47,7 @@ const FavouritesComponent = (props) => {
             }).then((response) => {
                 if(response && response.data) {
                     console.log(response);
-                    resolve(response.data.data);
+                    resolve(response.data);
                 }
             }).catch((error) => {
                 console.log(error);

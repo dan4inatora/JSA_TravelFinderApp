@@ -14,14 +14,11 @@ export class RatingsRouter extends CommonRoutesConfig {
             .get(AuthenticationMiddleware.isAuthenticated,
                 ratingsController.getAllRatingsForHotel)
         this.app.route('/addRating/:id')
-            .post(AuthenticationMiddleware.isAuthenticated,
-                ratingsController.addRating)
+            .post(ratingsController.addRating)
         this.app.route('/deleteRating/:id/:hotelId')
-            .delete(AuthenticationMiddleware.isAuthenticated,
-                ratingsController.deleteRating)
+            .delete(ratingsController.deleteRating)
         this.app.route('/getUserRating/:id/:hotelId')
-            .get(AuthenticationMiddleware.isAuthenticated,
-                ratingsController.getUserRatingForHotel)
+            .get(ratingsController.getUserRatingForHotel)
 
 
         return this.app;

@@ -7,25 +7,20 @@ export class DestinationRouter extends CommonRoutesConfig {
     constructor(app: express.Application) {
         super(app, 'DestinationRouter');
     }
-
+z
     configureRoutes() {
         // (we'll add the actual route configuration here next)
 
-        this.app.route('/getHotelById')
-            .get(AuthenticationMiddleware.isAuthenticated,
-                 destinationController.getHotelById)
-        this.app.route('/getHotels')
-            .get(AuthenticationMiddleware.isAuthenticated,
-                destinationController.getHotels)
-        this.app.route('/getPointOfInterest')
-            .get(AuthenticationMiddleware.isAuthenticated,
-                destinationController.getPointOfInterest)
-        this.app.route('/getRecommendations')
-            .get(AuthenticationMiddleware.isAuthenticated,
-                destinationController.getRecommendations)
-        this.app.route('/getToursAndActivities')
-            .get(AuthenticationMiddleware.isAuthenticated,
-                destinationController.getToursAndActivities)
+        this.app.route('/getHotelById/:lat/:lng/:hotelId')
+            .get(destinationController.getHotelById)
+        this.app.route('/getHotels/:lat/:lng/:budgetValue/:dateRange')
+            .get(destinationController.getHotels)
+        this.app.route('/getPointOfInterest/:lat/:lng')
+            .get(destinationController.getPointOfInterest)
+        this.app.route('/getRecommendations/:code')
+            .get(destinationController.getRecommendations)
+        this.app.route('/getToursAndActivities/:lat/:lng')
+            .get(destinationController.getToursAndActivities)
         
    
         return this.app;

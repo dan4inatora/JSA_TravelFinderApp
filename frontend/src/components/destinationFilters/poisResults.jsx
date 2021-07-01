@@ -6,6 +6,8 @@ import StarBorderIcon from '@material-ui/icons/StarBorder';
 import ArrowForwardIcon from '@material-ui/icons/ArrowForward';
 import { Chip, Paper, GridListTile, GridListTileBar, IconButton, Typography, Button} from '@material-ui/core';
 import {addRecommendation} from '../../redux/userSearched/userSearched.actions';
+import { createStructuredSelector } from 'reselect';
+import {selectCurrentDestination} from '../../redux/amadeus/amadeus.selectors';
 import {connect} from 'react-redux';
 import _ from 'lodash';
 
@@ -95,7 +97,7 @@ const PoisResults = (props) => {
 
     return (
         <div className="search-results-container">
-                {data.length ? 
+                {data ? 
                 <Typography gutterBottom variant="h3" component="h2" className={classes.resultsTitle}>
                     Results from your search ({data.length})
                 </Typography>  : null}              
@@ -148,7 +150,7 @@ const PoisResults = (props) => {
                             
                             <Button size="large" color="primary" component={Link} 
                             to={`poi/${result.id}/${result.geoCode.longitude}/${result.geoCode.latitude}`} variant="contained">
-                                Book now
+                                View
                                 <ArrowForwardIcon/>
                             </Button>
                         </Typography>
@@ -169,290 +171,12 @@ const PoisResults = (props) => {
     )
 }
 
+const mapStateToProps = createStructuredSelector({
+    currentSelectedDestination: selectCurrentDestination
+});
+
 const mapDispatchToProps = dispatch => ({
     addToUserSearched: (cityCode) => dispatch(addRecommendation(cityCode))
 }); 
 
-// const data = [
-//     {
-//         "type": "location",
-//         "subType": "POINT_OF_INTEREST",
-//         "id": "9CB40CB5D0",
-//         "self": {
-//             "href": "https://test.api.amadeus.com/v1/reference-data/locations/pois/9CB40CB5D0",
-//             "methods": [
-//                 "GET"
-//             ]
-//         },
-//         "geoCode": {
-//             "latitude": 41.39165,
-//             "longitude": 2.164772
-//         },
-//         "name": "Casa Batlló",
-//         "category": "SIGHTS",
-//         "rank": 5,
-//         "tags": [
-//             "sightseeing",
-//             "sights",
-//             "museum",
-//             "landmark",
-//             "tourguide",
-//             "restaurant",
-//             "attraction",
-//             "activities",
-//             "commercialplace",
-//             "shopping",
-//             "souvenir"
-//         ]
-//     },
-//     {
-//         "type": "location",
-//         "subType": "POINT_OF_INTEREST",
-//         "id": "5F48B525B3",
-//         "self": {
-//             "href": "https://test.api.amadeus.com/v1/reference-data/locations/pois/5F48B525B3",
-//             "methods": [
-//                 "GET"
-//             ]
-//         },
-//         "geoCode": {
-//             "latitude": 41.387573,
-//             "longitude": 2.175313
-//         },
-//         "name": "Palau de la Música Catalana",
-//         "category": "SIGHTS",
-//         "rank": 5,
-//         "tags": [
-//             "sightseeing",
-//             "landmark",
-//             "tourguide",
-//             "activities",
-//             "attraction",
-//             "events",
-//             "theater",
-//             "musicvenue",
-//             "sights",
-//             "commercialplace"
-//         ]
-//     },
-//     {
-//         "type": "location",
-//         "subType": "POINT_OF_INTEREST",
-//         "id": "AF57D529B2",
-//         "self": {
-//             "href": "https://test.api.amadeus.com/v1/reference-data/locations/pois/AF57D529B2",
-//             "methods": [
-//                 "GET"
-//             ]
-//         },
-//         "geoCode": {
-//             "latitude": 41.40359,
-//             "longitude": 2.17436
-//         },
-//         "name": "La Sagrada Familia",
-//         "category": "SIGHTS",
-//         "rank": 5,
-//         "tags": [
-//             "church",
-//             "sightseeing",
-//             "temple",
-//             "sights",
-//             "attraction",
-//             "historicplace",
-//             "tourguide",
-//             "landmark",
-//             "professionalservices",
-//             "latte",
-//             "activities",
-//             "commercialplace"
-//         ]
-//     },
-//     {
-//         "type": "location",
-//         "subType": "POINT_OF_INTEREST",
-//         "id": "6490DA6437",
-//         "self": {
-//             "href": "https://test.api.amadeus.com/v1/reference-data/locations/pois/6490DA6437",
-//             "methods": [
-//                 "GET"
-//             ]
-//         },
-//         "geoCode": {
-//             "latitude": 41.36844,
-//             "longitude": 2.15357
-//         },
-//         "name": "Museu Nacional d'Art de Catalunya",
-//         "category": "SIGHTS",
-//         "rank": 5,
-//         "tags": [
-//             "museum",
-//             "sightseeing",
-//             "artgallerie",
-//             "sights",
-//             "tourguide",
-//             "restaurant",
-//             "attraction",
-//             "shopping",
-//             "activities",
-//             "commercialplace"
-//         ]
-//     },
-//     {
-//         "type": "location",
-//         "subType": "POINT_OF_INTEREST",
-//         "id": "E0F7A78465",
-//         "self": {
-//             "href": "https://test.api.amadeus.com/v1/reference-data/locations/pois/E0F7A78465",
-//             "methods": [
-//                 "GET"
-//             ]
-//         },
-//         "geoCode": {
-//             "latitude": 41.41068,
-//             "longitude": 2.226342
-//         },
-//         "name": "Parc del Fòrum",
-//         "category": "SIGHTS",
-//         "rank": 5,
-//         "tags": [
-//             "park",
-//             "attraction",
-//             "activities",
-//             "tourguide",
-//             "landmark",
-//             "sightseeing",
-//             "commercialplace",
-//             "professionalservices"
-//         ]
-//     },
-//     {
-//         "type": "location",
-//         "subType": "POINT_OF_INTEREST",
-//         "id": "DF1ABE30F1",
-//         "self": {
-//             "href": "https://test.api.amadeus.com/v1/reference-data/locations/pois/DF1ABE30F1",
-//             "methods": [
-//                 "GET"
-//             ]
-//         },
-//         "geoCode": {
-//             "latitude": 41.347973,
-//             "longitude": 2.074765
-//         },
-//         "name": "RCDE Stadium",
-//         "category": "SIGHTS",
-//         "rank": 5,
-//         "tags": [
-//             "stadium",
-//             "sportclub",
-//             "sports",
-//             "events",
-//             "sightseeing",
-//             "commercialplace",
-//             "club",
-//             "shopping",
-//             "transport",
-//             "restaurant"
-//         ]
-//     },
-//     {
-//         "type": "location",
-//         "subType": "POINT_OF_INTEREST",
-//         "id": "631EC5882F",
-//         "self": {
-//             "href": "https://test.api.amadeus.com/v1/reference-data/locations/pois/631EC5882F",
-//             "methods": [
-//                 "GET"
-//             ]
-//         },
-//         "geoCode": {
-//             "latitude": 41.38402,
-//             "longitude": 2.101542
-//         },
-//         "name": "Hospital Sant Joan de Déu Barcelona",
-//         "category": "SIGHTS",
-//         "rank": 5,
-//         "tags": [
-//             "hospital",
-//             "medicalcenter",
-//             "professionalservices",
-//             "sightseeing",
-//             "commercialplace"
-//         ]
-//     },
-//     {
-//         "type": "location",
-//         "subType": "POINT_OF_INTEREST",
-//         "id": "29A0671F8C",
-//         "self": {
-//             "href": "https://test.api.amadeus.com/v1/reference-data/locations/pois/29A0671F8C",
-//             "methods": [
-//                 "GET"
-//             ]
-//         },
-//         "geoCode": {
-//             "latitude": 41.3715,
-//             "longitude": 2.05582
-//         },
-//         "name": "Follia",
-//         "category": "RESTAURANT",
-//         "rank": 5,
-//         "tags": [
-//             "restaurant",
-//             "sightseeing",
-//             "commercialplace"
-//         ]
-//     },
-//     {
-//         "type": "location",
-//         "subType": "POINT_OF_INTEREST",
-//         "id": "006829D957",
-//         "self": {
-//             "href": "https://test.api.amadeus.com/v1/reference-data/locations/pois/006829D957",
-//             "methods": [
-//                 "GET"
-//             ]
-//         },
-//         "geoCode": {
-//             "latitude": 41.359634,
-//             "longitude": 2.076576
-//         },
-//         "name": "Los Arcos Bar",
-//         "category": "RESTAURANT",
-//         "rank": 5,
-//         "tags": [
-//             "restaurant",
-//             "tapas",
-//             "gastropub",
-//             "bar",
-//             "sightseeing",
-//             "commercialplace"
-//         ]
-//     },
-//     {
-//         "type": "location",
-//         "subType": "POINT_OF_INTEREST",
-//         "id": "AF47F131AE",
-//         "self": {
-//             "href": "https://test.api.amadeus.com/v1/reference-data/locations/pois/AF47F131AE",
-//             "methods": [
-//                 "GET"
-//             ]
-//         },
-//         "geoCode": {
-//             "latitude": 41.455376,
-//             "longitude": 2.206609
-//         },
-//         "name": "Lluerna",
-//         "category": "RESTAURANT",
-//         "rank": 5,
-//         "tags": [
-//             "restaurant",
-//             "sightseeing",
-//             "commercialplace",
-//             "seafood"
-//         ]
-//     }
-// ]
-
-export default connect(null, mapDispatchToProps)(PoisResults);
+export default connect(mapStateToProps, mapDispatchToProps)(PoisResults);

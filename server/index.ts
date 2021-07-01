@@ -35,6 +35,14 @@ createConnection().then(async () => {
   console.log('Error creating database connection: ' + error)
 });
 
+app.use(cors({
+  methods:["POST","PUT","GET", "DELETE"],
+  origin:`http://localhost:${envConfig.frontend.port}`,
+  optionsSuccessStatus: 200,
+  preflightContinue: true,
+  credentials: true
+}));
+
 //Middleware - sessions 
 const sessionMiddleware = session({
   name: "travelFinderSession",
@@ -71,16 +79,11 @@ app.use((err, req, res, next) => {
 
 //CORS FOR PUBLIC
 console.log()
-app.use(cors({
-  methods:["POST","PUT","GET", "DELETE"],
-  origin:`http://localhost:${envConfig.frontend.port}`,
-  credentials: true
-}));
 
 // app.use(function(req, res, next) {
 //   res.header("Access-Control-Allow-Origin", "*");
 //   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+//   res.setHeader('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
 //      next();
 // });
 
@@ -128,13 +131,15 @@ adminApp.use((err, req, res, next) => {
 adminApp.use(cors({
   methods:["POST","PUT","GET", "DELETE"],
   origin:`http://localhost:${envConfig.frontend.port}`,
+  optionsSuccessStatus: 200,
+  preflightContinue: true,
   credentials: true
 }));
 
 // adminApp.use(function(req, res, next) {
 //   res.header("Access-Control-Allow-Origin", "*");
 //   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
-//   res.header('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
+//   res.setHeader('Access-Control-Allow-Methods', 'PUT, POST, GET, DELETE, OPTIONS');
 //      next();
 // });
 

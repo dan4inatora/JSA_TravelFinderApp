@@ -18,7 +18,9 @@ class DestinationController {
   }
 
   public async getPointOfInterest(req : Request, res : Response, next : NextFunction)  {
-    const {lat, lng} = req.body;    
+    const lat = req.params.lat;
+    const lng = req.params.lng;    
+    console.log(req.body);
         axios({
             method: 'GET',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded',
@@ -26,16 +28,16 @@ class DestinationController {
             url: `https://test.api.amadeus.com/v1/reference-data/locations/pois?latitude=${lat}&longitude=${lng}`
         }).then((response) => {
             if(response && response.data) {
-               res.send(response.data.data);
+               res.send(response.data);
             }
         }).catch((error) => {
-            console.log(error);
             res.send(error);
         }); 
   };
 
   public async getToursAndActivities(req : Request, res : Response, next : NextFunction)  {
-    const {lat, lng} = req.body;   
+    const lat = req.params.lat;
+    const lng = req.params.lng; 
         axios({
             method: 'GET',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded',
@@ -43,32 +45,32 @@ class DestinationController {
             url: `https://test.api.amadeus.com/v1/shopping/activities?latitude=${lat}&longitude=${lng}`
         }).then((response) => {
             if(response && response.data) {
-                console.log(response);
-                res.send(response.data.data);
+                res.send(response.data);
             }
         }).catch((error) => {
-            console.log(error);
             res.send(error)
         });
   };
 
 
   public async getHotels(req : Request, res : Response, next : NextFunction)  {
-    const {lat, lng, budgetValue, dateRange} = req.body;
+    const lat = req.params.lat;
+    const lng = req.params.lng;
+    const budgetValue = req.params.budgetValue;
+    const dateRange = req.params.dateRange;
+
     let stringParams='';
-    console.log(req.body);
     if(lat) {
         stringParams=`latitude=${lat}&longitude=${lng}`;
     }
     if(budgetValue) {
-        stringParams = stringParams+ `&priceRange=${budgetValue[0]}-${budgetValue[1]}`;
+        stringParams = stringParams+ `&priceRange=${budgetValue}`;
     }
     if(dateRange) {
         stringParams = stringParams + `&dateRange=${dateRange}`
     }
     stringParams = stringParams + '&currency=USD';
 
-    console.log('https://test.api.amadeus.com/v2/shopping/hotel-offers?' + stringParams);
     
     axios({
         method: 'GET',
@@ -77,18 +79,18 @@ class DestinationController {
         url: 'https://test.api.amadeus.com/v2/shopping/hotel-offers?' + stringParams
     }).then((response) => {
         if(response && response.data) {
-            //console.log(response);
-            res.send(response.data.data);
+            res.send(response.data);
         }
     }).catch((error) => {
-        //console.log(error);
         res.send(error);
     });
 
   };
 
   public async getHotelById(req : Request, res : Response, next : NextFunction)  {
-    const {lat, lng, hotelId} = req.body;
+    const lat = req.params.lat;
+    const lng = req.params.lng;
+    const hotelId = req.params.hotelId;
 
         axios({
             method: 'GET',
@@ -97,8 +99,7 @@ class DestinationController {
             url: `https://test.api.amadeus.com/v2/shopping/hotel-offers/by-hotel?latitude=${lat}&longitude=${lng}&hotelId=${hotelId}`
         }).then((response) => {
             if(response && response.data) {
-                console.log(response);
-                res.send(response.data.data);
+                res.send(response.data);
             }
         }).catch((error) => {
             console.log(error);
@@ -108,7 +109,7 @@ class DestinationController {
   };
 
   public async getRecommendations(req : Request, res : Response, next : NextFunction)  {
-    const {cityCode} = req.body;
+    const cityCode = req.params.code;
         axios({
             method: 'GET',
             headers: { 'Content-Type': 'application/x-www-form-urlencoded',
@@ -116,11 +117,9 @@ class DestinationController {
             url: `https://test.api.amadeus.com/v1/reference-data/recommended-locations?cityCodes=${cityCode}`
         }).then((response) => {
             if(response && response.data) {
-                console.log(response);
-                res.send(response.data.data);
+                res.send(response.data);
             }
         }).catch((error) => {
-            console.log(error);
             res.send(error);
         });
 

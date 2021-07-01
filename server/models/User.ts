@@ -49,7 +49,6 @@ export class User extends BaseEntity{
     }
 
     async comparePassword(attempt: string): Promise<boolean> {
-      console.log("HIUSTON HERE", attempt, this.password);
       return await bcrypt.compare(attempt, this.password);
     }
 

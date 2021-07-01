@@ -31,6 +31,8 @@ class UserController {
   };
   
   public async login(req : Request, res : Response, next : NextFunction){
+    console.log("I AM GROOT!");
+
     await passport.authenticate(
       "local",
       { session: true },
@@ -44,7 +46,7 @@ class UserController {
                 return next(err);
               }
             });
-            return res.send(user);
+            return res.status(200).send(user);
           } catch (err) {
             return next(err);
           }

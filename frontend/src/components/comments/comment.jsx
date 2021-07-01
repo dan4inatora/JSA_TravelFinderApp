@@ -5,10 +5,8 @@ import './comments.styles.scss';
 const Comment = (props) =>
 {
     const {commentItem} = props;
-    let firstName = commentItem.user.firstName;
-    let lastName = commentItem.user.lastName;
-    let name = commentItem.user.organizationName?commentItem.user.organizationName: firstName + " " + lastName
-    let commentText= commentItem.comment.comment;
+    let firstName = commentItem.userId;
+    let commentText= commentItem.comment;
     return(
         <div className="comment">
             <div className="name-and-tag">
@@ -16,7 +14,7 @@ const Comment = (props) =>
                     <div className="user-pic">
                         <AccountCircleIcon size="small"/>
                     </div>  
-                   <div className="name-pill">{name}</div>
+                   <div className="name-pill">{firstName}</div>
                 </div>
                 {/* <div className="report-button-container">
                     <button className="channel-info-button report-button">Report</button>

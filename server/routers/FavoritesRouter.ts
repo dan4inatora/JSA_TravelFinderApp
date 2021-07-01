@@ -11,17 +11,13 @@ export class FavoritesRouter extends CommonRoutesConfig {
     configureRoutes() {
         // (we'll add the actual route configuration here next)
         this.app.route('/getAllFavorites/:id')
-            .get(AuthenticationMiddleware.isAuthenticated,
-                 favoritesController.getAllFavorites)
+            .get(favoritesController.getAllFavorites)
         this.app.route('/addFavorites/:id')
-            .post(AuthenticationMiddleware.isAuthenticated,
-                favoritesController.addFavorite)
+            .post(favoritesController.addFavorite)
         this.app.route('/deleteFavorites/:id/:hotelId')
-            .post(AuthenticationMiddleware.isAuthenticated,
-                favoritesController.deleteFavorite)
+            .post(favoritesController.deleteFavorite)
         this.app.route('isAddedToFavourites/:id/:hotelId')
-            .get(AuthenticationMiddleware.isAuthenticated,
-                favoritesController.isAddedToFavourites)
+            .get(favoritesController.isAddedToFavourites)
 
         return this.app;
     }
