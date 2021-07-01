@@ -50,11 +50,9 @@ const DestinationsPage = () => {
       
       geocodeByAddress(address)
         .then(results => {
-            getLatLng(results[0])
-        })
-        .then(result => {
-            console.log(result);
-            //setAddressCoords({Lat: lat, Lng: lng});
+            getLatLng(results[0]);
+            setAddressCoords({Lat: results[0].geometry.location.lat(), Lng: results[0].geometry.location.lng()});
+            console.log(results[0].geometry.location.lat(), results[0].geometry.location.lng());
         })
         .catch(error => {
             console.error('Error', error)
@@ -88,14 +86,17 @@ const DestinationsPage = () => {
                 setLoadingIndicator(false);
             });
         } else if(selectedRadioButton === 'hotels') {
-            fetchHotels(addressCoords, budgetValue, dateRange).then((response) => {
-                setData(mockData);
-                setLoadingIndicator(false);
-                setShowHotels(true);
-            }).catch((error) => {
-                console.log(error);
-                setLoadingIndicator(false);
-            });
+            setData(mockData);
+            setLoadingIndicator(false);
+            setShowHotels(true);
+            // fetchHotels(addressCoords, budgetValue, dateRange).then((response) => {
+            //     setData(mockData);
+            //     setLoadingIndicator(false);
+            //     setShowHotels(true);
+            // }).catch((error) => {
+            //     console.log(error);
+            //     setLoadingIndicator(false);
+            // });
         }
     }
 
@@ -132,23 +133,25 @@ const DestinationsPage = () => {
             </div>
           )}
         </PlacesAutocomplete>
-        
-        {showFilters ?
-        <div>
-            <DestinationFilters budgetValue={budgetValue} dateRange={dateRange} 
-                setBudgetValue={setBudgetValue} setDateRange={setDateRange}
-                selectedRadioButton={selectedRadioButton} setValue={setValue}/>
-            <Button size="large" color="primary" className={classes.button} variant="contained" 
-                onClick={() => search(budgetValue, dateRange, selectedRadioButton, addressCoords)}>
-                Search
-            </Button>
-        </div>
-        : null}
+
         <div className='loading-indicator'>
             <CircleLoader css={`z-index: 100;`} 
             size={80} color={"#36D2B3"} loading={loadingIndicator}/>
             {/* <div className='loader-message'>{loadingMessage}</div> */}
         </div>
+
+        {showFilters ?
+        <div>
+            <Button size="large" color="primary" className={classes.button} variant="contained" 
+                onClick={() => search(budgetValue, dateRange, selectedRadioButton, addressCoords)}>
+                Search
+            </Button>
+            <DestinationFilters budgetValue={budgetValue} dateRange={dateRange} 
+                setBudgetValue={setBudgetValue} setDateRange={setDateRange}
+                selectedRadioButton={selectedRadioButton} setValue={setValue}/>
+        </div>
+        : null}
+        
         {showTours ? 
             <ToursResults data={data}/>
         : null}

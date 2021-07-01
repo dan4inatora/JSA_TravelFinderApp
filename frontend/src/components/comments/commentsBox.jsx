@@ -3,12 +3,16 @@ import Comment from './comment';
 import AddComment from './addComment';
 import axios from 'axios';
 import './comments.styles.scss';
+import {selectCurrentUser} from '../../redux/user/user.selectors';
+import {createStructuredSelector} from 'reselect';
+import {connect} from 'react-redux';
 import { useState } from 'react';
 
 const CommentsBox = (props) => {
-    const {isLoggedIn, userId, contentId, hotelName} = props
+    const {isLoggedIn, currentUser, contentId, hotelName} = props
     const [hasComments, setHasComments] = useState(false);
     const [comments, setComments] = useState([]);
+    const [userId] = useState(currentUser ? currentUser.id : 0);  
 
     useEffect(() => {
         getAllCommentsForContentId();
@@ -43,7 +47,8 @@ const CommentsBox = (props) => {
                 {comments.map((comment, index)=>(
                      <Comment commentItem={comment} key={index}/>
                 ))}
-            </div>:
+            </div>
+            :
             <h2 className="alling-left">No comments yet, be the first to comment!</h2>
             }
             {isLoggedIn?
@@ -54,4 +59,8 @@ const CommentsBox = (props) => {
     )
 }
 
-export default CommentsBox;
+const mapStateToProps = createStructuredSelector({
+    currentUser: selectCurrentUser
+});
+
+export default connect(mapStateToProps)(CommentsBox);

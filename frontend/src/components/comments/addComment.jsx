@@ -58,10 +58,18 @@ const AddComment = (props) => {
     return(
         <div className='add-comment-box'>
             <div className="add-comment-form">
-                <TextField id="standard-basic" onChange={handleChange} value={comment} multiline rowsMax={10} variant="standard" label="Write your comment..."/>
-                <button onClick={handleSubmit} className="post-comment">Send</button>
-               
+                <TextField id="standard-basic" onChange={handleChange} disabled={userId === 0} value={comment} multiline rowsMax={10} variant="standard" label="Write your comment..."/>
+                <button onClick={handleSubmit} disabled={userId === 0} className="post-comment">Send</button>
             </div>
+            {userId === 0 ? 
+                <h2 className="error-box">
+                You have to 
+                &nbsp;
+                    <a href="/sign-in" >Log In</a>
+                &nbsp;
+                    in order to comment. 
+                </h2>
+            : null}
         </div>
     )
 }

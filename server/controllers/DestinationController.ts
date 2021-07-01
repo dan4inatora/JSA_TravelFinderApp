@@ -54,7 +54,7 @@ class DestinationController {
 
 
   public async getHotels(req : Request, res : Response, next : NextFunction)  {
-    const {lat, lng, budgetValue} = req.body;
+    const {lat, lng, budgetValue, dateRange} = req.body;
     let stringParams='';
     console.log(req.body);
     if(lat) {
@@ -63,25 +63,27 @@ class DestinationController {
     if(budgetValue) {
         stringParams = stringParams+ `&priceRange=${budgetValue[0]}-${budgetValue[1]}`;
     }
+    if(dateRange) {
+        stringParams = stringParams + `&dateRange=${dateRange}`
+    }
     stringParams = stringParams + '&currency=USD';
-    // if(dateRange) {
-    //     stringParams = stringParams+ `&dateRange=${dateRange[0]}`
-    // }
+
     console.log('https://test.api.amadeus.com/v2/shopping/hotel-offers?' + stringParams);
-        axios({
-            method: 'GET',
-            headers: { 'Content-Type': 'application/x-www-form-urlencoded',
-            'Authorization': 'Bearer ' + process.env.REACT_APP_ACCESS_TOKEN},
-            url: 'https://test.api.amadeus.com/v2/shopping/hotel-offers?' + stringParams
-        }).then((response) => {
-            if(response && response.data) {
-                //console.log(response);
-                res.send(response.data.data);
-            }
-        }).catch((error) => {
-            //console.log(error);
-            res.send(error);
-        });
+    
+    axios({
+        method: 'GET',
+        headers: { 'Content-Type': 'application/x-www-form-urlencoded',
+        'Authorization': 'Bearer ' + process.env.REACT_APP_ACCESS_TOKEN},
+        url: 'https://test.api.amadeus.com/v2/shopping/hotel-offers?' + stringParams
+    }).then((response) => {
+        if(response && response.data) {
+            //console.log(response);
+            res.send(response.data.data);
+        }
+    }).catch((error) => {
+        //console.log(error);
+        res.send(error);
+    });
 
   };
 

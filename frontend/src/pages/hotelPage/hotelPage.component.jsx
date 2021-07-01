@@ -12,9 +12,6 @@ import HourglassFullIcon from '@material-ui/icons/HourglassFull';
 import {fetchHotelById} from '../../components/axios/axiosRequests';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import _ from 'lodash';
-import {selectCurrentUser} from '../../redux/user/user.selectors';
-import {createStructuredSelector} from 'reselect';
-import {connect} from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import RatingComponent from '../../components/rating/ratings';
 import MapsComponent from '../../components/maps/mapsComponent';
@@ -180,7 +177,7 @@ const useStyles = makeStyles((theme) => ({
 
 const HotelPage = (props) => {
     const classes = useStyles();
-    const {routeProps, currentUser} = props;
+    const {routeProps} = props;
     const {hotelId, longitude, latitude} = routeProps.match.params;
     const history = useHistory();
 
@@ -229,7 +226,7 @@ const HotelPage = (props) => {
                     ))}
                 </Typography>
                 <div className={classes.flexEndContainer}>             
-                    <FavouritesComponent userId={currentUser.id} hotelId={hotelId}/>
+                    <FavouritesComponent hotelId={hotelId}/>
                         
                     {data.available ? 
                     <Typography variant="subtitle2" display='inline' className={classes.greenAvailable}>
@@ -283,7 +280,7 @@ const HotelPage = (props) => {
                     </Paper>
                 
                     <Paper className={classes.uploadPaper}>
-                        <UploadInstrument userId={currentUser.id}/>
+                        <UploadInstrument/>
                 </Paper>
                 </div>
 
@@ -291,20 +288,17 @@ const HotelPage = (props) => {
                     <Typography variant="subtitle2" className={classes.info}>
                         Rate {data.hotel.name}?
                     </Typography>
-                    {currentUser ? 
-                        <RatingComponent userId={currentUser.id} hotelId={hotelId} />
-                    : null}
+                    
+                    <RatingComponent hotelId={hotelId} />
 
                     <Typography variant="subtitle2" className={classes.info}>
                         Leave a comment
                     </Typography>
-                    {currentUser ?
-                        <CommentsBox isLoggedIn={true}
-                        userId={currentUser.id} 
-                        hotelName={data.hotel.name}
-                        contentId={data.hotel.hotelId}
-                        signIn={signIn}/>
-                    : null} 
+
+                    <CommentsBox isLoggedIn={true}
+                    hotelName={data.hotel.name}
+                    contentId={data.hotel.hotelId}
+                    signIn={signIn}/>
                 </Paper>
 
                 <Typography variant="subtitle1" display='inline' className={classes.subtitle}>
@@ -372,11 +366,7 @@ const HotelPage = (props) => {
     )
 }
 
-const mapStateToProps = createStructuredSelector({
-    currentUser: selectCurrentUser
-});
-
-export default connect(mapStateToProps, null)(HotelPage);
+export default HotelPage;
 
 const mockData = {
         "type": "hotel-offers",

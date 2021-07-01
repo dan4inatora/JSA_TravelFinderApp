@@ -33,24 +33,6 @@ const LocationPictures = (props) => {
     return (
         <GridListTile cols={locationPics.length > 1 ? 2 : 1}>
             {hotelId !== 0 ? 
-                locationPics.map((pic) => {
-                    <React.Fragment>
-                    <img className={classes.image}
-                        src="http://uat.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/1BBCD9A70FE94FAF8B1959D2552E21B8"
-                        alt="hotelName"
-                    />
-                    <GridListTileBar
-                        title={pic.author}
-                        classes={{ root: classes.titleBar, title: classes.imageTitle}}
-                        actionIcon={
-                            <IconButton aria-label={`star ${hotelName}`}>
-                                <StarBorderIcon className={classes.imageTitle} />
-                            </IconButton>
-                        }
-                    />   
-                    </React.Fragment>
-                })
-            :
                 <React.Fragment>
                     <img className={classes.image}
                         src="http://uat.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/1BBCD9A70FE94FAF8B1959D2552E21B8"
@@ -65,7 +47,26 @@ const LocationPictures = (props) => {
                             </IconButton>
                         }
                     />   
+                    {locationPics.map((pic) => {
+                        <React.Fragment>
+                        <img className={classes.image}
+                            src="http://uat.multimediarepository.testing.amadeus.com/cmr/retrieve/hotel/1BBCD9A70FE94FAF8B1959D2552E21B8"
+                            alt="hotelName"
+                        />
+                        <GridListTileBar
+                            title={pic.author}
+                            classes={{ root: classes.titleBar, title: classes.imageTitle}}
+                            actionIcon={
+                                <IconButton aria-label={`star ${hotelName}`}>
+                                    <StarBorderIcon className={classes.imageTitle} />
+                                </IconButton>
+                            }
+                        />   
+                        </React.Fragment>
+                    })}
                 </React.Fragment>
+            :
+                null
             }             
         </GridListTile>
     )

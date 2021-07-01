@@ -1,8 +1,11 @@
-import React from 'react';
+import React, {useState} from 'react';
 import Dropzone from 'react-dropzone-uploader';
 import CloudUploadIcon from '@material-ui/icons/CloudUpload';
 import { makeStyles } from '@material-ui/core/styles';
 import { getDroppedOrSelectedFiles } from 'html5-file-selector';
+import {selectCurrentUser} from '../../redux/user/user.selectors';
+import {createStructuredSelector} from 'reselect';
+import {connect} from 'react-redux';
 import './uploadInstrument.styles.scss';
 
 const useStyles = makeStyles((theme) => ({
@@ -73,8 +76,9 @@ const Layout = ({ input, previews, submitButton, dropzoneProps, files, extra: { 
   }
 
 const UploadInstrument = (props) => {
-    const {userId} = props;
+    const {currentUser} = props;
     const classes = useStyles();
+    const [userId] = useState(currentUser ? currentUser.id : 0);  
 
     const getUploadParams = () => ({ url: 'https://httpbin.org/post' })
 
@@ -85,20 +89,27 @@ const UploadInstrument = (props) => {
     }
 
   return (
-    <Dropzone
-        getUploadParams={getUploadParams}
-        LayoutComponent={Layout}
-        onSubmit={handleSubmit}
-        InputComponent={Input}
-        classNames={{ 
-          inputLabelWithFiles: classes.inputLabel, 
-          previewImage: classes.previewImage, 
-          previewContainer: classes.previewContainer }}
-        inputContent="Drop Your Photos Here"
-        accept="image/*,video/*"
-        disabled={userId ? false : true}
-    />
+    <React.Fragment>
+      {!currentUser ? "You have to be logged in in order to upload photos!" : null}
+      <Dropzone
+          getUploadParams={getUploadParams}
+          LayoutComponent={Layout}
+          onSubmit={handleSubmit}
+          InputComponent={Input}
+          classNames={{ 
+            inputLabelWithFiles: classes.inputLabel, 
+            previewImage: classes.previewImage, 
+            previewContainer: classes.previewContainer }}
+          inputContent="Drop Your Photos Here"
+          accept="image/*,video/*"
+          disabled={currentUser ? false : true}
+      />
+    </React.Fragment>
   )
 }
 
-export default UploadInstrument;
+const mapStateToProps = createStructuredSelector({
+  currentUser: selectCurrentUser
+});
+
+export default connect(mapStateToProps)(UploadInstrument);

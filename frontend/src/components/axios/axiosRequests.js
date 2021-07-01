@@ -6,8 +6,8 @@ export function fetchPointsOfInterest(addressCoords) {
             method: 'GET',
             url: 'http://localhost:3000/getPointOfInterest',
             data: {
-                lng: addressCoords.lng,
-                lat: addressCoords.lat
+                lng: addressCoords.Lng,
+                lat: addressCoords.Lat
             },
             withCredentials: true
         }).then((response) => {
@@ -28,8 +28,8 @@ export function fetchToursAndActivities(addressCoords) {
             method: 'GET',
             url: 'http://localhost:3000/getToursAndActivities',
             data: {
-                lat: addressCoords.lat,
-                lng: addressCoords.lng
+                lat: addressCoords.Lat,
+                lng: addressCoords.Lng
             },
             withCredentials: true
         }).then((response) => {
@@ -45,14 +45,16 @@ export function fetchToursAndActivities(addressCoords) {
 }
 
 export function fetchHotels(addressCoords, budgetValue, dateRange) {
+    console.log(dateRange);
     return new Promise((resolve, reject) => {
         const reqBody = {
             method: 'GET',
             url: 'http://localhost:3000/getHotels',
             data: {
-                lat: addressCoords.lat,
-                lng: addressCoords.lng,
-                budgetValue: budgetValue
+                lat: addressCoords.Lat,
+                lng: addressCoords.Lng,
+                budgetValue: budgetValue,
+                dateRange: `${dateRange.startDate}-${dateRange.endDate}`
             },
             withCredentials: true
         };

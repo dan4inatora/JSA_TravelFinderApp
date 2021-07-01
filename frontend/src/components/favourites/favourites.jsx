@@ -1,11 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import FavoriteIcon from '@material-ui/icons/Favorite';
 import { Button } from '@material-ui/core';
+import {selectCurrentUser} from '../../redux/user/user.selectors';
+import {createStructuredSelector} from 'reselect';
+import {connect} from 'react-redux';
 import axios from 'axios';
 
 const FavouritesComponent = (props) => {
-    const {userId, hotelId} = props;
+    const {currentUser, hotelId} = props;
     const [isAdded, setIsAdded] = useState(false);
+    const [userId] = useState(currentUser ? currentUser.id : 0);  
 
     useEffect(() => {
         checkIfUserAdded();
@@ -73,12 +77,13 @@ const FavouritesComponent = (props) => {
     return (
         <React.Fragment>
             {isAdded ? 
-                <Button size="small" onClick={() => removeFromFavourites()}
+                <Button size="small" onClick={() => removeFromFavourites()} disabled={userId === 0}
                     variant="contained" endIcon={<FavoriteIcon/>}>
                     Remove from favourites
                 </Button> 
                 :  
-                <Button size="small" variant="contained" onClick={() => addToFavourites()} endIcon={<FavoriteIcon/>}>
+                <Button size="small" variant="contained" disabled={userId === 0}
+                    onClick={() => addToFavourites()} endIcon={<FavoriteIcon/>}>
                     Add to favourites
                 </Button> 
         }
@@ -86,4 +91,8 @@ const FavouritesComponent = (props) => {
     )
 }
 
-export default FavouritesComponent;
+const mapStateToProps = createStructuredSelector({
+    currentUser: selectCurrentUser
+});
+
+export default connect(mapStateToProps, null)(FavouritesComponent);

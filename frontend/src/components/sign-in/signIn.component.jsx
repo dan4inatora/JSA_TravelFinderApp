@@ -66,32 +66,33 @@ const SignIn = ({loginUser}) => {
       validationSchema,
       onSubmit(values) {
         try {
-          axios({
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json'},
-            url: 'http://localhost:3000/login',
-            withCredentials: true,
-            data: {
-              email: values.email,
-              password: values.password
-            }
-          }).then((response) => {
-            if(response.data && response.data.email) {
-              loginUser({id: response.data.id, email: response.data.email, name: response.data.firstName + " " + response.data.lastName, 
-              role: response.data.role, username: response.data.username});
-            }
-
-            setTimeout(() => {
-              history.push('/');
-            }, 1000);
-          }).catch((error) => {
-            console.log(error);
-          });
-
-          console.log(values);
-      } catch(error) {
-          console.error(error);
-      }
+          return new Promise((resolve, reject) => {
+            axios({
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json', "Access-Control-Allow-Origin": "*"},
+              url: 'http://localhost:3000/login',
+              withCredentials: true,
+              data: {
+                email: values.email,
+                password: values.password
+              }
+            }).then((response) => {
+              if(response.data && response.data.email) {
+                loginUser({id: response.data.id, email: response.data.email, name: response.data.firstName + " " + response.data.lastName, 
+                role: response.data.role, username: response.data.username});
+              }
+              setTimeout(() => {
+                resolve(response.data);
+                history.push('/');
+              }, 1000);
+            }).catch((error) => {
+              console.log(error);
+              reject(error);
+            });
+          })
+        } catch(error) {
+            console.error(error);
+        }
       }
   })
 
@@ -131,7 +132,7 @@ const SignIn = ({loginUser}) => {
               </Link>
             </Grid>
             <Grid item>
-              <Link href="#" variant="body2">
+              <Link href="/sign-up" variant="body2">
                 {"Don't have an account? Sign Up"}
               </Link>
             </Grid>
